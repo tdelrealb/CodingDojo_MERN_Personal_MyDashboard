@@ -7,6 +7,11 @@ const NoteSchema = new Schema(
 			ref: 'User',
 		},
 
+		area: {
+			type: String,
+			required: [true, 'Please assign this note to an area.'],
+		},
+
 		title: {
 			type: String,
 			required: [true, 'Please give a title to your note.'],

@@ -24,6 +24,19 @@ const getNotes = async (req, res) => {
 	}
 };
 
+const filterNotesByArea = async (req, res) => {
+	const { area } = req.params;
+	const userId = req.user._id;
+
+	try {
+		const notes = await Note.find({ userId, area });
+
+		res.status(200).json({ notes });
+	} catch (error) {
+		res.status(500).json({ error: 'Error when filtering notes by area.' });
+	}
+};
+
 const filterNotesByLabel = async (req, res) => {
 	const { label } = req.params;
 	const userId = req.user._id;
@@ -56,14 +69,14 @@ const searchNotes = async (req, res) => {
 
 const editNote = async (req, res) => {
 	const { id } = req.params;
-	const { title, label, body } = req.body;
+	const { area, title, label, body } = req.body;
 	const userId = req.user._id;
 
 	try {
 		const updatedNote = await Note.findOneAndUpdate(
 			{ _id: id, userId },
-			{ title, label, body },
-			{ new: true },
+			{ area, title, label, body },
+			{ new: true, runValidators: true },
 		);
 
 		if (!updatedNote) {
@@ -96,6 +109,7 @@ const deleteNote = async (req, res) => {
 export {
 	createNote,
 	getNotes,
+	filterNotesByArea,
 	filterNotesByLabel,
 	searchNotes,
 	editNote,
