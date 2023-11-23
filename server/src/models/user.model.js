@@ -50,12 +50,11 @@ const UserSchema = new Schema(
 		timestamps: true,
 	},
 );
-UserSchema.pre('save', async next => {
+UserSchema.pre('save', async function (next) {
 	try {
 		if (!this.isModified('password')) {
 			return next();
 		}
-
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(this.password, salt);
 		this.password = hashedPassword;
@@ -65,7 +64,7 @@ UserSchema.pre('save', async next => {
 	}
 });
 
-UserSchema.methods.comparePassword = async candidatePassword => {
+UserSchema.methods.comparePassword = async function (candidatePassword) {
 	return await bcrypt.compare(candidatePassword, this.password);
 };
 
