@@ -2,7 +2,7 @@ import Note from '../models/note.model.js';
 
 const createNote = async (req, res) => {
 	const noteData = req.body;
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const note = await Note.create({ ...noteData, userId });
@@ -14,7 +14,7 @@ const createNote = async (req, res) => {
 };
 
 const getNotes = async (req, res) => {
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const notes = await Note.find({ userId });
@@ -26,7 +26,7 @@ const getNotes = async (req, res) => {
 
 const filterNotesByLabel = async (req, res) => {
 	const { label } = req.params;
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const notes = await Note.find({ userId, label });
@@ -38,7 +38,7 @@ const filterNotesByLabel = async (req, res) => {
 
 const searchNotes = async (req, res) => {
 	const { query } = req.params;
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const notes = await Note.find({
@@ -57,7 +57,7 @@ const searchNotes = async (req, res) => {
 const editNote = async (req, res) => {
 	const { id } = req.params;
 	const { title, label, body } = req.body;
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const updatedNote = await Note.findOneAndUpdate(
@@ -77,7 +77,7 @@ const editNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
 	const { id } = req.params;
-	const userId = req.user.id;
+	const userId = req.user._id;
 
 	try {
 		const deletedNote = await Note.findByIdAndDelete({ _id: id, userId });
