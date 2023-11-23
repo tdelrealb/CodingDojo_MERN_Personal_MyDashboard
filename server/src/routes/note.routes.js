@@ -8,7 +8,8 @@ router.use(validateToken);
 
 router.post('/create', noteController.createNote);
 router.get('/all', noteController.getNotes);
-router.get('/filter/:label', noteController.filterNotesByLabel);
+router.get('/filter/area/:area', noteController.filterNotesByArea);
+router.get('/filter/label/:label', noteController.filterNotesByLabel);
 router.get('/search/:query', noteController.searchNotes);
 router.put('/edit/:id', noteController.editNote);
 router.delete('/delete/:id', noteController.deleteNote);
