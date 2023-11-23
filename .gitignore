@@ -4,3 +4,4 @@ middlewares
 .eslintignore
 .prettierignore
 MyDashboard.md
+dist
