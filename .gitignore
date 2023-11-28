@@ -1,7 +1,8 @@
 node_modules
 .env
-middlewares
 .eslintignore
+.prettierrc
+.eslintrc.cjs
 .prettierignore
 MyDashboard.md
 dist
