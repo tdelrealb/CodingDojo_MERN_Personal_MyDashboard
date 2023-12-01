@@ -19,12 +19,12 @@ const NoteSchema = new Schema(
 
 		label: {
 			type: String,
-			required: [true, 'Please assign a category to your note.'],
+			required: false,
 		},
 
 		body: {
 			type: String,
-			required: true,
+			required: [true, 'Please give a body to your note.'],
 		},
 	},
 
