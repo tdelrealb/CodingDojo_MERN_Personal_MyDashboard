@@ -5,9 +5,9 @@ const createNote = async (req, res) => {
 	const userId = req.user._id;
 
 	try {
-		const note = await Note.create({ ...noteData, userId });
-		await note.save();
-		res.status(201).json({ message: note });
+		const newNote = await Note.create({ ...noteData, userId });
+		await newNote.save();
+		res.status(201).json({ message: newNote });
 	} catch (error) {
 		res.status(500).json({ error: 'Error creating the note.' });
 	}
@@ -30,10 +30,9 @@ const filterNotesByArea = async (req, res) => {
 
 	try {
 		const notes = await Note.find({ userId, area });
-
 		res.status(200).json({ notes });
 	} catch (error) {
-		res.status(500).json({ error: 'Error when filtering notes by area.' });
+		res.status(500).json({ error: 'Error filtering notes by area.' });
 	}
 };
 
@@ -45,7 +44,7 @@ const filterNotesByLabel = async (req, res) => {
 		const notes = await Note.find({ userId, label });
 		res.status(200).json({ notes });
 	} catch (error) {
-		res.status(500).json({ error: 'Error when filtering notes by label.' });
+		res.status(500).json({ error: 'Error filtering notes by label.' });
 	}
 };
 
@@ -93,14 +92,14 @@ const deleteNote = async (req, res) => {
 	const userId = req.user._id;
 
 	try {
-		const deletedNote = await Note.findByIdAndDelete({ _id: id, userId });
+		const note = await Note.findByIdAndDelete({ _id: id, userId });
 
-		if (!deletedNote) {
+		if (!note) {
 			return res
 				.status(404)
 				.json({ error: 'We were unable to find the note.' });
 		}
-		res.status(200).json({ message: 'Note successfully deleted.' });
+		res.status(200).json({ message: 'Note succesfully deleted.' });
 	} catch (error) {
 		res.status(500).json({ error: 'Error deleting the note.' });
 	}

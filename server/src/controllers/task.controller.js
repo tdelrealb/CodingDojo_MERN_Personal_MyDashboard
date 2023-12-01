@@ -1,15 +1,58 @@
 import Task from '../models/task.model.js';
+import Project from '../models/project.model.js';
 
 const createTask = async (req, res) => {
 	const taskData = req.body;
 	const userId = req.user._id;
 
 	try {
-		const task = await Task.create({ ...taskData, userId });
-		await task.save();
-		res.status(201).json({ message: task });
+		const projectId = taskData.projectId;
+		const project = await Project.findOne({ _id: projectId, userId });
+
+		if (!project) {
+			return res.status(404).json({ error: 'Project not found.' });
+		}
+
+		const newTask = await Task.create({ ...taskData, userId, projectId });
+		await newTask.save();
+		res.status(201).json({ message: newTask });
 	} catch (error) {
 		res.status(500).json({ error: 'Error creating the task.' });
+	}
+};
+
+const editTask = async (req, res) => {
+	const { id } = req.params;
+	const { projectId, title, label, date, status } = req.body;
+	const userId = req.user._id;
+
+	try {
+		const task = await Task.findOne({ _id: id, userId });
+
+		if (!task) {
+			return res.status(404).json({ error: 'Task not found.' });
+		}
+
+		if (projectId) {
+			const project = await Project.findOne({ _id: projectId, userId });
+
+			if (!project) {
+				return res.status(404).json({ error: 'Project not found.' });
+			}
+
+			task.projectId = projectId;
+		}
+
+		task.title = title;
+		task.label = label;
+		task.date = date;
+		task.status = status;
+
+		await task.save();
+
+		res.status(200).json({ task });
+	} catch (error) {
+		res.status(500).json({ error: 'Error updating the task.' });
 	}
 };
 
@@ -24,16 +67,15 @@ const getTasks = async (req, res) => {
 	}
 };
 
-const filterTasksByArea = async (req, res) => {
-	const { area } = req.params;
+const filterTasksByProject = async (req, res) => {
+	const { projectId } = req.params;
 	const userId = req.user._id;
 
 	try {
-		const tasks = await Task.find({ userId, area });
-
+		const tasks = await Task.find({ userId, projectId });
 		res.status(200).json({ tasks });
 	} catch (error) {
-		res.status(500).json({ error: 'Error when filtering tasks by area.' });
+		res.status(500).json({ error: 'Error filtering tasks by project.' });
 	}
 };
 
@@ -45,28 +87,7 @@ const filterTasksByLabel = async (req, res) => {
 		const tasks = await Task.find({ userId, label });
 		res.status(200).json({ tasks });
 	} catch (error) {
-		res.status(500).json({ error: 'Error when filtering tasks by label.' });
-	}
-};
-
-const editTask = async (req, res) => {
-	const { id } = req.params;
-	const { area, title, label, date } = req.body;
-	const userId = req.user._id;
-
-	try {
-		const uptadedTask = await Task.findByIdAndUpdate(
-			{ _id: id, userId },
-			{ area, title, label, date },
-			{ new: true, runValidators: true },
-		);
-
-		if (!uptadedTask) {
-			res.status(404).json({ error: 'Task not found.' });
-		}
-		res.status(200).json({ task: uptadedTask });
-	} catch (error) {
-		res.status(500).json({ error: 'Error updating the task.' });
+		res.status(500).json({ error: 'Error filtering tasks by label.' });
 	}
 };
 
@@ -82,7 +103,7 @@ const deleteTask = async (req, res) => {
 				.status(404)
 				.json({ error: 'We were unable to find the task.' });
 		}
-		res.status(200).json({ message: 'Task successfully deleted.' });
+		res.status(200).json({ message: 'Task succesfully deleted.' });
 	} catch (error) {
 		res.status(500).json({ error: 'Error deleting the task.' });
 	}
@@ -91,7 +112,7 @@ const deleteTask = async (req, res) => {
 export {
 	createTask,
 	getTasks,
-	filterTasksByArea,
+	filterTasksByProject,
 	filterTasksByLabel,
 	editTask,
 	deleteTask,
