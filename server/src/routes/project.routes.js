@@ -7,8 +7,8 @@ const router = express.Router();
 router.use(validateToken);
 
 router.post('/create', projectController.createProject);
-router.get('/filter/:area', projectController.filterProjectsByArea);
-router.put('/edit/:id', projectController.editProject);
+router.get('/area/:area', projectController.getProjectsByArea);
+router.put('/update/:id', projectController.updateProject);
 router.delete('/delete/:id', projectController.deleteProject);
 
 export { router };
