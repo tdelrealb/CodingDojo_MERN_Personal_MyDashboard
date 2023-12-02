@@ -14,12 +14,11 @@ const ProjectSchema = new Schema(
 
 		title: {
 			type: String,
-			required: [true, 'Please give a title to your new project.'],
+			required: [true, 'Please give a title to your project.'],
 		},
 
 		description: {
 			type: String,
-			required: false,
 		},
 	},
 
