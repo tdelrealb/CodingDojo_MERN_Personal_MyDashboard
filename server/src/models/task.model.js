@@ -7,10 +7,14 @@ const TaskSchema = new Schema(
 			ref: 'User',
 		},
 
+		area: {
+			type: String,
+			required: [true, 'Please assign this task to an area.'],
+		},
+
 		projectId: {
 			type: Schema.Types.ObjectId,
 			ref: 'Project',
-			required: [true, 'Please assign this task to a project.'],
 		},
 
 		title: {
@@ -18,20 +22,19 @@ const TaskSchema = new Schema(
 			required: [true, 'Please give a title to your new task.'],
 		},
 
+		date: {
+			type: Date,
+			default: Date.now(),
+		},
+
 		label: {
 			type: String,
-			required: [true, 'Please assign a category to your task.'],
+			required: [true, 'Please give a label to your task.'],
 		},
 
 		status: {
 			type: String,
-			required: [true, 'Please give a status to your task.']
-		},
-
-		date: {
-			type: Date,
-			default: Date.now,
-			required: false,
+			required: [true, 'Please give a status to your task.'],
 		},
 	},
 
