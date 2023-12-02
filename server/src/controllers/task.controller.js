@@ -21,9 +21,56 @@ const createTask = async (req, res) => {
 	}
 };
 
-const editTask = async (req, res) => {
+const getTasks = async (req, res) => {
+	const userId = req.user._id;
+
+	try {
+		const tasks = await Task.find({ userId });
+		res.status(200).json({ tasks });
+	} catch (error) {
+		res.status(500).json({ error: 'Error loading tasks.' });
+	}
+};
+
+const getTasksByArea = async (req, res) => {
+	const { area } = req.params;
+	const userId = req.user._id;
+
+	try {
+		const tasks = await Task.find({ userId, area });
+		res.status(200).json({ tasks });
+	} catch (error) {
+		res.status(500).json({ error: 'Error filtering tasks by area.' });
+	}
+};
+
+const getTasksByProject = async (req, res) => {
+	const { projectId } = req.params;
+	const userId = req.user._id;
+
+	try {
+		const tasks = await Task.find({ userId, projectId });
+		res.status(200).json({ tasks });
+	} catch (error) {
+		res.status(500).json({ error: 'Error filtering tasks by project.' });
+	}
+};
+
+const getTasksByLabel = async (req, res) => {
+	const { label } = req.params;
+	const userId = req.user._id;
+
+	try {
+		const tasks = await Task.find({ userId, label });
+		res.status(200).json({ tasks });
+	} catch (error) {
+		res.status(500).json({ error: 'Error filtering tasks by label.' });
+	}
+};
+
+const updateTask = async (req, res) => {
 	const { id } = req.params;
-	const { projectId, title, label, date, status } = req.body;
+	const { area, projectId, title, date, label, status } = req.body;
 	const userId = req.user._id;
 
 	try {
@@ -43,51 +90,16 @@ const editTask = async (req, res) => {
 			task.projectId = projectId;
 		}
 
+		task.area = area;
 		task.title = title;
-		task.label = label;
 		task.date = date;
+		task.label = label;
 		task.status = status;
 
 		await task.save();
-
 		res.status(200).json({ task });
 	} catch (error) {
 		res.status(500).json({ error: 'Error updating the task.' });
-	}
-};
-
-const getTasks = async (req, res) => {
-	const userId = req.user._id;
-
-	try {
-		const tasks = await Task.find({ userId });
-		res.status(200).json({ tasks });
-	} catch (error) {
-		res.status(500).json({ error: 'Error loading tasks.' });
-	}
-};
-
-const filterTasksByProject = async (req, res) => {
-	const { projectId } = req.params;
-	const userId = req.user._id;
-
-	try {
-		const tasks = await Task.find({ userId, projectId });
-		res.status(200).json({ tasks });
-	} catch (error) {
-		res.status(500).json({ error: 'Error filtering tasks by project.' });
-	}
-};
-
-const filterTasksByLabel = async (req, res) => {
-	const { label } = req.params;
-	const userId = req.user._id;
-
-	try {
-		const tasks = await Task.find({ userId, label });
-		res.status(200).json({ tasks });
-	} catch (error) {
-		res.status(500).json({ error: 'Error filtering tasks by label.' });
 	}
 };
 
@@ -99,9 +111,7 @@ const deleteTask = async (req, res) => {
 		const deletedTask = await Task.findByIdAndDelete({ _id: id, userId });
 
 		if (!deletedTask) {
-			return res
-				.status(404)
-				.json({ error: 'We were unable to find the task.' });
+			return res.status(404).json({ error: 'Task not found.' });
 		}
 		res.status(200).json({ message: 'Task succesfully deleted.' });
 	} catch (error) {
@@ -112,8 +122,9 @@ const deleteTask = async (req, res) => {
 export {
 	createTask,
 	getTasks,
-	filterTasksByProject,
-	filterTasksByLabel,
-	editTask,
+	getTasksByArea,
+	getTasksByProject,
+	getTasksByLabel,
+	updateTask,
 	deleteTask,
 };
