@@ -7,11 +7,10 @@ const router = express.Router();
 router.use(validateToken);
 
 router.post('/create', noteController.createNote);
-router.get('/all', noteController.getNotes);
-router.get('/filter/area/:area', noteController.filterNotesByArea);
-router.get('/filter/label/:label', noteController.filterNotesByLabel);
+router.get('/area/:area', noteController.getNotesByArea);
+router.get('/label/:label', noteController.getNotesByLabel);
 router.get('/search/:query', noteController.searchNotes);
-router.put('/edit/:id', noteController.editNote);
+router.put('/update/:id', noteController.updateNote);
 router.delete('/delete/:id', noteController.deleteNote);
 
 export { router };
