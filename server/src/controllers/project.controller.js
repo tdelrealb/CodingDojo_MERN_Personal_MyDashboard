@@ -7,13 +7,13 @@ const createProject = async (req, res) => {
 	try {
 		const newProject = await Project.create({ ...projectData, userId });
 		await newProject.save();
-		res.status(201).json({ message: newProject });
+		res.status(201).json({ newProject });
 	} catch (error) {
 		res.status(500).json({ error: 'Error creating the project.' });
 	}
 };
 
-const filterProjectsByArea = async (req, res) => {
+const getProjectsByArea = async (req, res) => {
 	const { area } = req.params;
 	const userId = req.user._id;
 
@@ -25,7 +25,7 @@ const filterProjectsByArea = async (req, res) => {
 	}
 };
 
-const editProject = async (req, res) => {
+const updateProject = async (req, res) => {
 	const { id } = req.params;
 	const { area, title, description } = req.body;
 	const userId = req.user._id;
@@ -54,9 +54,7 @@ const deleteProject = async (req, res) => {
 		const project = await Project.findByIdAndDelete({ _id: id, userId });
 
 		if (!project) {
-			return res
-				.status(404)
-				.json({ error: 'We were unable to find the project.' });
+			return res.status(404).json({ error: 'Project not found.' });
 		}
 		res.status(200).json({ message: 'Project succesfully deleted.' });
 	} catch (error) {
@@ -64,4 +62,4 @@ const deleteProject = async (req, res) => {
 	}
 };
 
-export { createProject, filterProjectsByArea, editProject, deleteProject };
+export { createProject, getProjectsByArea, updateProject, deleteProject };
