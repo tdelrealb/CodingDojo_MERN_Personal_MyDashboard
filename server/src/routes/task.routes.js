@@ -8,9 +8,10 @@ router.use(validateToken);
 
 router.post('/create', taskController.createTask);
 router.get('/all', taskController.getTasks);
-router.get('/filter/project/:projectId', taskController.filterTasksByProject);
-router.get('/filter/label/:label', taskController.filterTasksByLabel);
-router.put('/edit/:id', taskController.editTask);
+router.get('/area/:area', taskController.getTasksByArea);
+router.get('/project/:projectId', taskController.getTasksByProject);
+router.get('/label/:label', taskController.getTasksByLabel);
+router.put('/update/:id', taskController.updateTask);
 router.delete('/delete/:id', taskController.deleteTask);
 
 export { router };
