@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import corsConfig from '../middlewares/cors.middleware.js';
 import * as userRoutes from '../routes/user.routes.js';
 import * as projectRoutes from '../routes/project.routes.js';
 import * as taskRoutes from '../routes/task.routes.js';
@@ -9,12 +8,13 @@ import * as resourceRoutes from '../routes/resource.routes.js';
 import * as habitRoutes from '../routes/habit.routes.js';
 import * as incomeRoutes from '../routes/income.routes.js';
 import * as expenseRoutes from '../routes/expense.routes.js';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
-app.use(corsConfig);
+app.use(cors());
 app.set('port', process.env.PORT);
 
 app.use(express.json());
