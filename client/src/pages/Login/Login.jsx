@@ -52,7 +52,7 @@ export const Login = () => {
 
 				sessionStorage.setItem('token', token);
 
-				navigate('/');
+				navigate('/dashboard');
 			} catch (error) {
 				if (error.response) {
 					console.error(
