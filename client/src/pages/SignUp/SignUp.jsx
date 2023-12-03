@@ -138,7 +138,7 @@ export const SignUp = () => {
 				const token = response.data.authToken;
 
 				sessionStorage.setItem('token', token);
-				navigate('/');
+				navigate('/dashboard');
 			} catch (error) {
 				if (error.response) {
 					console.error(

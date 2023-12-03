@@ -21,14 +21,14 @@ export const App = () => {
 					<Route exact path='/' Component={Home} />
 					<Route exact path='/login' Component={Login} />
 					<Route exact path='/signup' Component={SignUp} />
-					<Route exact path='/dashboard'/>
-					<Route exact path='/work'/>
-					<Route exact path='/studies'/>
-					<Route exact path='/trip'/>
-					<Route exact path='/personal'/>
-					<Route exact path='/finance'/>
-					<Route exact path='/social'/>
-					<Route exact path='/hobbies'/>
+					<Route exact path='/dashboard' Component={Dashboard}/>
+					<Route exact path='/work' Component={Work}/>
+					<Route exact path='/studies' Component={Studies}/>
+					<Route exact path='/trip' Component={Trip}/>
+					<Route exact path='/personal' Component={Personal}/>
+					<Route exact path='/finance' Component={Finance}/>
+					<Route exact path='/social' Component={Social}/>
+					<Route exact path='/hobbies' Component={Hobbies}/>
 
 				</Routes>
 			</BrowserRouter>
