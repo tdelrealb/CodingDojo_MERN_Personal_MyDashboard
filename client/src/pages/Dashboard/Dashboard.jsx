@@ -1,5 +1,5 @@
 import styles from './Dashboard.module.css';
-import backgroundBlur2 from '../../assets/backgroundBlur2.png';
+import backgroundBlur from '../../assets/backgroundBlur.png';
 
 export const Dashboard = () => {
 	return (
@@ -7,7 +7,7 @@ export const Dashboard = () => {
 			<div className={styles.background}>
 				<span className={styles.imageWrapper}>
 					<img
-						src={backgroundBlur2}
+						src={backgroundBlur}
 						alt='My Dashboard - Dash background'
 					/>
 				</span>

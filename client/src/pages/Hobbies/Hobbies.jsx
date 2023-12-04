@@ -1,5 +1,5 @@
 import styles from './Hobbies.module.css';
-import backgroundBlur2 from '../../assets/backgroundBlur2.png';
+import backgroundBlur from '../../assets/backgroundBlur.png';
 
 export const Hobbies = () => {
 	return (
@@ -7,13 +7,12 @@ export const Hobbies = () => {
 			<div className={styles.background}>
 				<span className={styles.imageWrapper}>
 					<img
-						src={backgroundBlur2}
+						src={backgroundBlur}
 						alt='My Dashboard - Hobbies background'
 					/>
 				</span>
-				<span className={styles.backgroundBlur}/>
+				<span className={styles.backgroundBlur} />
 			</div>
 		</div>
 	);
 };
-

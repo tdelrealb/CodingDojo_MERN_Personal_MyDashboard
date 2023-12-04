@@ -1,5 +1,5 @@
 import styles from './Trip.module.css';
-import backgroundBlur2 from '../../assets/backgroundBlur2.png';
+import backgroundBlur from '../../assets/backgroundBlur.png';
 
 export const Trip = () => {
 	return (
@@ -7,11 +7,11 @@ export const Trip = () => {
 			<div className={styles.background}>
 				<span className={styles.imageWrapper}>
 					<img
-						src={backgroundBlur2}
+						src={backgroundBlur}
 						alt='My Dashboard - Trip background'
 					/>
 				</span>
-				<span className={styles.backgroundBlur}/>
+				<span className={styles.backgroundBlur} />
 			</div>
 		</div>
 	);
