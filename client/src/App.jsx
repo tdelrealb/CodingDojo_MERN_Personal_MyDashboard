@@ -15,7 +15,6 @@ import { Hobbies } from './pages/Hobbies/Hobbies';
 import { Settings } from './pages/Settings/Settings';
 import { AuthProvider } from './utils/AuthProvider';
 import { SideMenu } from './components/SideMenu/SideMenu';
-import { MyDashboardIcon } from './components/MyDashboardIcon/MyDashboardIcon';
 
 export const App = () => {
 	return (
@@ -32,7 +31,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Dashboard />
 							</AuthProvider>
 						}></Route>
@@ -42,7 +40,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Work />
 							</AuthProvider>
 						}></Route>
@@ -52,7 +49,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Studies />
 							</AuthProvider>
 						}></Route>
@@ -62,7 +58,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Trip />
 							</AuthProvider>
 						}></Route>
@@ -72,7 +67,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Personal />
 							</AuthProvider>
 						}></Route>
@@ -82,7 +76,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Finance />
 							</AuthProvider>
 						}></Route>
@@ -92,7 +85,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Social />
 							</AuthProvider>
 						}></Route>
@@ -102,7 +94,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Hobbies />
 							</AuthProvider>
 						}></Route>
@@ -112,7 +103,6 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideMenu />
-								<MyDashboardIcon />
 								<Settings />
 							</AuthProvider>
 						}></Route>
