@@ -1,0 +1,38 @@
+.myDashIcon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+
+    position: absolute;
+    bottom: 56px;
+    left: 40px;
+
+    padding: 32px 15px;
+
+    animation: fadeInAnimation ease 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.myDashIcon > img {
+    position: absolute;
+    width: 48px;
+    transition: all 0.3s ease-in-out;
+}
+
+.myDashIcon > img:hover {
+    transform: scale(1.1);
+    cursor: none;
+}
+
