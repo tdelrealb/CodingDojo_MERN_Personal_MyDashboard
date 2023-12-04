@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 32px;
+    z-index: 1000;
 
     position: absolute;
     top:50%;

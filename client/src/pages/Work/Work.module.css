@@ -1,0 +1,39 @@
+.workPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: relative;
+    overflow: hidden;
+
+    width: 100vw;
+    height: 100vh;
+
+    min-width: 100vw;
+    min-height: 100vh;
+
+    background-color: black;
+}
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.imageWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.backgroundBlur {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.250);
+    backdrop-filter: blur(104px);
+}
