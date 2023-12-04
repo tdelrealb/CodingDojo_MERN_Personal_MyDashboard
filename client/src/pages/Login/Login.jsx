@@ -21,6 +21,8 @@ export const Login = () => {
 
 	const handleData = e => {
 		const { name, value } = e.target;
+		setErrors(prevErrors => ({...prevErrors, [name]: ''}));
+		setApiError(null)
 		setUser({ ...user, [name]: value });
 	};
 
