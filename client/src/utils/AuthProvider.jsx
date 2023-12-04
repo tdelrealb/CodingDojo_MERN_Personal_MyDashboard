@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import {PropTypes} from 'prop-types';
+import { PropTypes } from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
 	const token = sessionStorage.getItem('token');
 
