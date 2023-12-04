@@ -3,7 +3,11 @@ import MyDashboardIcon from '../../assets/MyDashboardIcon.png';
 import {useNavigate} from 'react-router-dom'
 
 export const Home = () => {
-    const navigate = useNavigate;
+    const navigate = useNavigate();
+	
+	const handleClick = () => {
+		navigate('/login')
+	}
 
 	return (
 		<div className={styles.homePage}>
@@ -16,7 +20,7 @@ export const Home = () => {
 				<h1 className={styles.title}>MyDashboard</h1>
 			</span>
             <h6 className={styles.text}>Your life, in order.</h6>
-            <button className={styles.startBtn} onClick={navigate('/login')}>Get Started</button>
+            <button className={styles.startBtn} onClick={handleClick}>Get Started</button>
 		</div>
 	);
 };
