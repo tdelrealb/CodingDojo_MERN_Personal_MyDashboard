@@ -1,0 +1,88 @@
+@import './normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+:root {
+    --primary: #FF986E;
+    --secondary-pink: #FF71A9;
+    --secondary-blue: #00D7FF;
+    --secondary-yellow: #00D7FF;
+    --main-gradient: linear-gradient(to right, #FF71A9, #FF986E);
+
+    --white: #FBEEE9;
+    --white-75: rgba(251, 238, 233, 0.75);
+    --white-50: rgba(251, 238, 233, 0.50);
+    --white-25: rgba(251, 238, 233, 0.25);
+    --white-10: rgba(251, 238, 233, 0.10);
+    --white-5: rgba(251, 238, 233, 0.05);
+
+    --error: #FF4D4D;
+    --error-desat: #ffa9a9;
+    
+    --background: #0F0805;
+
+    --paragraph-normal: 1rem;
+    --paragraph-small: 0.813rem;
+
+    --h1-light: 400;
+
+    --transition: all 0.2s ease-in-out;
+
+    --btn-grow: scale(1.1);
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+}
+
+h3 {
+    font-size: 2.063rem;
+    font-weight: 500;
+    color: var(--white);
+    margin: 0;
+}
+
+h4 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+}
+
+h5 {
+    font-size: 1.438rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+}
+
+h6 {
+    font-size: 1.188rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+}
+
+.headerLight {
+    font-weight: var(--h1-light);
+}
+
+p {
+    font-size: var(--paragraph-normal);
+    font-weight: 400;
+    color: var(--white);;
+    margin: 0;
+}

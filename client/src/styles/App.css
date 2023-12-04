@@ -1,0 +1,11 @@
+.app {
+    background-image: url('../assets/BackgroudImage.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+    height: 100vh;
+
+    margin: 0;
+    padding: 0;
+}
