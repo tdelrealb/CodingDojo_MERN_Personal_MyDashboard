@@ -1,0 +1,169 @@
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.link {
+    margin: 0;
+    padding: 0;
+    
+    font-size: 1.1875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.closeIcon {
+    height: 1.5rem;
+
+    position: fixed;
+    left: 3rem;
+    top: 3rem;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    margin: 0;
+}
+
+.icon {
+    height: 4rem;
+    width: 4rem;
+
+    margin-top: 0.5rem;
+}
+
+.title {
+    font-weight: var(--h1-light);
+
+    background: var(--main-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text {
+    margin-bottom: 2rem;
+}
+
+.fakeInput {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    height: 2.69931rem;
+    width: 23.5rem;
+
+    padding: 0.75rem 1rem;
+
+    background: var(--white-5);
+    border: 1px solid var(--white-50);
+    border-radius: 6.25rem;
+}
+
+.fakeInput > input {
+    height: 100%;
+    width: 100%;
+    
+    position: absolute;
+    left: 0;
+
+    padding: 0.75rem 1rem;
+
+    background-color: #f0f8ff00;
+    border-radius: 6.25rem;
+
+    border: none;
+    outline: none;
+
+    font-size: var(--paragraph-normal);
+    color: var(--white);
+}
+
+.fakeInput > input::placeholder {
+    font-size: var(--paragraph-normal);
+    color: var(--white-50);
+}
+
+.arrowBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 1rem;
+    width: 1rem;
+
+    position: absolute;
+    right: 1rem;
+
+    background-color: #f0f8ff00;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.loginFooter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+
+    position: absolute;
+    bottom: 4rem;
+}
+
+.loginFooter > p {
+    color: var(--white-75);
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+
+    position: absolute;
+    bottom: 250px;
+
+    color: var(--error-desat);
+    font-weight: 500;
+
+    animation: fadeInAnimation ease 200ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.errorIcon {
+    height: var(--paragraph-normal);
+}
