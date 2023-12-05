@@ -29,7 +29,7 @@ const TaskSchema = new Schema(
 
 		label: {
 			type: String,
-			required: [true, 'Please give a label to your task.'],
+			// required: [true, 'Please give a label to your task.'],
 		},
 
 		status: {
