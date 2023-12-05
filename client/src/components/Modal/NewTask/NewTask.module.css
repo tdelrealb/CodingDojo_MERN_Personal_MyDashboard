@@ -208,6 +208,10 @@
 
     color: var(--error-desat);
 /* text-align: center; */
+
+animation: fadeInAnimation ease 0.4s;
+animation-iteration-count: 1;
+animation-fill-mode: forwards;
 }
 
 .error > img {
