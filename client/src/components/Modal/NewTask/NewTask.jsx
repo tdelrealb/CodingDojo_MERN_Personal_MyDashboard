@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import styles from './NewTask.module.css';
 import Modal from 'react-modal';
-import CloseIcon from '../../../assets/CloseIcon.svg';
 import MyDashboardIcon from '../../../assets/MyDashboardIcon.png';
-import AssignIcon from '../../../assets/AssignIcon.svg';
 import ArrowBtn from '../../../assets/ArrowBtn.svg';
 import Error from '../../../assets/Error.svg';
 import { useEffect, useState } from 'react';
@@ -71,7 +69,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 	};
 
 	const handleSubmit = async e => {
-		e.preventDefault(); // Agrega esta línea para prevenir la recarga de la página
+		e.preventDefault();
 
 		try {
 			const createdTask = {
