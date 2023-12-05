@@ -7,11 +7,12 @@ import PlusIconPink from '../../assets/PlusIconPink.svg';
 import { NewTask } from '../../components/Modal/NewTask/NewTask';
 import { NewProject } from '../../components/Modal/NewProject/NewProject';
 import { NewNote } from '../../components/Modal/NewNote/NewNote';
-import { NewExpense } from '../../components/Modal/NewExpense/NewExpense';
+import moment from 'moment';
 
 import { Clock } from '../../components/Clock/Clock';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
@@ -19,8 +20,10 @@ export const MyBoard = () => {
 	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 	const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
-
+	const [tasks, setTasks] = useState([]);
 	const navigate = useNavigate();
+
+
 
 	const handleLogout = () => {
 		sessionStorage.removeItem('token');
@@ -43,14 +46,49 @@ export const MyBoard = () => {
 		setIsExpenseModalOpen(true);
 	};
 
+	const getTasks = async () => {
+		try {
+			const token = sessionStorage.getItem('token');
+			const response = await axios.get(
+				'http://localhost:7000/tasks/all',
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			const sortedTasks = response.data.tasks.sort((a, b) => {
+				const dateA = new Date(a.date);
+				const dateB = new Date(b.date);
+				return dateA - dateB;
+			});
+
+			setTasks(sortedTasks);
+		} catch (error) {
+			console.log('Error getting tasks', error);
+		}
+	};
+
+	
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
-
+		
 		if (token) {
 			const payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
 		}
 	}, []);
+	
+	useEffect(() => {
+		getTasks();
+	}, []);
+	
+	tasks.forEach((task) => {
+		const date = moment(task.date);
+		task.formattedDate = date.format('D/M/Y')
+	});
+	console.log(tasks);
 
 	return (
 		<div className={styles.myBoardPage}>
@@ -111,16 +149,7 @@ export const MyBoard = () => {
 									</button>
 								</div>
 
-								<div className={styles.card}>
-									<h4>New expense</h4>
-									<button onClick={openExpenseModal}>
-										<img
-											src={PlusIconPink}
-											alt='Orange Plus Icon'
-										/>
-										Create expense
-									</button>
-								</div>
+						
 							</span>
 							<span></span>
 						</div>
@@ -131,6 +160,20 @@ export const MyBoard = () => {
 									Upcoming <br />
 									tasks
 								</h3>
+								<span className={styles.upcomingTasks}>
+									{tasks.map(task => (
+										<div
+											key={task.id}
+											className={styles.tasksContainer}>
+											<p>{task.formattedDate}</p>
+											<span
+												className={styles.taskContent}>
+												<h6>{task.title}</h6>
+												<p></p>
+											</span>
+										</div>
+									))}
+								</span>
 							</div>
 						</div>
 					</span>
@@ -156,13 +199,6 @@ export const MyBoard = () => {
 				<NewNote
 					isOpen={isNoteModalOpen}
 					closeModal={() => setIsNoteModalOpen(false)}
-				/>
-			)}
-
-			{isExpenseModalOpen && (
-				<NewExpense
-					isOpen={isExpenseModalOpen}
-					closeModal={() => setIsExpenseModalOpen(false)}
 				/>
 			)}
 		</div>

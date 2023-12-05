@@ -7,11 +7,6 @@ const NoteSchema = new Schema(
 			ref: 'User',
 		},
 
-		projectId: {
-			type: Schema.Types.ObjectId,
-			ref: 'Project',
-		},
-
 		area: {
 			type: String,
 			required: [true, 'Please assign this note to an area.'],
@@ -20,11 +15,6 @@ const NoteSchema = new Schema(
 		title: {
 			type: String,
 			required: [true, 'Please give a title to your note.'],
-		},
-
-		label: {
-			type: String,
-			required: [true, 'Please assign a label to your note.'],
 		},
 
 		body: {

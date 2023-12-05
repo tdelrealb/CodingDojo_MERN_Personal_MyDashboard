@@ -26,18 +26,6 @@ const getNotesByArea = async (req, res) => {
 	}
 };
 
-const getNotesByLabel = async (req, res) => {
-	const { label } = req.params;
-	const userId = req.user._id;
-
-	try {
-		const notes = await Note.find({ userId, label });
-		res.status(200).json({ notes });
-	} catch (error) {
-		res.status(500).json({ error: 'Error filtering notes by label.' });
-	}
-};
-
 const searchNotes = async (req, res) => {
 	const { query } = req.params;
 	const userId = req.user._id;
@@ -59,7 +47,7 @@ const searchNotes = async (req, res) => {
 
 const updateNote = async (req, res) => {
 	const { id } = req.params;
-	const { projectId, area, title, label, body } = req.body;
+	const { area, title, label, body } = req.body;
 	const userId = req.user._id;
 
 	try {
@@ -67,16 +55,6 @@ const updateNote = async (req, res) => {
 
 		if (!note) {
 			return res.status(404).json({ error: 'Note not found.' });
-		}
-
-		if (projectId) {
-			const project = await Project.findOne({ _id: projectId, userId });
-
-			if (!project) {
-				return res.status(404).json({ error: 'Project not found.' });
-			}
-
-			note.projectId = projectId;
 		}
 
 		note.area = area;
@@ -110,7 +88,6 @@ const deleteNote = async (req, res) => {
 export {
 	createNote,
 	getNotesByArea,
-	getNotesByLabel,
 	searchNotes,
 	updateNote,
 	deleteNote,
