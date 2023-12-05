@@ -2,6 +2,7 @@ import './styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './utils/AuthProvider';
 import { SideBar } from './components/SideBar/SideBar';
+import { FloatingIcon } from './components/FloatingIcon/FloatingIcon';
 
 import { Home } from './pages/Home/Home';
 import { Login } from './pages/Login/Login';
@@ -31,6 +32,7 @@ export const App = () => {
 						element={
 							<AuthProvider>
 								<SideBar />
+								<FloatingIcon />
 								<MyBoard />
 							</AuthProvider>
 						}></Route>
