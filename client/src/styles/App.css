@@ -3,9 +3,18 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    overflow: hidden;
     
     height: 100vh;
 
     margin: 0;
     padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
 }
