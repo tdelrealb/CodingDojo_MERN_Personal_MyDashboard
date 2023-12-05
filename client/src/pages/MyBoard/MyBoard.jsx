@@ -1,5 +1,9 @@
 import styles from './MyBoard.module.css';
 import LogoutIcon from '../../assets/LogoutIcon.svg';
+import PlusIconOrange from '../../assets/PlusIconOrange.svg';
+import PlusIconBlue from '../../assets/PlusIconBlue.svg';
+import PlusIconYellow from '../../assets/PlusIconYellow.svg';
+import PlusIconPink from '../../assets/PlusIconPink.svg';
 import { Clock } from '../../components/Clock/Clock';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -28,7 +32,7 @@ export const MyBoard = () => {
 				<span className={styles.header}>
 					<div className={styles.titleColumn}>
 						<h1 className={styles.title}>
-							Hi,{' '}
+							👋 Hi,{' '}
 							<span className={styles.userName}>
 								{userData && userData.username}
 							</span>
@@ -42,18 +46,66 @@ export const MyBoard = () => {
 					</button>
 				</span>
 
-				<span className={styles.mainContent}>
-					<div className={styles.leftColumn}>
-						<span className={styles.cardsContent}>
-							<div className={styles.card}></div>
-							<div className={styles.card}></div>
-							<div className={styles.card}></div>
-							<div className={styles.card}></div>
-						</span>
-						<span></span>
-					</div>
-					<div className={styles.rightColumn}></div>
-				</span>
+				<section className={styles.capture}>
+					<h4>Capture</h4>
+					<hr />
+					<span className={styles.mainContent}>
+						<div className={styles.leftColumn}>
+							<span className={styles.cardsContent}>
+								<div className={styles.card}>
+									<h4>New task</h4>
+									<button>
+										<img
+											src={PlusIconOrange}
+											alt='Orange Plus Icon'
+										/>
+										Create task
+									</button>
+								</div>
+
+								<div className={styles.card}>
+									<h4>New project</h4>
+									<button>
+										<img
+											src={PlusIconBlue}
+											alt='Blue Plus Icon'
+										/>
+										Create project
+									</button>
+								</div>
+
+								<div className={styles.card}>
+									<h4>New note</h4>
+									<button>
+										<img
+											src={PlusIconYellow}
+											alt='Yellow Plus Icon'
+										/>
+										Create note
+									</button>
+								</div>
+
+								<div className={styles.card}>
+									<h4>New expense</h4>
+									<button>
+										<img
+											src={PlusIconPink}
+											alt='Orange Plus Icon'
+										/>
+										Create expense
+									</button>
+								</div>
+							</span>
+							<span></span>
+						</div>
+
+						<div className={styles.rightColumn}>
+							<div className={styles.upcoming}>
+								<h3 className={styles.upcomingTitle}>Upcoming <br />tasks</h3>
+							</div>
+						</div>
+					</span>
+				</section>
 			</div>
 		</div>
 	);
