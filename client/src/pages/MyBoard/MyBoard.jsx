@@ -5,6 +5,9 @@ import PlusIconBlue from '../../assets/PlusIconBlue.svg';
 import PlusIconYellow from '../../assets/PlusIconYellow.svg';
 import PlusIconPink from '../../assets/PlusIconPink.svg';
 import { NewTask } from '../../components/Modal/NewTask/NewTask';
+import { NewProject } from '../../components/Modal/NewProject/NewProject';
+import { NewNote } from '../../components/Modal/NewNote/NewNote';
+import { NewExpense } from '../../components/Modal/NewExpense/NewExpense';
 
 import { Clock } from '../../components/Clock/Clock';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +15,11 @@ import { useEffect, useState } from 'react';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+	const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
@@ -20,12 +27,20 @@ export const MyBoard = () => {
 		navigate('/');
 	};
 
-	const openModal = () => {
-		setIsModalOpen(true);
+	const openTaskModal = () => {
+		setIsTaskModalOpen(true);
 	};
 
-	const closeModal = () => {
-		setIsModalOpen(false);
+	const openProjectModal = () => {
+		setIsProjectModalOpen(true);
+	};
+
+	const openNoteModal = () => {
+		setIsNoteModalOpen(true);
+	};
+
+	const openExpenseModal = () => {
+		setIsExpenseModalOpen(true);
 	};
 
 	useEffect(() => {
@@ -65,7 +80,7 @@ export const MyBoard = () => {
 							<span className={styles.cardsContent}>
 								<div className={styles.card}>
 									<h4>New task</h4>
-									<button onClick={openModal}>
+									<button onClick={openTaskModal}>
 										<img
 											src={PlusIconOrange}
 											alt='Orange Plus Icon'
@@ -76,7 +91,7 @@ export const MyBoard = () => {
 
 								<div className={styles.card}>
 									<h4>New project</h4>
-									<button>
+									<button onClick={openProjectModal}>
 										<img
 											src={PlusIconBlue}
 											alt='Blue Plus Icon'
@@ -87,7 +102,7 @@ export const MyBoard = () => {
 
 								<div className={styles.card}>
 									<h4>New note</h4>
-									<button>
+									<button onClick={openNoteModal}>
 										<img
 											src={PlusIconYellow}
 											alt='Yellow Plus Icon'
@@ -98,7 +113,7 @@ export const MyBoard = () => {
 
 								<div className={styles.card}>
 									<h4>New expense</h4>
-									<button>
+									<button onClick={openExpenseModal}>
 										<img
 											src={PlusIconPink}
 											alt='Orange Plus Icon'
@@ -123,7 +138,33 @@ export const MyBoard = () => {
 			</div>
 
 			{/* Modals */}
-			{isModalOpen && <NewTask isOpen={isModalOpen} closeModal={closeModal} />}
+			{isTaskModalOpen && (
+				<NewTask
+					isOpen={isTaskModalOpen}
+					closeModal={() => setIsTaskModalOpen(false)}
+				/>
+			)}
+
+			{isProjectModalOpen && (
+				<NewProject
+					isOpen={isProjectModalOpen}
+					closeModal={() => setIsProjectModalOpen(false)}
+				/>
+			)}
+
+			{isNoteModalOpen && (
+				<NewNote
+					isOpen={isNoteModalOpen}
+					closeModal={() => setIsNoteModalOpen(false)}
+				/>
+			)}
+
+			{isExpenseModalOpen && (
+				<NewExpense
+					isOpen={isExpenseModalOpen}
+					closeModal={() => setIsExpenseModalOpen(false)}
+				/>
+			)}
 		</div>
 	);
 };
