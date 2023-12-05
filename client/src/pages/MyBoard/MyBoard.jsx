@@ -4,17 +4,28 @@ import PlusIconOrange from '../../assets/PlusIconOrange.svg';
 import PlusIconBlue from '../../assets/PlusIconBlue.svg';
 import PlusIconYellow from '../../assets/PlusIconYellow.svg';
 import PlusIconPink from '../../assets/PlusIconPink.svg';
+import { NewTask } from '../../components/Modal/NewTask/NewTask';
+
 import { Clock } from '../../components/Clock/Clock';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
 		sessionStorage.removeItem('token');
 		navigate('/');
+	};
+
+	const openModal = () => {
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
 	};
 
 	useEffect(() => {
@@ -54,7 +65,7 @@ export const MyBoard = () => {
 							<span className={styles.cardsContent}>
 								<div className={styles.card}>
 									<h4>New task</h4>
-									<button>
+									<button onClick={openModal}>
 										<img
 											src={PlusIconOrange}
 											alt='Orange Plus Icon'
@@ -101,12 +112,18 @@ export const MyBoard = () => {
 
 						<div className={styles.rightColumn}>
 							<div className={styles.upcoming}>
-								<h3 className={styles.upcomingTitle}>Upcoming <br />tasks</h3>
+								<h3 className={styles.upcomingTitle}>
+									Upcoming <br />
+									tasks
+								</h3>
 							</div>
 						</div>
 					</span>
 				</section>
 			</div>
+
+			{/* Modals */}
+			{isModalOpen && <NewTask isOpen={isModalOpen} closeModal={closeModal} />}
 		</div>
 	);
 };

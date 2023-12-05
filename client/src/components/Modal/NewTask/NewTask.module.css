@@ -1,0 +1,256 @@
+.customModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+
+    height: 32.9375rem;
+    width: 61.25rem;
+
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(100px);
+
+    border: 1px solid var(--white-50);
+    outline: none;
+    border-radius: 2.1875rem;
+
+    animation: fadeInAnimation ease 0.4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.customOverlay {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+
+    background: rgba(15, 8, 5, 0.10);
+    backdrop-filter: blur(5px);
+
+    height: 100vh;
+    width: 100vw;
+
+    animation: fadeInAnimation ease 0.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+
+    padding: 2rem;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+
+    height: 100%;
+    width: 100%;
+
+    /* background: var(--white-50); */
+    padding: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.header > img {
+    width: 48px;
+}
+
+.header > h2 {
+    background: var(--Gradient, linear-gradient(90deg, #FF71A9 0%, #FF986E 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.column > h6 {
+    color: var(--white-75);
+    font-weight: var(--h1-light);
+}
+
+.optionWrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    justify-content: center;
+}
+
+.option > button {
+    width: 8rem;
+    height: 6rem;
+
+    /* background-color: var(--white-5); */
+    border: 1px solid var(--white-25);
+    border-radius: 0.8rem;
+
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.projects {
+    width: 8rem;
+    height: 6rem;
+
+    background-color: var(--white-5);
+    border: 1px solid var(--white-25);
+    border-radius: 0.8rem;
+    outline: none;
+
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.projects:hover {
+    transform: scale(1.1);
+}
+
+.option > button:hover {
+    transform: scale(1.1);
+}
+
+.option1 {
+    background: rgba(255, 255, 153, 0.1);
+}
+
+.option2 {
+    background: rgba(255, 152, 110, 0.1);
+}
+
+.option3 {
+    background: rgba(110, 229, 255, 0.1);
+}
+
+.option4 {
+    background: rgba(129, 255, 110, 0.1);
+}
+
+.option5 {
+    background: rgba(255, 110, 110, 0.1);
+}
+
+.option6 {
+    background: rgba(137, 110, 255, 0.1);
+}
+
+.fixed {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0);
+
+    width: 4rem;
+    border: none;
+    outline: none;
+
+    top: 2rem;
+    left: 1rem;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.fixed > img {
+    width: 2rem;
+    transform: scaleX(-1);
+}
+
+.fixed:hover {
+    transform: scale(1.1);
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+
+    color: var(--error-desat);
+/* text-align: center; */
+}
+
+.error > img {
+    width: 24px;
+}
+
+.fakeInput > input {
+    width: 16rem;
+    height: 2rem;
+    position: absolute;
+
+    background-color: var(--white-5);
+    border: 1px solid var(--white-25);
+    border-radius: 0.8rem;
+    outline: none;
+
+    color: var(--white-75);
+
+    padding: 1rem;
+}
+
+.fakeInput {
+    display: flex;
+    position: relative;
+    width: 16rem;
+    height: 2rem;
+
+}
+
+.fakeInput > button {
+    position: absolute;
+    top: 8px;
+    right: 0.3rem;
+
+    cursor: pointer;
+
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
