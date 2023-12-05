@@ -26,6 +26,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 	const [userData, setUserData] = useState(null);
 	const [projects, setProjects] = useState([]);
 	const [currentStep, setCurrentStep] = useState(1);
+	const [errors, setErrors] = useState([]);
 
 	const getProjectsByArea = async () => {
 		try {
@@ -61,6 +62,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 	const handleTitleChange = e => {
 		e.preventDefault();
 		const titleValue = e.target.value;
+
 		setTask(prevTask => ({ ...prevTask, title: titleValue }));
 	};
 
@@ -69,7 +71,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 	};
 
 	const handleSubmit = async e => {
-		e.preventDefault();
+		e.preventDefault(); // Agrega esta línea para prevenir la recarga de la página
 
 		try {
 			const createdTask = {
@@ -95,11 +97,11 @@ export const NewTask = ({ isOpen, closeModal }) => {
 
 			setCurrentStep(prevStep => prevStep + 1);
 		} catch (error) {
-			console.log('Error', error);
+			setErrors([
+				error.response.data.message || 'An unexpected error occurred.',
+			]);
 		}
 	};
-
-
 
 	useEffect(() => {
 		getProjectsByArea();
@@ -114,9 +116,15 @@ export const NewTask = ({ isOpen, closeModal }) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (currentStep === 0) {
+			closeModal();
+		}
+	}, [currentStep, closeModal]);
+
 	return (
 		<Modal
-			isOpen={true}
+			isOpen={isOpen}
 			contentLabel='New task'
 			className={styles.customModal}
 			overlayClassName={styles.customOverlay}
@@ -189,7 +197,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 							<button
 								className={styles.fixed}
 								onClick={() =>
-									setCurrentStep(prevStep => prevStep + 1)
+									setCurrentStep(prevStep => prevStep - 1)
 								}>
 								<img src={ArrowBtn} />
 							</button>
@@ -242,9 +250,17 @@ export const NewTask = ({ isOpen, closeModal }) => {
 									placeholder='project title'
 								/>
 								<button
-									onClick={() =>
-										setCurrentStep(prevStep => prevStep + 1)
-									}>
+									onClick={e => {
+										e.preventDefault();
+										if (task.title.trim() !== '') {
+											setCurrentStep(
+												prevStep => prevStep + 1,
+											);
+										} else {
+											setErrors(['Title is required.']);
+										}
+									}}>
+									;
 									<img src={ArrowBtn} />
 								</button>
 							</form>
@@ -255,6 +271,15 @@ export const NewTask = ({ isOpen, closeModal }) => {
 								}>
 								<img src={ArrowBtn} />
 							</button>
+
+							{errors.length > 0 && (
+								<p className={styles.error}>
+									<img src={Error} alt='Error' />
+									{errors.map((error, index) => (
+										<span key={index}>{error}</span>
+									))}
+								</p>
+							)}
 						</>
 					)}
 					{currentStep === 4 && (
