@@ -49,7 +49,7 @@ export const Login = () => {
 				};
 
 				const response = await axios.post(
-					'http://localhost:7000/users/login',
+					`${import.meta.env.VITE_AXIOS_URI}/users/login`,
 					loggedUser,
 				);
 

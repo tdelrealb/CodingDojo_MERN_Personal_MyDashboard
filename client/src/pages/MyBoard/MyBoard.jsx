@@ -50,7 +50,7 @@ export const MyBoard = () => {
 		try {
 			const token = sessionStorage.getItem('token');
 			const response = await axios.get(
-				'http://localhost:7000/tasks/all',
+				`${import.meta.env.VITE_AXIOS_URI}/tasks/all`,
 				{
 					headers: {
 						Authorization: token,

@@ -130,7 +130,7 @@ export const SignUp = () => {
 				};
 
 				const response = await axios.post(
-					'http://localhost:7000/users/register',
+					`${import.meta.env.VITE_AXIOS_URI}/users/register`,
 					newUser,
 				);
 

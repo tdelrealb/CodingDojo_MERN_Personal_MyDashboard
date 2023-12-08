@@ -51,7 +51,7 @@ export const NewNote = ({ isOpen, closeModal }) => {
 
 			const token = sessionStorage.getItem('token');
 			await axios.post(
-				'http://localhost:7000/notes/create',
+				`${import.meta.env.VITE_AXIOS_URI}/notes/create`,
 				createdNote,
 				{
 					headers: {
