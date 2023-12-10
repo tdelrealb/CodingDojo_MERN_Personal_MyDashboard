@@ -31,7 +31,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 			const token = sessionStorage.getItem('token');
 
 			const response = await axios.get(
-				'http://localhost:7000/projects/area/' + task.area,
+				`${import.meta.env.VITE_AXIOS_URI}/projects/area/` + task.area,
 				{
 					headers: {
 						Authorization: token,
@@ -84,7 +84,7 @@ export const NewTask = ({ isOpen, closeModal }) => {
 
 			const token = sessionStorage.getItem('token');
 			await axios.post(
-				'http://localhost:7000/tasks/create',
+				`${import.meta.env.VITE_AXIOS_URI}/tasks/create`,
 				createdTask,
 				{
 					headers: {
