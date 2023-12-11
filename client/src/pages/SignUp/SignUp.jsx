@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './SignUp.module.css';
 import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
 import CloseIcon from '../../assets/close-icon.svg';
@@ -5,7 +6,7 @@ import NextIcon from '../../assets/next-icon.svg';
 import ErrorIcon from '../../assets/error-icon.svg';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export const SignUp = () => {
@@ -63,6 +64,7 @@ export const SignUp = () => {
 	const [user, setUser] = useState(initialValue);
 	const [errors, setErrors] = useState({});
 	const [apiErrors, setApiErrors] = useState(null);
+	const [progressBar, setProgressBar] = useState(0);
 	const navigate = useNavigate();
 
 	const handleData = e => {
@@ -175,10 +177,22 @@ export const SignUp = () => {
 
 	const currentStepData = steps[currentStep];
 
+	useEffect(() => {
+		const totalSteps = steps.length;
+		const currentProgress = (currentStep / totalSteps) * 100;
+		setProgressBar(currentProgress);
+	}, [currentStep, steps]);
+
 	return (
 		<div className={styles.signUpPage}>
-            
-            <Link to={'/'}>
+			<div className={styles.progressBar}>
+				<div
+					className={styles.progressBarFill}
+					style={{ width: `${progressBar}%` }}
+				/>
+			</div>
+
+			<Link to={'/'}>
 				<img
 					src={CloseIcon}
 					alt='Close-icon'
