@@ -182,18 +182,18 @@
 
 @-webkit-keyframes slide-right {
     0% {
-    -webkit-transform: translateX(-100px);
-            transform: translateX(-100px);
+    -webkit-transform: translateX(-150px);
+            transform: translateX(-150px);
     }
-    100% {
+    150% {
     -webkit-transform: translateX(0);
             transform: translateX(0);
     }
 }
 @keyframes slide-right {
     0% {
-    -webkit-transform: translateX(-100px);
-            transform: translateX(-100px);
+    -webkit-transform: translateX(-150px);
+            transform: translateX(-150px);
     }
     100% {
     -webkit-transform: translateX(0);
