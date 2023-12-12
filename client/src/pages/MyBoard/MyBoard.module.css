@@ -201,6 +201,11 @@
     gap: 1rem;
 }
 
+.social img:hover {
+    transition: var(--transition-config);
+    transform: scale(1.2);
+}
+
 .userData {
     display: flex;
     align-items: center;

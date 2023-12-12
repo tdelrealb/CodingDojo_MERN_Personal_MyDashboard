@@ -12,8 +12,21 @@ import DummyUser from '../../assets/dummy-user.png';
 
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
+import { Calendar } from '../../components/Calendar/Calendar';
+import { useState, useEffect } from 'react';
 
 export const MyBoard = () => {
+	const [userData, setUserData] = useState(null);
+
+	useEffect(() => {
+		const token = sessionStorage.getItem('token');
+		
+		if (token) {
+			const payload = JSON.parse(atob(token.split('.')[1]));
+			setUserData(payload);
+		}
+	}, []);
+
 	return (
 		<div className={styles.myBoardPage}>
 			<div className={styles.leftColumn}>
@@ -25,7 +38,7 @@ export const MyBoard = () => {
 
 					<span className={styles.userInfo}>
 						<h1>
-							Hi, <span>user name</span> 👋
+							Hi, <span>{userData && userData.username}</span> 👋
 						</h1>
 						<h6>It is the perfect day for planning.</h6>
 					</span>
@@ -87,14 +100,16 @@ export const MyBoard = () => {
 
 					<div className={styles.userData}>
 						<span className={styles.userContact}>
-							<Link className={styles.link}>
-								<h4>User first name and last name</h4>
+							<Link to={'/settings'} className={styles.link}>
+								<h4>{userData && userData.firstName} {userData && userData.lastName}</h4>
 							</Link>
-							<p>user@gmail.com</p>
+							<p>{userData && userData.email}</p>
 						</span>
 						<img src={DummyUser} alt='User-profile-pic' />
 					</div>
 				</section>
+
+				<Calendar />
 			</div>
 		</div>
 	);

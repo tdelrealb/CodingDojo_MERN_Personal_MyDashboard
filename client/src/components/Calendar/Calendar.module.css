@@ -1,0 +1,215 @@
+.calendarToDo {
+    display: flex;
+    flex-direction: column;
+    gap: 1.69rem;
+    
+    width: 42rem; 
+
+    margin-top: 1.69rem;
+    /* outline: 1px solid white; */
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+
+    height: 28.0625rem;
+    width: 42rem;
+
+    padding: 1.5rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+}
+
+.calendarTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 2.125rem;
+    width: 38.412rem;
+
+    margin-bottom: 2.37rem;
+}
+
+.calendarTitle > h2 {
+    color: var(--secondary-aqua-green);
+}
+
+.arrows {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.arrows > h4 {
+    color: var(--white-75);
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.arrows > img:hover {
+    cursor: pointer;
+    transition: var(--transition-config);
+    transform: var(--btn-grow);
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+}
+
+.oneDay {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.oneDay > p {
+    color: var(--white-50);
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+}
+
+.oneDate {
+    display: grid;
+    margin-bottom: 1.06rem;
+    place-content: center;
+
+    cursor: pointer;
+}
+
+.notCurrentDay:hover {
+    background: var(--white-25);
+    border-radius: 50%;
+}
+
+.selectedDate {
+    background: var(--error);
+    color: var(--black);
+    border-radius: 50%;
+}
+
+.oneDate > p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+}
+
+.oneDate:hover {
+    transition: var(--transition-config);
+    transform: var(--btn-grow);
+}
+
+.dayOfCurrentMonth {
+    color: var(--white);
+}
+
+.notDayOfCurrentMonth {
+    color: var(--white-25);
+    font-size: var(--paragraph-small);
+}
+
+.currentDay {
+    background: var(--gradient);
+    color: var(--black);
+    border-radius: 50%;
+}
+
+.toDoList {
+    display: flex;
+    flex-direction: column;
+
+    height: 25.3125rem;
+    width: 42rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+}
+
+.listTitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    padding: 1.5rem;
+}
+
+.listTitle > h2 {
+    color: var(--secondary-aqua-green);
+}
+
+.listTitle > p {
+    color: var(--white-75);
+}
+
+.listBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: scroll;
+    
+    margin-top: 1rem;
+    padding: 0 1.5rem;
+    cursor: default;
+}
+
+.taskItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.taskInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.taskTitleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.taskTitleInfo > h6 {
+    background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.taskTitleInfo > p {
+    color: var(--white-50);
+}
+
+.taskActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.taskActions > img:hover {
+    cursor: pointer;
+    transition: var(--transition-config);
+    transform: var(--btn-grow);
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
