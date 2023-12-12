@@ -43,6 +43,48 @@ export const Calendar = () => {
 		}
 	};
 
+	const handleTaskDelete = async taskId => {
+		try {
+			const token = sessionStorage.getItem('token');
+			await axios.delete(
+				`${import.meta.env.VITE_AXIOS_URI}/tasks/delete/${taskId}`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+			getTasks();
+		} catch (error) {
+			console.log('Error deleting task', error);
+		}
+	};
+
+	const handleStatusChange = async task => {
+		try {
+			const token = sessionStorage.getItem('token');
+			await axios.put(
+				`${import.meta.env.VITE_AXIOS_URI}/tasks/update/${task._id}`,
+				{
+					area: task.area,
+					projectId: task.projectId,
+					title: task.title,
+					date: task.date,
+					label: task.label,
+					status: 'Finished',
+				},
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+			getTasks();
+		} catch (error) {
+			console.log('Error finishing task', error);
+		}
+	};
+
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
 
@@ -152,8 +194,18 @@ export const Calendar = () => {
 									</span>
 								</div>
 								<span className={styles.taskActions}>
-									<img src={CheckIcon} alt='Check-icon' />
-									<img src={TrashIcon} alt='Trash-icon' />
+									<img
+										src={CheckIcon}
+										alt='Check-icon'
+										onClick={() => handleStatusChange(task)}
+									/>
+									<img
+										src={TrashIcon}
+										alt='Trash-icon'
+										onClick={() =>
+											handleTaskDelete(task._id)
+										}
+									/>
 								</span>
 							</div>
 						))}
