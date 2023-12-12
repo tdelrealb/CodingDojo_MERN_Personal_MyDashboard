@@ -44,6 +44,16 @@
     animation-fill-mode: forwards;
 }
 
+.myDashboardIcon {
+    height: 2rem;
+    width: 2rem;
+    opacity: 30%;
+
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+
+}
 
 .customModal > h2 {
     color: var(--white-75);
@@ -71,26 +81,6 @@
     justify-content: center;
     height: 2rem;
     width: 6.875rem;
-
-    background-color: rgba(240, 248, 255, 0);
-    border: 1px solid var(--black-50);
-    border-radius: 1.875rem;
-    
-    font-size: var(--paragraph);
-    font-weight: 500;
-    color: var(--black-75);
-
-    cursor: pointer;
-}
-
-.projectBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 2rem;
-    width: max-content;
-
-    min-width: 6.875rem;
 
     background-color: rgba(240, 248, 255, 0);
     border: 1px solid var(--black-50);
@@ -138,17 +128,6 @@
     cursor: pointer;
 }
 
-.myDashboardIcon {
-    height: 2rem;
-    width: 2rem;
-    opacity: 30%;
-
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
-
-}
-
 .error {
     display: flex;
     align-items: center;
@@ -188,24 +167,3 @@
     color: var(--white-50);
     
 }
-
-.marginBottom {
-    margin-bottom: 1rem;
-}
-
-.titleGradient {
-    background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-@keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
