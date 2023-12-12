@@ -10,6 +10,8 @@ import TwitterIcon from '../../assets/twitter-icon.svg';
 import WhatsappIcon from '../../assets/whatsapp-icon.svg';
 import DummyUser from '../../assets/dummy-user.png';
 
+import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
+
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
 import { Calendar } from '../../components/Calendar/Calendar';
@@ -17,10 +19,15 @@ import { useState, useEffect } from 'react';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
+	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
+	const openTaskModal = () => {
+		setIsTaskModalOpen(true);
+	};
 
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
-		
+
 		if (token) {
 			const payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
@@ -47,7 +54,9 @@ export const MyBoard = () => {
 				<section className={styles.newSection}>
 					<div className={styles.newCard}>
 						<h4>New task</h4>
-						<button className={styles.addTaskBtn}>
+						<button
+							className={styles.addTaskBtn}
+							onClick={openTaskModal}>
 							<img src={AddIconBlue} alt='AddIcon-blue' />
 							<p>Create task</p>
 						</button>
@@ -101,7 +110,10 @@ export const MyBoard = () => {
 					<div className={styles.userData}>
 						<span className={styles.userContact}>
 							<Link to={'/settings'} className={styles.link}>
-								<h4>{userData && userData.firstName} {userData && userData.lastName}</h4>
+								<h4>
+									{userData && userData.firstName}{' '}
+									{userData && userData.lastName}
+								</h4>
 							</Link>
 							<p>{userData && userData.email}</p>
 						</span>
@@ -111,6 +123,15 @@ export const MyBoard = () => {
 
 				<Calendar />
 			</div>
+
+			{/* Modals */}
+
+			{isTaskModalOpen && (
+				<NewTaskModal
+					isOpen={isTaskModalOpen}
+					closeModal={() => setIsTaskModalOpen(false)}
+				/>
+			)}
 		</div>
 	);
 };
