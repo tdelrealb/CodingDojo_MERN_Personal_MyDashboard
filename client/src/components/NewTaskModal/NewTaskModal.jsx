@@ -186,7 +186,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 						{projects.projects?.length > 0 ? (
 							projects.projects.map(proj => (
 								<button
-									className={`${styles.areaBtn} ${styles.social}`}
+									className={`${styles.projectBtn} ${styles.social}`}
 									key={proj._id}
 									onClick={e =>
 										handleProyectBtn(proj._id, e)
