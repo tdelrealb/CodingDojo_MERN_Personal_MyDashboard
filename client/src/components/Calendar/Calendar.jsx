@@ -181,8 +181,10 @@ export const Calendar = () => {
 
 				<div className={styles.listBody}>
 					{tasks
-						.filter(task =>
-							dayjs(task.date).isSame(selectedDate, 'day'),
+						.filter(
+							task =>
+								dayjs(task.date).isSame(selectedDate, 'day') &&
+								task.status === 'Not started',
 						)
 						.map((task, index) => (
 							<div className={styles.taskItem} key={index}>
