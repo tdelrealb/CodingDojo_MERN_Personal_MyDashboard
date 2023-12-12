@@ -55,7 +55,7 @@ export const SideMenu = () => {
 			)}
 
 			{isOpen && (
-				<div className={styles.sideMenuContainer}>
+				<div className={isOpen ? styles.sideMenuContainerOpen : styles.sideMenuContainerClosed}>
 					<span className={styles.sideBtnOpen} onClick={toggleMenu}>
 						<img src={LeftArrowIcon} alt='Arrow-icon' />
 						<img src={MyDashboardWhite} alt='myDashboard-Green' />

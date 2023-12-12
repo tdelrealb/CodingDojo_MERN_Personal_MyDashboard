@@ -1,0 +1,232 @@
+.myBoardPage {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+
+    height: 65.5rem;
+    width: 118rem;
+
+    padding: 2rem;
+
+    min-height: 65.5rem;
+    min-width: 118rem;
+    margin: 1rem;
+
+    background: var(--black-50);
+    border-radius: 1.875rem;
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1.5rem;
+
+    width: 70.5rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    height: 16.5rem;
+    width: 70.5rem;
+
+    padding: 3rem;
+
+    background: url('../../assets/user-banner.png');
+    border-radius: 1.875rem;
+}
+
+.dateNow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
+
+    height: 3rem;
+    width: 10rem;
+
+    background: var(--white-25);
+    border-radius: 0.9375rem;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    height: 4.1875rem;
+    width: 17.625rem;
+
+    margin-top: 3.31rem;
+}
+
+.userInfo > h1 > span {
+    background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.userInfo > h6 {
+    color: var(--white-75);
+}
+
+.newSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    height: 8.25rem;
+    width: 70.5rem;
+    /* outline: 1px solid white; */
+}
+
+.newCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
+    height: 8.25rem;
+    width: 16.5rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+
+    padding-left: 2rem;
+}
+
+.newCard > h4 {
+    color: var(--white);
+}
+
+.addTaskBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 8rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addProjectBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 9.375rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addNoteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 8.1875rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addExpenseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 10rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.userHub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 4.5rem;
+    width: 42rem;
+
+    padding: 0 1rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userData {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userContact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.userContact > p {
+    font-size: var(--paragraph);
+    color: var(--white-75);
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
