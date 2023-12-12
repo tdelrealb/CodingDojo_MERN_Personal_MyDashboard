@@ -1,20 +1,230 @@
 .myBoardPage {
     display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+
+    height: 65.5rem;
+    width: 118rem;
+
+    padding: 2rem;
+
+    min-height: 65.5rem;
+    min-width: 118rem;
+    margin: 1rem;
+
+    background: var(--black-50);
+    border-radius: 1.875rem;
+}
+
+.leftColumn {
+    display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+
+    width: 70.5rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
 
-    height: 100vh;
-    width: 100vw;
+    height: 16.5rem;
+    width: 70.5rem;
 
-    min-height: 100vh;
-    min-width: 100vw;
+    padding: 3rem;
 
-    overflow: auto;
+    background: url('../../assets/user-banner.png');
+    border-radius: 1.875rem;
+}
 
-    animation: fadeInAnimation ease 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
+.dateNow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
+
+    height: 3rem;
+    width: 10rem;
+
+    background: var(--white-25);
+    border-radius: 0.9375rem;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    height: 4.1875rem;
+    width: 17.625rem;
+
+    margin-top: 3.31rem;
+}
+
+.userInfo > h1 > span {
+    background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.userInfo > h6 {
+    color: var(--white-75);
+}
+
+.newSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    height: 8.25rem;
+    width: 70.5rem;
+    /* outline: 1px solid white; */
+}
+
+.newCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    
+    height: 8.25rem;
+    width: 16.5rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+
+    padding-left: 2rem;
+}
+
+.newCard > h4 {
+    color: var(--white);
+}
+
+.addTaskBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 8rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addProjectBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 9.375rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addNoteBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 8.1875rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.addExpenseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    height: 1.75rem;
+    width: 10rem;
+
+    margin-top: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+}
+
+.userHub {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 4.5rem;
+    width: 42rem;
+
+    padding: 0 1rem;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.social img:hover {
+    transition: var(--transition-config);
+    transform: scale(1.2);
+}
+
+.userData {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userContact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.userContact > p {
+    font-size: var(--paragraph);
+    color: var(--white-75);
 }
 
 @keyframes fadeInAnimation {
@@ -24,176 +234,4 @@
     100% {
         opacity: 1;
     }
-}
-
-.mainContainer {
-    display: flex;
-    flex-direction: column;
-    
-    position: relative;
-    left: 3rem;
-    z-index: 1;
-
-    height: 100%;
-    width: 106.125rem;
-
-    padding: 5rem 0;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.titleColumn{
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.title {
-    font-weight: var(--h1-light);
-    color: var(--white);
-}
-
-.userName {
-    font-weight: 600;
-    background: var(--main-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logoutBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-
-    height: 2.4735rem;
-    width: 8rem;
-
-    background: var(--white-5);
-    border: 1px solid var(--white-50);
-    border-radius: 6.25rem;
-
-    font-size: var(--paragraph-normal);
-    color: var(--white-50);
-
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.logoutBtn:hover {
-    transform: var(--btn-grow);
-}
-
-.capture {
-    margin-top: 3.5rem;
-}
-
-.capture > h4 {
-    color: var(--white-75);
-    margin: 0;
-}
-
-.capture > hr {
-    border-color: var(--white-50);
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-}
-
-.mainContent {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    height: 100vh;
-}
-
-.cardsContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 73rem;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0rem;
-
-    height: 8.5rem;
-    width: 22rem;
-    
-    padding: 1.2rem;
-
-    background: var(--white-5);
-    border: 1px solid var(--white-50);
-    border-radius: 2.1875rem;
-}
-
-.card > h4 {
-    color: var(--white-75);
-}
-
-.card > button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-
-    height: 2.4375rem;
-    width: 11rem;
-
-    background: var(--white-5);
-    outline: none;
-    border: 1px solid var(--white-50);
-    border-radius: 6.25rem;
-
-    font-size: var(--paragraph-normal);
-    color: var(--white-50);
-
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.card > button:hover {
-    transform: scale(1.05)
-}
-
-.upcoming {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-    height: 41.875rem;
-    width: 25rem;
-
-    padding: 2.06rem;
-
-    background: var(--white-5);
-    border: 1px solid var(--white-50);
-    border-radius: 2.1875rem;
-    overflow: scroll;
-}
-
-.upcomingTitle {
-    color: var(--white-75);
-}
-
-.upcomingTasks {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-
-    margin-top: 2rem;
-}
-
-.upcoming::-webkit-scrollbar {
-    display: none;
 }

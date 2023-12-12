@@ -1,30 +1,47 @@
 import styles from './Redirect.module.css';
-import MyDashboardIcon from '../../assets/MyDashboardIcon.png';
-import {useNavigate} from 'react-router-dom';
-import { useEffect } from 'react';
+import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export const Redirect = () => {
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+    const [progressBar, setProgressBar] = useState(0);
 
     useEffect(() => {
-        const redirectTimeOut = setTimeout(() => {
-            navigate('/myboard');
-        }, 4000);
+        const interval = setInterval(() => {
+            setProgressBar(prevProgressBar => {
+                const increment = (100 / (4000 / 40)); 
+                const newProgress = Math.min(prevProgressBar + increment, 100);
 
-        return () => clearTimeout(redirectTimeOut)
-    }, [navigate])
+                if (newProgress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => navigate('/myboard'), 1500);
+                }
+
+                return newProgress;
+            });
+        }, 40);
+
+
+        return () => clearInterval(interval);
+    }, [navigate]);
 
 	return (
 		<div className={styles.redirectPage}>
-			<span className={styles.header}>
-				<img
-					src={MyDashboardIcon}
-					alt='MyDashboard - Icon'
-					className={styles.icon}
+            <div className={styles.progressBar}>
+				<div
+					className={styles.progressBarFill}
+					style={{ width: `${progressBar}%` }}
 				/>
-				<h1 className={styles.title}>Welcome to MyDashboard</h1>
+			</div>
+
+			<span className={styles.title}>
+				<img src={myDashboardIcon} alt='MyDashboard-icon' />
+				<h1 className={styles.titleText}>
+					Welcome to <span>YourDashboard</span>
+				</h1>
 			</span>
-            <h6 className={styles.text}>We are putting everything in place.</h6>
+			<p>We are putting everything in place.</p>
 		</div>
 	);
 };
