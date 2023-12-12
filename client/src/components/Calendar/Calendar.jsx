@@ -99,8 +99,6 @@ export const Calendar = ({calendarUpdate}) => {
 		getTasks();
 	}, [calendarUpdate]);
 
-	console.log(calendarUpdate);
-
 	return (
 		<div className={styles.calendarToDo}>
 			<section className={styles.calendar}>
