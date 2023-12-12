@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './SignUp.module.css';
-import MyDashboardIcon from '../../assets/MyDashboardIcon.png';
-import CloseIcon from '../../assets/CloseIcon.svg';
-import Error from '../../assets/Error.svg';
-import ArrowBtn from '../../assets/ArrowBtn.svg';
+import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
+import CloseIcon from '../../assets/close-icon.svg';
+import NextIcon from '../../assets/next-icon.svg';
+import ErrorIcon from '../../assets/error-icon.svg';
+
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export const SignUp = () => {
@@ -20,35 +22,39 @@ export const SignUp = () => {
 		{
 			id: 1,
 			type: 'text',
-			placeholder: 'tell me your first name',
+			placeholder: 'first name',
 			name: 'firstName',
 			value: 'firstName',
 		},
+
 		{
 			id: 2,
 			type: 'text',
-			placeholder: 'tell me your last name',
+			placeholder: 'last name',
 			name: 'lastName',
 			value: 'lastName',
 		},
+
 		{
 			id: 3,
 			type: 'text',
-			placeholder: 'create a username',
+			placeholder: 'username',
 			name: 'username',
 			value: 'username',
 		},
+
 		{
 			id: 4,
 			type: 'text',
-			placeholder: 'tell me your email',
+			placeholder: 'email',
 			name: 'email',
 			value: 'email',
 		},
+
 		{
 			id: 5,
 			type: 'password',
-			placeholder: 'create your password',
+			placeholder: 'password',
 			name: 'password',
 			value: 'password',
 		},
@@ -57,13 +63,14 @@ export const SignUp = () => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [user, setUser] = useState(initialValue);
 	const [errors, setErrors] = useState({});
-	const [apiError, setApiError] = useState(null);
+	const [apiErrors, setApiErrors] = useState(null);
+	const [progressBar, setProgressBar] = useState(0);
 	const navigate = useNavigate();
 
 	const handleData = e => {
 		const { name, value } = e.target;
-        setErrors(prevErrors => ({...prevErrors, [name]: ''}));
-		setApiError(null)
+		setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
+		setApiErrors(null);
 		setUser({ ...user, [name]: value });
 	};
 
@@ -94,6 +101,7 @@ export const SignUp = () => {
 
 	const saveData = async e => {
 		e.preventDefault();
+
 		if (!user.firstName || user.firstName.length < 3) {
 			setErrors({
 				firstName:
@@ -146,11 +154,11 @@ export const SignUp = () => {
 					);
 					console.error('Status code:', error.response.status);
 
-					setApiError('Error in user sign in. Please try again.');
+					setApiErrors('Error in user sign in. Please try again.');
 				} else if (error.request) {
 					console.error('No response received from the server');
 
-					setApiError(
+					setApiErrors(
 						'No response received from the server. Please try again later.',
 					);
 				} else {
@@ -159,7 +167,7 @@ export const SignUp = () => {
 						error.message,
 					);
 
-					setApiError(
+					setApiErrors(
 						'An unexpected error occurred. Please try again later.',
 					);
 				}
@@ -169,9 +177,22 @@ export const SignUp = () => {
 
 	const currentStepData = steps[currentStep];
 
+	useEffect(() => {
+		const totalSteps = steps.length;
+		const currentProgress = (currentStep / totalSteps) * 100;
+		setProgressBar(currentProgress);
+	}, [currentStep, steps]);
+
 	return (
 		<div className={styles.signUpPage}>
-			<Link to={'/'} className={styles.link}>
+			<div className={styles.progressBar}>
+				<div
+					className={styles.progressBarFill}
+					style={{ width: `${progressBar}%` }}
+				/>
+			</div>
+
+			<Link to={'/'}>
 				<img
 					src={CloseIcon}
 					alt='Close-icon'
@@ -179,66 +200,57 @@ export const SignUp = () => {
 				/>
 			</Link>
 
-			<form className={styles.loginForm}>
-				<div className={styles.header}>
-					<img
-						src={MyDashboardIcon}
-						alt='MyDashboard - Icon'
-						className={styles.icon}
-					/>
-					<h1 className={styles.title}>Register to MyDashboard</h1>
-					<h6 className={styles.text}>
-						Organize your time, achieve your goals.
-					</h6>
+			<form className={styles.form}>
+				<div className={styles.title}>
+					<img src={myDashboardIcon} alt='MyDashboard-icon' />
+					<h1>Register to MyDashboard</h1>
+					<h6>Organize your time, achieve your goals.</h6>
 				</div>
 
-				<span className={styles.fakeInput}>
-					<input
-						type={currentStepData.type}
-						autoComplete='off'
-						placeholder={currentStepData.placeholder}
-						name={currentStepData.name}
-						value={user[currentStepData.value]}
-						onChange={handleData}
-					/>
-
-					{currentStep < steps.length - 1 ? (
-						<button
-							className={styles.arrowBtn}
-							onClick={handleNextButton}>
-							<img src={ArrowBtn} alt='NextStep' />
-						</button>
-					) : (
-						<button className={styles.arrowBtn} onClick={saveData}>
-							<img src={ArrowBtn} alt='NextStep' />
-						</button>
-					)}
-				</span>
-
-				{apiError && (
-					<p className={styles.error}>
-						<img
-							src={Error}
-							alt='Error icon'
-							className={styles.errorIcon}
+				<div className={styles.userSignUp}>
+					<span className={styles.input}>
+						<input
+							type={currentStepData.type}
+							autoComplete='off'
+							placeholder={currentStepData.placeholder}
+							name={currentStepData.name}
+							value={user[currentStepData.value]}
+							onChange={handleData}
 						/>
-						{apiError}
-					</p>
-				)}
 
-				{errors[currentStepData.name] && (
-					<p className={styles.error}>
-						<img
-							src={Error}
-							alt='Error icon'
-							className={styles.errorIcon}
-						/>
-						{errors[currentStepData.name]}
-					</p>
-				)}
+						{currentStep < steps.length - 1 ? (
+							<button
+								className={styles.nextIcon}
+								onClick={handleNextButton}>
+								<img src={NextIcon} alt='Next-icon' />
+							</button>
+						) : (
+							<button
+								className={styles.nextIcon}
+								onClick={saveData}>
+								<img src={NextIcon} alt='Next-icon' />
+							</button>
+						)}
+					</span>
+				</div>
 			</form>
 
-			<div className={styles.loginFooter}>
+			{apiErrors && (
+				<p className={styles.error}>
+					<img src={ErrorIcon} alt='Error-icon' />
+					{apiErrors}
+				</p>
+			)}
+
+			{errors[currentStepData.name] && (
+				<p className={styles.error}>
+					<img src={ErrorIcon} alt='Error-icon' />
+					{errors[currentStepData.name]}
+				</p>
+			)}
+
+			<div className={styles.login}>
+				<span />
 				<p>
 					Already have an account?{' '}
 					<Link to={'/login'} className={styles.link}>

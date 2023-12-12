@@ -1,12 +1,12 @@
 .app {
-    background-image: url('../assets/BackgroudImage.png');
+    background-image: url('../assets/background-blur.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     overflow: hidden;
-    
-    height: 100vh;
 
+    height: 100vh;
+    width: 100vw;
     margin: 0;
     padding: 0;
 }

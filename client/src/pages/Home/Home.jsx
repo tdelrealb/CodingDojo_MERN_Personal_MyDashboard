@@ -1,26 +1,26 @@
 import styles from './Home.module.css';
-import MyDashboardIcon from '../../assets/MyDashboardIcon.png';
-import {useNavigate} from 'react-router-dom'
+import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-    const navigate = useNavigate();
-	
+	const navigate = useNavigate();
+
 	const handleClick = () => {
-		navigate('/login')
-	}
+		navigate('/login');
+	};
 
 	return (
 		<div className={styles.homePage}>
-			<span className={styles.header}>
-				<img
-					src={MyDashboardIcon}
-					alt='MyDashboard - Icon'
-					className={styles.icon}
-				/>
-				<h1 className={styles.title}>MyDashboard</h1>
-			</span>
-            <h6 className={styles.text}>Your life, in order.</h6>
-            <button className={styles.startBtn} onClick={handleClick}>Get Started</button>
+			<section className={styles.mainContent}>
+				<span className={styles.title}>
+					<img src={myDashboardIcon} alt='MyDashboard-icon' />
+					<h1>MyDashboard</h1>
+				</span>
+				<h6 className={styles.slogan}>Your life, in order.</h6>
+				<button className={styles.getStartedBtn} onClick={handleClick}>
+					Get started
+				</button>
+			</section>
 		</div>
 	);
 };
