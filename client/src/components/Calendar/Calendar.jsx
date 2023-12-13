@@ -5,6 +5,9 @@ import RightIcon from '../../assets/right-icon.svg';
 import TaskPin from '../../assets/task-pin.svg';
 import CheckIcon from '../../assets/check-icon.svg';
 import TrashIcon from '../../assets/trash-icon.svg';
+import TaskPinTransparent from '../../assets/task-pin-transparent.svg';
+import CheckIconTransparent from '../../assets/check-icon-transparent.svg';
+import TrashIconTransparent from '../../assets/trash-icon-transparent.svg';
 
 import { generateDates, months } from '../../utils/CalendarFuncionalities';
 import { conditionals } from '../../utils/CalendarConditionals';
@@ -12,13 +15,14 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
 
-export const Calendar = ({calendarUpdate}) => {
+export const Calendar = ({ calendarUpdate }) => {
 	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const currentDate = dayjs();
 	const [today, setToday] = useState(currentDate);
 	const [selectedDate, setSelectedDate] = useState(currentDate);
 	const [userData, setUserData] = useState(null);
 	const [tasks, setTasks] = useState([]);
+	const [completed, setCompleted] = useState(false);
 
 	const getTasks = async () => {
 		try {
@@ -33,6 +37,15 @@ export const Calendar = ({calendarUpdate}) => {
 			);
 
 			const sortedTasks = response.data.tasks.sort((a, b) => {
+				if (a.status === 'Not started' && b.status !== 'Not started') {
+					return -1;
+				} else if (
+					a.status !== 'Not started' &&
+					b.status === 'Not started'
+				) {
+					return 1;
+				}
+
 				const dateA = new Date(a.date);
 				const dateB = new Date(b.date);
 				return dateA - dateB;
@@ -63,6 +76,7 @@ export const Calendar = ({calendarUpdate}) => {
 
 	const handleStatusChange = async task => {
 		try {
+			const newStatus = completed ? 'Not started' : 'Finished';
 			const token = sessionStorage.getItem('token');
 			await axios.put(
 				`${import.meta.env.VITE_AXIOS_URI}/tasks/update/${task._id}`,
@@ -72,7 +86,7 @@ export const Calendar = ({calendarUpdate}) => {
 					title: task.title,
 					date: task.date,
 					label: task.label,
-					status: 'Finished',
+					status: newStatus,
 				},
 				{
 					headers: {
@@ -81,6 +95,7 @@ export const Calendar = ({calendarUpdate}) => {
 				},
 			);
 			getTasks();
+			setCompleted(!completed);
 		} catch (error) {
 			console.log('Error finishing task', error);
 		}
@@ -182,28 +197,64 @@ export const Calendar = ({calendarUpdate}) => {
 
 				<div className={styles.listBody}>
 					{tasks
-						.filter(
-							task =>
-								dayjs(task.date).isSame(selectedDate, 'day') &&
-								task.status === 'Not started',
+						.filter(task =>
+							dayjs(task.date).isSame(selectedDate, 'day'),
 						)
 						.map((task, index) => (
 							<div className={styles.taskItem} key={index}>
 								<div className={styles.taskInfo}>
-									<img src={TaskPin} alt='Task-pin' />
+									<img
+										src={
+											task.status === 'Not started'
+												? TaskPin
+												: TaskPinTransparent
+										}
+										alt='Task-pin'
+									/>
 									<span className={styles.taskTitleInfo}>
-										<h6>{task.title}</h6>
-										<p>{task.area}</p>
+										<h6
+											className={
+												task.status === 'Not started'
+													? styles.taskTitle
+													: styles.taskTitleDisabled
+											}>
+											{task.title}
+										</h6>
+										<p
+											className={
+												task.status === 'Not started'
+													? styles.projectTitle
+													: styles.projectTitleDisabled
+											}>
+											{task.area} /{' '}
+											<span
+												className={
+													task.status ===
+													'Not started'
+														? styles.statusNotStarted
+														: styles.statusFinished
+												}>
+												{task.status}
+											</span>
+										</p>
 									</span>
 								</div>
 								<span className={styles.taskActions}>
 									<img
-										src={CheckIcon}
+										src={
+											task.status === 'Not started'
+												? CheckIcon
+												: CheckIconTransparent
+										}
 										alt='Check-icon'
 										onClick={() => handleStatusChange(task)}
 									/>
 									<img
-										src={TrashIcon}
+										src={
+											task.status === 'Not started'
+												? TrashIcon
+												: TrashIconTransparent
+										}
 										alt='Trash-icon'
 										onClick={() =>
 											handleTaskDelete(task._id)

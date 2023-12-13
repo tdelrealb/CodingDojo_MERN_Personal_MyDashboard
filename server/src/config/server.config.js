@@ -8,13 +8,14 @@ import * as resourceRoutes from '../routes/resource.routes.js';
 import * as habitRoutes from '../routes/habit.routes.js';
 import * as incomeRoutes from '../routes/income.routes.js';
 import * as expenseRoutes from '../routes/expense.routes.js';
+import { corsOptions } from '../middlewares/cors.middleware.js';
 import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.set('port', process.env.PORT);
 
 app.use(express.json());

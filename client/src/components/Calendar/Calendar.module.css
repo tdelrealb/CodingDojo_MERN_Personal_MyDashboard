@@ -182,15 +182,33 @@
     gap: 0.25rem;
 }
 
-.taskTitleInfo > h6 {
+.taskTitle {
     background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.taskTitleInfo > p {
+.taskTitleDisabled {
+    color: var(--white-10);
+}
+
+.projectTitle {
     color: var(--white-50);
+}
+
+.projectTitleDisabled {
+    color: var(--white-10);
+}
+
+.statusNotStarted {
+    font-size: var(--paragraph-small);
+    color: var(--error);
+}
+
+.statusFinished {
+    font-size: var(--paragraph-small);
+    color: var(--secondary-aqua-green);
 }
 
 .taskActions {
