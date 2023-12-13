@@ -180,6 +180,9 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 					type='text'
 					placeholder='Title of the expense'
 					autoFocus
+					autoCapitalize='off'
+					autoCorrect='off'
+					spellCheck='false'
 					name='title'
 					value={expense.title}
 					onChange={handleInputChange}
@@ -187,6 +190,9 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 				<input
 					type='number'
 					placeholder='amount'
+					autoCapitalize='off'
+					autoCorrect='off'
+					spellCheck='false'
 					name='amount'
 					value={expense.amount}
 					onChange={handleInputChange}
