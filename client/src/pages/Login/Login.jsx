@@ -1,10 +1,9 @@
 import styles from './Login.module.css';
 import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
-import GoogleIcon from '../../assets/google-icon.svg';
 import CloseIcon from '../../assets/close-icon.svg';
 import NextIcon from '../../assets/next-icon.svg';
 import ErrorIcon from '../../assets/error-icon.svg';
-
+import { ExternalAuth } from '../../components/ExternalAuth/ExternalAuth.jsx'
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
@@ -91,8 +90,6 @@ export const Login = () => {
 		}
 	};
 
-	const googleAuth = e => {};
-
 	return (
 		<div className={styles.loginPage}>
 			<Link to={'/'}>
@@ -126,13 +123,7 @@ export const Login = () => {
 								<img src={NextIcon} alt='Next-icon' />
 							</button>
 						</span>
-
-						<button
-							className={styles.googleLogin}
-							onClick={googleAuth}>
-							<img src={GoogleIcon} alt='Google-icon' />
-							<p>Sign in with Google</p>
-						</button>
+						<ExternalAuth/>
 					</div>
 				) : (
 					<div className={styles.userLogin}>
@@ -151,13 +142,7 @@ export const Login = () => {
 								<img src={NextIcon} alt='Next-icon' />
 							</button>
 						</span>
-
-						<button
-							className={styles.googleLogin}
-							onClick={googleAuth}>
-							<img src={GoogleIcon} alt='Google-icon' />
-							<p>Sign in with Google</p>
-						</button>
+						<ExternalAuth/>
 					</div>
 				)}
 			</form>

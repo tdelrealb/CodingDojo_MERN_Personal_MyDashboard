@@ -1,0 +1,47 @@
+
+.googleLogin {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
+
+    height: 1.20925rem;
+    width: 10.5625rem;
+
+    margin: 0;
+    margin-top: 1.5rem;
+    padding: 0;
+
+    background: none;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    transition: var(--transition-config);
+}
+
+.googleLogin:hover {
+    transform: var(--btn-grow);
+}
+
+.googleLogin > img {
+    height: 1.14675rem;
+    width: 1.125rem;
+    flex-shrink: 0;
+}
+
+.googleLogin > p {
+    font-size: var(--paragraph);
+    color: var(--white-75);
+}
+
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
