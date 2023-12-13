@@ -2,15 +2,17 @@ import styles from './ExternalAuth.module.css';
 import GoogleIcon from '../../assets/google-icon.svg';
 import { auth , googleProvider} from "../../config/firebase.js";
 import { signInWithPopup } from "firebase/auth";
-import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export const ExternalAuth = () => {
+  const navigate = useNavigate();
 
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
       const googleData = await signInWithPopup(auth,googleProvider);
-      console.log(googleData);
+      
       const googleUser = {
         firstName: googleData._tokenResponse.firstName,
         lastName: googleData._tokenResponse.lastName,
@@ -18,10 +20,10 @@ export const ExternalAuth = () => {
         email: googleData._tokenResponse.email,
         password: googleData._tokenResponse.photoUrl,
       };
-
+      
       const response = await axios.post(
           `${import.meta.env.VITE_AXIOS_URI}/users/extLogin`,
-          googleUser,
+          googleUser
       );
 
       const token = response.data.authToken;

@@ -40,6 +40,32 @@ const loginUser = async (req, res) => {
 	}
 };
 
+const googleLoginUser = async (req, res) => {
+	const email = req.body.email;
+	
+	try {
+		//check if user exists
+		const googleUser = await User.findOne({ email });
+		
+		if (googleUser){
+			const authToken = generateAuthToken(googleUser);
+			res.status(200).json({ authToken });
+		} else {
+			const userData = req.body;
+			const newUser = await User.create(userData);
+			await newUser.save();
+			const authToken = generateAuthToken(newUser);
+
+			res.status(201).json({
+				user: newUser,
+				authToken,
+			});
+		}
+	} catch (error) {
+		res.status(500).json({ error: error });
+	}
+};
+
 const getUserById = async (req, res) => {
 	const { id } = req.params;
 
@@ -84,4 +110,4 @@ const updateUser = async (req, res) => {
 	}
 };
 
-export { registerUser, loginUser, getUserById, updateUser };
+export { registerUser, loginUser, googleLoginUser, getUserById, updateUser };
