@@ -11,18 +11,49 @@ import WhatsappIcon from '../../assets/whatsapp-icon.svg';
 import DummyUser from '../../assets/dummy-user.png';
 
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
+import { NewProjectModal } from '../../components/NewProjectModal/NewProjectModal';
+import { NewExpenseModal } from '../../components/NewExpenseModal/NewExpenseModal';
 
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
 import { Calendar } from '../../components/Calendar/Calendar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+	const [calendarUpdate, setCalendarUpdate] = useState(0);
 
 	const openTaskModal = () => {
 		setIsTaskModalOpen(true);
+	};
+
+	const openProjectModal = () => {
+		setIsProjectModalOpen(true);
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
+	};
+
+	const openExpenseModal = () => {
+		setIsExpenseModalOpen(true);
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
+	};
+
+	const closeTaskModal = () => {
+		setIsTaskModalOpen(false);
+	};
+
+	const closeProjectModal = () => {
+		setIsProjectModalOpen(false);
+	};
+
+	const closeExpenseModal = () => {
+		setIsExpenseModalOpen(false);
+	};
+
+	const updateTasks = () => {
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
 	};
 
 	useEffect(() => {
@@ -35,7 +66,7 @@ export const MyBoard = () => {
 	}, []);
 
 	return (
-		<div className={styles.myBoardPage}>
+		<div className={styles.myBoardPage} onClick={updateTasks}>
 			<div className={styles.leftColumn}>
 				<section className={styles.header}>
 					<span className={styles.dateNow}>
@@ -64,7 +95,9 @@ export const MyBoard = () => {
 
 					<div className={styles.newCard}>
 						<h4>New project</h4>
-						<button className={styles.addProjectBtn}>
+						<button
+							className={styles.addProjectBtn}
+							onClick={openProjectModal}>
 							<img src={AddIconGreen} alt='AddIcon-green' />
 							<p>Create project</p>
 						</button>
@@ -80,7 +113,7 @@ export const MyBoard = () => {
 
 					<div className={styles.newCard}>
 						<h4>New expense</h4>
-						<button className={styles.addExpenseBtn}>
+						<button className={styles.addExpenseBtn} onClick={openExpenseModal}>
 							<img src={AddIconYellow} alt='AddIcon-yellow' />
 							<p>Create expense</p>
 						</button>
@@ -121,7 +154,7 @@ export const MyBoard = () => {
 					</div>
 				</section>
 
-				<Calendar />
+				<Calendar calendarUpdate={calendarUpdate} />
 			</div>
 
 			{/* Modals */}
@@ -129,7 +162,21 @@ export const MyBoard = () => {
 			{isTaskModalOpen && (
 				<NewTaskModal
 					isOpen={isTaskModalOpen}
-					closeModal={() => setIsTaskModalOpen(false)}
+					closeModal={closeTaskModal}
+				/>
+			)}
+
+			{isProjectModalOpen && (
+				<NewProjectModal
+					isOpen={isProjectModalOpen}
+					closeModal={closeProjectModal}
+				/>
+			)}
+			
+			{isExpenseModalOpen && (
+				<NewExpenseModal
+					isOpen={isExpenseModalOpen}
+					closeModal={closeExpenseModal}
 				/>
 			)}
 		</div>
