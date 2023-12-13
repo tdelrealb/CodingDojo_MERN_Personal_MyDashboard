@@ -1,0 +1,155 @@
+.customModal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 100000;
+
+    height: 20.75rem;
+    width: 34.25rem;
+
+    padding: 1.5rem 2rem;
+
+    background: var(--black);
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    box-shadow: 15px 20px 20px 1px rgba(0, 0, 0, 0.25);
+
+    animation: fadeInAnimation ease 0.4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.customOverlay {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    z-index: 99999;
+
+    height: 100vh;
+    width: 100vw;
+
+    background: var(--black-75);
+    backdrop-filter: blur(3.5px);
+
+    animation: fadeInAnimation ease 0.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.verLine {
+    height: 11.25rem;
+    width: 0.0625rem;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background: linear-gradient(0deg, rgba(226, 231, 233, 0.01) 0%, rgba(226, 231, 233, 0.25) 50.47%, rgba(226, 231, 233, 0.01) 100%);
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    height: 10.5rem;
+    width: 11.5625rem;
+
+    position: absolute;
+    right: 3.56rem;
+}
+
+.rightColumn > h2 {
+    color: var(--white-75);
+    margin-bottom: 1rem;
+}
+
+.rightColumn > input {
+    color: var(--white-50);
+    font-size: 1.125rem;
+    font-weight: 500;
+    
+    background: var(--black);
+    outline: none;
+    border: none;
+
+    margin-bottom: 1.5rem;
+}
+
+.rightColumn > select {
+    height: 1.75rem;
+    width: 8.75rem;
+
+    background: var(--white-5);
+
+    text-align: center;
+    font-size: var(--paragraph-small);
+    color: var(--white-50);
+
+    border: none;
+    outline: none;
+    border-radius: 0.4375rem;
+
+    appearance: none;
+}
+
+.rightColumn > select > option {
+    background-color: grey;
+    color: white;
+}
+
+::selection {
+    color: var(--secondary-aqua-green);
+}
+
+.nextIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
+
+    cursor: pointer;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--error);
+    position: absolute;
+    right: 50%;
+    transform: translate(50%, 0);
+    bottom: 1rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+input[type=number] {
+-moz-appearance: textfield;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+

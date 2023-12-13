@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styles from './Calendar.module.css';
 import LeftIcon from '../../assets/left-icon.svg';
 import RightIcon from '../../assets/right-icon.svg';
@@ -11,7 +12,7 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import axios from 'axios';
 
-export const Calendar = () => {
+export const Calendar = ({calendarUpdate}) => {
 	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const currentDate = dayjs();
 	const [today, setToday] = useState(currentDate);
@@ -96,7 +97,7 @@ export const Calendar = () => {
 
 	useEffect(() => {
 		getTasks();
-	}, []);
+	}, [calendarUpdate]);
 
 	return (
 		<div className={styles.calendarToDo}>
