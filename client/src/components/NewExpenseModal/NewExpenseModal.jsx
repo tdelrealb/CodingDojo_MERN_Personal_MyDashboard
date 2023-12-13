@@ -19,6 +19,44 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [userData, setUserData] = useState(null);
 	const [errors, setErrors] = useState([]);
+	const [incomes, setIncomes] = useState([]);
+	const [allExpenses, setAllExpenses] = useState([]);
+
+	const getIncomes = async e => {
+		try {
+			const token = sessionStorage.getItem('token');
+			const response = await axios.get(
+				`${import.meta.env.VITE_AXIOS_URI}/incomes/all`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			setIncomes(response.data.incomes);
+		} catch (error) {
+			console.log('Error getting incomes', error);
+		}
+	};
+
+	const getAllExpenses = async e => {
+		try {
+			const token = sessionStorage.getItem('token');
+			const response = await axios.get(
+				`${import.meta.env.VITE_AXIOS_URI}/expenses/all`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			setAllExpenses(response.data.expenses);
+		} catch (error) {
+			console.log('Error getting expenses', error);
+		}
+	};
 
 	const handleInputChange = e => {
 		const { name, value } = e.target;
@@ -78,10 +116,27 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 	}, []);
 
 	useEffect(() => {
+		getIncomes();
+		getAllExpenses();
+	}, []);
+
+	useEffect(() => {
 		if (currentStep === 2) {
 			closeModal();
 		}
 	}, [currentStep, closeModal]);
+
+	const totalIncomes = incomes.reduce(
+		(total, income) => total + income.amount,
+		0,
+	);
+
+	const totalExpenses = allExpenses.reduce(
+		(total, expense) => total + expense.amount,
+		0,
+	);
+
+	const remainingBalance = totalIncomes - totalExpenses;
 
 	return (
 		<Modal
@@ -90,7 +145,9 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 			className={styles.customModal}
 			overlayClassName={styles.customOverlay}
 			onRequestClose={closeModal}>
-			<div className={styles.column}></div>
+			<div className={styles.column}>
+				
+			</div>
 			<span className={styles.verLine}></span>
 
 			<div className={styles.rightColumn}>
@@ -111,7 +168,7 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 					onChange={handleInputChange}
 				/>
 				<select name='category' onChange={handleSelectChange}>
-					<option value='' disabled selected>
+					<option value='' disabled>
 						Type of expense
 					</option>
 					<option value='Bills'>Bills</option>
