@@ -12,6 +12,7 @@ import DummyUser from '../../assets/dummy-user.png';
 
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
 import { NewProjectModal } from '../../components/NewProjectModal/NewProjectModal';
+import { NewExpenseModal } from '../../components/NewExpenseModal/NewExpenseModal';
 
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,7 @@ export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
 	const [calendarUpdate, setCalendarUpdate] = useState(0);
 
 	const openTaskModal = () => {
@@ -33,6 +35,11 @@ export const MyBoard = () => {
 		setCalendarUpdate(prevUpdate => prevUpdate + 1);
 	};
 
+	const openExpenseModal = () => {
+		setIsExpenseModalOpen(true);
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
+	};
+
 	const closeTaskModal = () => {
 		setIsTaskModalOpen(false);
 	};
@@ -41,9 +48,13 @@ export const MyBoard = () => {
 		setIsProjectModalOpen(false);
 	};
 
+	const closeExpenseModal = () => {
+		setIsExpenseModalOpen(false);
+	};
+
 	const updateTasks = () => {
-		setCalendarUpdate(prevUpdate => prevUpdate + 1)
-	}
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
+	};
 
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
@@ -102,7 +113,7 @@ export const MyBoard = () => {
 
 					<div className={styles.newCard}>
 						<h4>New expense</h4>
-						<button className={styles.addExpenseBtn}>
+						<button className={styles.addExpenseBtn} onClick={openExpenseModal}>
 							<img src={AddIconYellow} alt='AddIcon-yellow' />
 							<p>Create expense</p>
 						</button>
@@ -159,6 +170,13 @@ export const MyBoard = () => {
 				<NewProjectModal
 					isOpen={isProjectModalOpen}
 					closeModal={closeProjectModal}
+				/>
+			)}
+			
+			{isExpenseModalOpen && (
+				<NewExpenseModal
+					isOpen={isExpenseModalOpen}
+					closeModal={closeExpenseModal}
 				/>
 			)}
 		</div>
