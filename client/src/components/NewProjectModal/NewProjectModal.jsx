@@ -131,6 +131,9 @@ export const NewProjectModal = ({ isOpen, closeModal }) => {
 					<input
 						className={styles.input}
 						type='text'
+						autoCapitalize='off'
+						autoCorrect='off'
+						spellCheck='false'
 						autoFocus
 						placeholder='Give a name to your project'
 						value={project.title}
@@ -145,6 +148,9 @@ export const NewProjectModal = ({ isOpen, closeModal }) => {
 					<input
 						className={styles.inputSmall}
 						type='text'
+						autoCapitalize='off'
+						autoCorrect='off'
+						spellCheck='false'
 						placeholder='Give a description to your project'
 						value={project.description}
 						onChange={e =>
