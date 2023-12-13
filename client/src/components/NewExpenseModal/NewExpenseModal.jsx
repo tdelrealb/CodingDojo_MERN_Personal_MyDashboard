@@ -138,6 +138,10 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 
 	const remainingBalance = totalIncomes - totalExpenses;
 
+	const totalIncomesFormatted = totalIncomes.toLocaleString();
+	const totalExpensesFormatted = totalExpenses.toLocaleString();
+	const remainingBalanceFormatted = remainingBalance.toLocaleString();
+
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -146,7 +150,27 @@ export const NewExpenseModal = ({ isOpen, closeModal }) => {
 			overlayClassName={styles.customOverlay}
 			onRequestClose={closeModal}>
 			<div className={styles.column}>
-				
+				<p className={styles.paragraph}>
+					Your total income is: <br />{' '}
+					<span className={styles.green}>
+						${totalIncomesFormatted}
+					</span>
+				</p>
+				<p className={styles.paragraph}>
+					You have spent: <br />{' '}
+					<span className={styles.yellow}>
+						${totalExpensesFormatted}
+					</span>
+				</p>
+				<p className={styles.paragraph}>
+					Cash on hand: <br />{' '}
+					<span
+						className={
+							remainingBalance > 0 ? styles.green : styles.red
+						}>
+						${remainingBalanceFormatted}
+					</span>
+				</p>
 			</div>
 			<span className={styles.verLine}></span>
 
