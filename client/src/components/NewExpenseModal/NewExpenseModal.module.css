@@ -57,6 +57,35 @@
     background: linear-gradient(0deg, rgba(226, 231, 233, 0.01) 0%, rgba(226, 231, 233, 0.25) 50.47%, rgba(226, 231, 233, 0.01) 100%);
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    left: 3rem;
+
+    height: 12.5rem;
+}
+
+.paragraph {
+    color: var(--white-50);
+}
+
+.green {
+    font-size: 2rem;
+    color: var(--secondary-aqua-green);
+}
+
+.yellow {
+    font-size: 2rem;
+    color: var(--secondary-yellow);
+}
+
+.red {
+    font-size: 2rem;
+    color: var(--error);
+}
+
 .rightColumn {
     display: flex;
     flex-direction: column;
