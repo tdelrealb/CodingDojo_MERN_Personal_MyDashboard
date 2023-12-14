@@ -8,7 +8,7 @@ import InstagramIcon from '../../assets/instagram-icon.svg';
 import FacebookIcon from '../../assets/facebook-icon.svg';
 import TwitterIcon from '../../assets/twitter-icon.svg';
 import WhatsappIcon from '../../assets/whatsapp-icon.svg';
-import DummyUser from '../../assets/dummy-user.png';
+// import DummyUser from '../../assets/dummy-user.png';
 
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
 import { NewProjectModal } from '../../components/NewProjectModal/NewProjectModal';
@@ -17,10 +17,9 @@ import { NewExpenseModal } from '../../components/NewExpenseModal/NewExpenseModa
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
 import { Calendar } from '../../components/Calendar/Calendar';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { HabitTracker } from '../../components/HabitTracker/HabitTracker';
 import axios from 'axios';
-
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
@@ -66,26 +65,27 @@ export const MyBoard = () => {
 		if (token) {
 			const payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
-			
 
 			const fetchUserImage = async () => {
 				try {
-					const res = await axios.get(`${import.meta.env.VITE_AXIOS_URI}/users/${payload._id}`, {
-						headers: {
-							Authorization: token,
+					const res = await axios.get(
+						`${import.meta.env.VITE_AXIOS_URI}/users/${
+							payload._id
+						}`,
+						{
+							headers: {
+								Authorization: token,
+							},
 						},
-					});
-	
+					);
+
 					setImageUrl(res.data.imageUrl);
-					
 				} catch (error) {
 					console.log(error);
 				}
 			};
 			fetchUserImage();
-		};
-
-
+		}
 	}, []);
 
 	return (
@@ -136,7 +136,9 @@ export const MyBoard = () => {
 
 					<div className={styles.newCard}>
 						<h4>New expense</h4>
-						<button className={styles.addExpenseBtn} onClick={openExpenseModal}>
+						<button
+							className={styles.addExpenseBtn}
+							onClick={openExpenseModal}>
 							<img src={AddIconYellow} alt='AddIcon-yellow' />
 							<p>Create expense</p>
 						</button>
@@ -175,7 +177,13 @@ export const MyBoard = () => {
 							</Link>
 							<p>{userData && userData.email}</p>
 						</span>
-						<img style={{height:'50px'}} src={imageUrl} alt='User-profile-pic' />
+						<div className={styles.userPic}>
+						<img
+							// style={{ height: '50px' }}
+							src={imageUrl}
+							alt='User-profile-pic'
+						/>
+						</div>
 					</div>
 				</section>
 
@@ -197,7 +205,7 @@ export const MyBoard = () => {
 					closeModal={closeProjectModal}
 				/>
 			)}
-			
+
 			{isExpenseModalOpen && (
 				<NewExpenseModal
 					isOpen={isExpenseModalOpen}
