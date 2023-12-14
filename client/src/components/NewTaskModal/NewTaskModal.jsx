@@ -76,7 +76,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 		}
 	};
 
-    const handleSubmit = async e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
 
 		try {
@@ -113,7 +113,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 		getProjectsByArea();
 	}, [task.area]);
 
-    useEffect(() => {
+	useEffect(() => {
 		const token = sessionStorage.getItem('token');
 
 		if (token) {
@@ -122,7 +122,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 		}
 	}, []);
 
-    useEffect(() => {
+	useEffect(() => {
 		if (currentStep === 5) {
 			closeModal();
 		}
@@ -210,6 +210,9 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 					<input
 						className={styles.input}
 						type='text'
+						autoCapitalize='off'
+						autoCorrect='off'
+						spellCheck='false'
 						autoFocus
 						placeholder='Give a title to your task'
 						value={task.title}
@@ -259,6 +262,9 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 					<input
 						className={styles.inputSmall}
 						type='text'
+						autoCapitalize='off'
+						autoCorrect='off'
+						spellCheck='false'
 						autoFocus
 						placeholder='Give a description to your task'
 						value={task.label}

@@ -18,7 +18,9 @@ import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
 import { Calendar } from '../../components/Calendar/Calendar';
 import { useState, useEffect, useRef } from 'react';
+import { HabitTracker } from '../../components/HabitTracker/HabitTracker';
 import axios from 'axios';
+
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
@@ -140,6 +142,8 @@ export const MyBoard = () => {
 						</button>
 					</div>
 				</section>
+
+				<HabitTracker />
 			</div>
 			<div className={styles.rightColumn}>
 				<section className={styles.userHub}>

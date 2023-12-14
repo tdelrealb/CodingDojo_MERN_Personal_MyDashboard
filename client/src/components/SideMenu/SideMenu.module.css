@@ -4,7 +4,7 @@
     align-items: flex-start;
     justify-content: center;
 
-    z-index: 10000;
+    z-index: 10000000;
     background: none;
 }
 
@@ -21,6 +21,7 @@
     left: 3rem;
     top: 50%;
     transform: translate(0, -50%);
+    z-index: 100000;
 
     cursor: pointer;
 }
@@ -38,6 +39,7 @@
     left: 19.75rem;
     top: 50%;
     transform: translate(0, -50%);
+    z-index: 100000;
 
     cursor: pointer;
 }
@@ -55,6 +57,7 @@
     left: 1rem;
     top: 1rem;
     bottom: 1rem;
+    z-index: 100000;
 
     background: var(--black-75);
     border-radius: 1.875rem 0rem 0rem 1.875rem;
@@ -89,6 +92,7 @@
     -webkit-animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	animation: slide-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+
 
 .title {
     display: flex;

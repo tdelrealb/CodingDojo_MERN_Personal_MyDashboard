@@ -1,0 +1,279 @@
+.habitTracker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+
+    height: 33.5rem;
+    width: 70.5rem;
+    padding: 1.5rem;
+
+    position: relative;
+
+    background: var(--black-75);
+    border-radius: 0.9375rem;
+    overflow: hidden;
+}
+
+.chartsSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.chart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 8rem;
+    width: 21.5rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+}
+
+.habitsSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    height: 22.5rem;
+    width: 67.5rem;
+
+    overflow: scroll;
+}
+
+.habit {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2rem;
+    flex-shrink: 0;
+
+    height: 10.375rem;
+    width: 44.4375rem;
+
+    position: relative;
+
+    padding: 1rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+}
+
+.editButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+
+    height: 1.125rem;
+
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+}
+
+.editButtons > img {
+    height: 1.125rem;
+    cursor: pointer;
+}
+
+.habit > h5 {
+    color: var(--white-75);
+}
+
+.buttonArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    height: 3rem;
+    width: 30rem;
+}
+
+.dates {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+
+    font-size: var(--paragraph-small);
+    color: var(--white-25);
+
+}
+
+.dayOfWeek {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 3rem;
+    width: 3rem;
+
+    border-radius: 0.4375rem;
+    background: var(--white-10);
+    color: var(--secondary-green);
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.completedDay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 3rem;
+    width: 3rem;
+
+    border-radius: 0.4375rem;
+    background: var(--secondary-green) !important;
+    color: var(--black-75) !important;
+    
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.currentDay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 3rem;
+    width: 3rem;
+
+    border: 1px solid var(--secondary-green);
+    border-radius: 0.4375rem;
+    background: var(--white-10);
+    color: var(--secondary-green);
+    
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.dayOfWeek:hover {
+    transform: var(--btn-grow);
+}
+
+.completedDay:hover {
+    transform: var(--btn-grow);
+}
+
+.currentDay:hover {
+    transform: var(--btn-grow);
+}
+
+.moveButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+
+    height: 1rem;
+    width: 5.081rem;
+
+    position: absolute;
+    right: 2.98rem;
+    bottom: 20rem;
+
+    z-index: 2;
+}
+
+.moveButtons > img {
+    height: 1rem;
+    cursor: pointer;
+}
+
+.moveButtons > p {
+    color: var(--white-50);
+    cursor: pointer;
+}
+
+.dashIcon {
+    position: absolute;
+
+    right: 1.5rem;
+    bottom: 1.5rem;
+}
+
+.createHabit {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    padding: 1rem;
+
+    height: 21rem;
+    width: 21.5rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+}
+
+.createHabit > h4 > span {
+    background: var(--gradient, linear-gradient(90deg, #63C7BC 0%, #B1EF8E 100%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.createHabit > h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.createHabit > input {
+    height: 4rem;
+    width: 100%;
+    
+    background-color: #63c7bb00;
+    outline: none;
+    border: none;
+
+    font-size: 1.125rem;
+    color: var(--white-50);
+}
+
+.next {
+    height: 2rem;
+    width: 2rem;
+
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+
+    cursor: pointer;
+}
+
+.dashGrad {
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    width: 2rem;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--error);
+    width: 100%;
+
+    
+    
+}
