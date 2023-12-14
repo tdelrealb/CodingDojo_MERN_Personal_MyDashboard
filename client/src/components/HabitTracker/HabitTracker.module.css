@@ -25,14 +25,42 @@
 
 .chart {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0.5rem;
 
     height: 8rem;
     width: 21.5rem;
 
+    padding: 2rem;
+
     background: var(--white-5);
     border-radius: 0.9375rem;
+}
+
+.chart > p {
+    color: var(--white-50);
+}
+
+.chart > h4 {
+    color: var(--secondary-green);
+}
+
+.chart > h1 {
+    color: var(--secondary-green);
+}
+
+.Completed {
+    color: var(--secondary-green);
+}
+
+.noCompleted {
+    color: var(--white-50);
+}
+
+.allWhite {
+    color: var(--white-50);
 }
 
 .habitsSection {

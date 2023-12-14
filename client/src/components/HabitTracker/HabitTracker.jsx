@@ -62,7 +62,7 @@ export const HabitTracker = () => {
 			);
 			const sortedHabits = response.data.habits.sort(
 				(a, b) =>
-					dayjs(b.updatedAt).valueOf() - dayjs(a.updatedAt).valueOf(),
+					dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf(),
 			);
 
 			setHabits(sortedHabits);
@@ -161,6 +161,37 @@ export const HabitTracker = () => {
 		}
 	};
 
+	const getLastAddedHabit = () => {
+		const lastAddedHabit = habits.length > 0 ? habits[0] : null;
+		return lastAddedHabit ? lastAddedHabit.title : '';
+	};
+
+	const getMostConsistentHabit = () => {
+		const mostConsistentHabit = habits.reduce(
+			(acc, habit) => {
+				return habit.doneOn.length > acc.doneOn.length ? habit : acc;
+			},
+			{ doneOn: [] },
+		);
+
+		return mostConsistentHabit.title || '';
+	};
+
+	const getTotalWeeklyHabits = () => {
+		const totalExpectedHabits = habits.length * daysOfWeek.length;
+		const performedHabits = habits.reduce((acc, habit) => {
+			const doneOnCount = habit.doneOn.filter(doneDate =>
+				dayjs(doneDate).isSame(currentWeek, 'week'),
+			).length;
+			return acc + doneOnCount;
+		}, 0);
+
+		return {
+			totalExpected: totalExpectedHabits,
+			performed: performedHabits,
+		};
+	};
+
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
 
@@ -176,9 +207,30 @@ export const HabitTracker = () => {
 	return (
 		<div className={styles.habitTracker}>
 			<section className={styles.chartsSection}>
-				<div className={styles.chart}></div>
-				<div className={styles.chart}></div>
-				<div className={styles.chart}></div>
+				<div className={styles.chart}>
+					<p>Last habit added:</p>
+					<h4>{getLastAddedHabit()}</h4>
+				</div>
+				<div className={styles.chart}>
+					<p>Most consistent habit:</p>
+					<h4>{getMostConsistentHabit()}</h4>
+				</div>
+				<div className={styles.chart}>
+					<p>Weekly habits</p>
+					<h1>
+						<span
+							className={
+								getTotalWeeklyHabits().performed ===
+								getTotalWeeklyHabits().totalExpected
+									? styles.Completed
+									: styles.noCompleted
+							}>
+							{getTotalWeeklyHabits().performed}
+						</span>{' '}
+						<span className={styles.allWhite}>/ </span>
+						{getTotalWeeklyHabits().totalExpected}
+					</h1>
+				</div>
 			</section>
 
 			<span className={styles.moveButtons}>
