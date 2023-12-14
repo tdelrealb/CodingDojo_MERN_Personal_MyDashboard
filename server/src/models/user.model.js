@@ -45,6 +45,11 @@ const UserSchema = new Schema(
 				'Your password must be at least eigth characters long.',
 			],
 		},
+
+		userPicture: {
+			type: String,
+			default: 'user-images/default-user-picture.png',
+		},
 	},
 	{
 		timestamps: true,
