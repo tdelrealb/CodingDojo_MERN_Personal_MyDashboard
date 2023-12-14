@@ -1,10 +1,8 @@
 node_modules
-# .env
+.env
 # .eslintignore
 # .prettierrc
 # .eslintrc.cjs
 # .prettierignore
 # MyDashboard.md
 dist
-
-.env.local
