@@ -13,11 +13,11 @@ export const ExternalAuth = () => {
     try {
       const googleData = await signInWithPopup(auth,googleProvider);
       const googleUser = {
-        firstName: googleData._tokenResponse.firstName,
-        lastName: googleData._tokenResponse.lastName,
-        username: googleData._tokenResponse.displayName,
-        email: googleData._tokenResponse.email,
-        password: googleData._tokenResponse.photoUrl,
+        firstName: googleData._tokenResponse.firstName || '',
+        lastName: googleData._tokenResponse.lastName || '',
+        username: googleData._tokenResponse.displayName || '',
+        email: googleData._tokenResponse.email || '',
+        password: googleData._tokenResponse.photoUrl || '',
         googlePicture: googleData._tokenResponse.photoUrl,
         isGoogle: true
       };
