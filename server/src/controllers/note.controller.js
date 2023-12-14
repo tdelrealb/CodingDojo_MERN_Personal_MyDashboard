@@ -6,7 +6,7 @@ import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sd
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 
-//CONTROLADOR ORIGINAL
+//  CONTROLADOR ORIGINAL
 // const createNote = async (req, res) => {
 // 	const noteData = req.body;
 // 	const userId = req.user._id;
@@ -20,7 +20,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // 	}
 // };
 
-//CONTROLADOR CON AWSS3
+//  CONTROLADOR CON AWSS3
 const createNote = async (req, res) => {
 	const noteData = req.body;
 	const userId = req.user._id;
@@ -83,7 +83,7 @@ const searchNotes = async (req, res) => {
 	}
 };
 
-//CONTROLADOR ORIGINAL
+//  CONTROLADOR ORIGINAL
 // const updateNote = async (req, res) => {
 // 	const { id } = req.params;
 // 	const { area, title, label, body } = req.body;
@@ -108,7 +108,7 @@ const searchNotes = async (req, res) => {
 // 	}
 // };
 
-//CONTROLADOR CON AWSS3
+//  CONTROLADOR CON AWSS3
 const updateNote = async (req, res) => {
     const noteData = req.body;
     const noteId = req.params.id;
@@ -163,7 +163,7 @@ const updateNote = async (req, res) => {
     }
 };
 
-//CONTROLADOR ORIGINAL
+//  CONTROLADOR ORIGINAL
 // const deleteNote = async (req, res) => {
 // 	const { id } = req.params;
 // 	const userId = req.user._id;
@@ -180,7 +180,7 @@ const updateNote = async (req, res) => {
 // 	}
 // };
 
-//CONTROLADOR CON AWSS3
+//  CONTROLADOR CON AWSS3
 const deleteNote = async (req, res) => {
     const { id } = req.params;
     const userId = req.user._id;
