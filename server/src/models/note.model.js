@@ -21,6 +21,11 @@ const NoteSchema = new Schema(
 			type: String,
 			required: [true, 'Please give a body to your note.'],
 		},
+
+		notePicture:{
+			type: String
+		},
+		
 	},
 
 	{

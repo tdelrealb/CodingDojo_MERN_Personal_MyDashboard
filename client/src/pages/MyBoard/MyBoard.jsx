@@ -18,6 +18,7 @@ import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
 import { Calendar } from '../../components/Calendar/Calendar';
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 export const MyBoard = () => {
 	const [userData, setUserData] = useState(null);
@@ -25,6 +26,7 @@ export const MyBoard = () => {
 	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
 	const [calendarUpdate, setCalendarUpdate] = useState(0);
+	const [imageUrl, setImageUrl] = useState(null);
 
 	const openTaskModal = () => {
 		setIsTaskModalOpen(true);
@@ -62,7 +64,26 @@ export const MyBoard = () => {
 		if (token) {
 			const payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
-		}
+			
+
+			const fetchUserImage = async () => {
+				try {
+					const res = await axios.get(`${import.meta.env.VITE_AXIOS_URI}/users/${payload._id}`, {
+						headers: {
+							Authorization: token,
+						},
+					});
+	
+					setImageUrl(res.data.imageUrl);
+					
+				} catch (error) {
+					console.log(error);
+				}
+			};
+			fetchUserImage();
+		};
+
+
 	}, []);
 
 	return (
@@ -150,7 +171,7 @@ export const MyBoard = () => {
 							</Link>
 							<p>{userData && userData.email}</p>
 						</span>
-						<img src={DummyUser} alt='User-profile-pic' />
+						<img style={{height:'50px'}} src={imageUrl} alt='User-profile-pic' />
 					</div>
 				</section>
 
