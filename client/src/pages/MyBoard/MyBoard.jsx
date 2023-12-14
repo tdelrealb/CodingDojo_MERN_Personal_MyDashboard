@@ -13,6 +13,7 @@ import WhatsappIcon from '../../assets/whatsapp-icon.svg';
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
 import { NewProjectModal } from '../../components/NewProjectModal/NewProjectModal';
 import { NewExpenseModal } from '../../components/NewExpenseModal/NewExpenseModal';
+import { NewNoteModal } from '../../components/NewNoteModal/NewNoteModal';
 
 import { Clock } from '../../components/Clock/Clock';
 import { Link } from 'react-router-dom';
@@ -26,6 +27,7 @@ export const MyBoard = () => {
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 	const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+	const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 	const [calendarUpdate, setCalendarUpdate] = useState(0);
 	const [imageUrl, setImageUrl] = useState(null);
 
@@ -35,6 +37,11 @@ export const MyBoard = () => {
 
 	const openProjectModal = () => {
 		setIsProjectModalOpen(true);
+		setCalendarUpdate(prevUpdate => prevUpdate + 1);
+	};
+
+	const openNoteModal = () => {
+		setIsNoteModalOpen(true);
 		setCalendarUpdate(prevUpdate => prevUpdate + 1);
 	};
 
@@ -49,6 +56,10 @@ export const MyBoard = () => {
 
 	const closeProjectModal = () => {
 		setIsProjectModalOpen(false);
+	};
+
+	const closeNoteModal = () => {
+		setIsNoteModalOpen(false);
 	};
 
 	const closeExpenseModal = () => {
@@ -128,7 +139,9 @@ export const MyBoard = () => {
 
 					<div className={styles.newCard}>
 						<h4>New note</h4>
-						<button className={styles.addNoteBtn}>
+						<button
+							className={styles.addNoteBtn}
+							onClick={openNoteModal}>
 							<img src={AddIconAqua} alt='AddIcon-aqua' />
 							<p>Create note</p>
 						</button>
@@ -178,11 +191,11 @@ export const MyBoard = () => {
 							<p>{userData && userData.email}</p>
 						</span>
 						<div className={styles.userPic}>
-						<img
-							// style={{ height: '50px' }}
-							src={imageUrl}
-							alt='User-profile-pic'
-						/>
+							<img
+								// style={{ height: '50px' }}
+								src={imageUrl}
+								alt='User-profile-pic'
+							/>
 						</div>
 					</div>
 				</section>
@@ -203,6 +216,13 @@ export const MyBoard = () => {
 				<NewProjectModal
 					isOpen={isProjectModalOpen}
 					closeModal={closeProjectModal}
+				/>
+			)}
+
+			{isNoteModalOpen && (
+				<NewNoteModal
+					isOpen={isNoteModalOpen}
+					closeModal={closeNoteModal}
 				/>
 			)}
 
