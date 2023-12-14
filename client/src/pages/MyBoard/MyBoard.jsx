@@ -65,7 +65,7 @@ export const MyBoard = () => {
 		if (token) {
 			const payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
-
+			
 			const fetchUserImage = async () => {
 				try {
 					const res = await axios.get(
@@ -78,8 +78,8 @@ export const MyBoard = () => {
 							},
 						},
 					);
-
-					setImageUrl(res.data.imageUrl);
+					const urlPicture = res.data.user.isGoogle ? res.data.user.googlePicture : res.data.imageUrl
+					setImageUrl(urlPicture);
 				} catch (error) {
 					console.log(error);
 				}
