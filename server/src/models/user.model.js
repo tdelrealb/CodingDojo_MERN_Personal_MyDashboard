@@ -50,6 +50,10 @@ const UserSchema = new Schema(
 			type: String,
 			default: 'user-images/default-user-picture.png',
 		},
+		isGoogle: {
+			type: Boolean, 
+			default: false
+		}
 	},
 	{
 		timestamps: true,

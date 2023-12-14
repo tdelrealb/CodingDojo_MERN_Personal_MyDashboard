@@ -12,7 +12,7 @@ export const ExternalAuth = () => {
     e.preventDefault();
     try {
       const googleData = await signInWithPopup(auth,googleProvider);
-      
+      console.log(googleData._tokenResponse);
       const googleUser = {
         firstName: googleData._tokenResponse.firstName,
         lastName: googleData._tokenResponse.lastName,
