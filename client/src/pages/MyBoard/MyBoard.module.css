@@ -229,6 +229,18 @@
     color: var(--white-75);
 }
 
+.userPic {
+    height: 2.5rem;
+    width: 2.5rem;
+    overflow: hidden;
+}
+
+.userPic > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 @keyframes fadeInAnimation {
     0% {
         opacity: 0;
@@ -237,3 +249,4 @@
         opacity: 1;
     }
 }
+
