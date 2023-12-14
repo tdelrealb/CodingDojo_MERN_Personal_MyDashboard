@@ -58,7 +58,7 @@ export const Login = () => {
 				const token = response.data.authToken;
 				sessionStorage.setItem('token', token);
 
-				navigate('/myboard');
+				navigate('/redirect');
 			} catch (error) {
 				if (error.response) {
 					console.error(
