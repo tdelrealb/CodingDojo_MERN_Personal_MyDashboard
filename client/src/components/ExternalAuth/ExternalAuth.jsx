@@ -12,13 +12,14 @@ export const ExternalAuth = () => {
     e.preventDefault();
     try {
       const googleData = await signInWithPopup(auth,googleProvider);
-      console.log(googleData._tokenResponse);
       const googleUser = {
         firstName: googleData._tokenResponse.firstName,
         lastName: googleData._tokenResponse.lastName,
         username: googleData._tokenResponse.displayName,
         email: googleData._tokenResponse.email,
         password: googleData._tokenResponse.photoUrl,
+        googlePicture: googleData._tokenResponse.photoUrl,
+        isGoogle: true
       };
       
       const response = await axios.post(
