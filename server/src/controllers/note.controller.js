@@ -20,36 +20,78 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // 	}
 // };
 
-//  CONTROLADOR CON AWSS3
-const createNote = async (req, res) => {
-	const noteData = req.body;
-	const userId = req.user._id;
-	const file = req.file;
-	const uniqueKey = uuidv4();
-	const folderName = 'note-images';
-	const fileNameWithUuid = `${folderName}/${uniqueKey}-${file.originalname}`;
+//  CONTROLADOR CON AWSS3 V1
+// const createNote = async (req, res) => {
+// 	const noteData = req.body;
+// 	const userId = req.user._id;
+// 	const file = req.file;
+// 	const uniqueKey = uuidv4();
+// 	const folderName = 'note-images';
+// 	const fileNameWithUuid = `${folderName}/${uniqueKey}-${file.originalname}`;
 
-	const uploadParams = {
-		Bucket: 'my-dashboard-bucket',
-		Key: fileNameWithUuid,
-		Body: file.buffer,
-		ContentType: file.mimetype,
-	};
+// 	const uploadParams = {
+// 		Bucket: 'my-dashboard-bucket',
+// 		Key: fileNameWithUuid,
+// 		Body: file.buffer,
+// 		ContentType: file.mimetype,
+// 	};
 
-	const uploadCommands = new PutObjectCommand(uploadParams);
+// 	const uploadCommands = new PutObjectCommand(uploadParams);
 
-	try {
-		const data = await s3.send(uploadCommands);
-		console.log('Successfully uploaded ', data);
+// 	try {
+// 		const data = await s3.send(uploadCommands);
+// 		console.log('Successfully uploaded ', data);
 
-		noteData.notePicture = uploadParams.Key;
+// 		noteData.notePicture = uploadParams.Key;
 		
-		const newNote = await Note.create({ ...noteData, userId });
-		await newNote.save();
-		res.status(201).json({ newNote });
-	} catch (error) {
-		res.status(500).json({ error: 'Error creating the note.' });
-	}
+// 		const newNote = await Note.create({ ...noteData, userId });
+// 		await newNote.save();
+// 		res.status(201).json({ newNote });
+// 	} catch (error) {
+// 		res.status(500).json({ error: 'Error creating the note.' });
+// 	}
+// };
+
+
+//  CONTROLADOR CON AWSS3 V2
+const createNote = async (req, res) => {
+    const noteData = req.body;
+    const userId = req.user._id;
+    const file = req.file;
+    const uniqueKey = uuidv4();
+    const folderName = 'note-images';
+
+    if (file) {
+    const fileNameWithUuid = `${folderName}/${uniqueKey}-${file.originalname}`;
+
+    const uploadParams = {
+        Bucket: 'my-dashboard-bucket',
+        Key: fileNameWithUuid,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+    };
+
+    const uploadCommands = new PutObjectCommand(uploadParams);
+
+    try {
+        const data = await s3.send(uploadCommands);
+        console.log('Successfully uploaded ', data);
+
+        noteData.notePicture = uploadParams.Key;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        return res.status(500).json({ error: 'Error uploading file.' });
+    }
+    }
+
+    try {
+        const newNote = await Note.create({ ...noteData, userId });
+        await newNote.save();
+        res.status(201).json({ newNote });
+    } catch (error) {
+        console.error('Error creating the note:', error);
+        res.status(500).json({ error: 'Error creating the note.' });
+    }
 };
 
 const getNotesByArea = async (req, res) => {
