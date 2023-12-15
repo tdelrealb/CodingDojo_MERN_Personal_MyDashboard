@@ -1,30 +1,36 @@
 import styles from './ExternalAuth.module.css';
 import GoogleIcon from '../../assets/google-icon.svg';
 import { auth , googleProvider} from "../../config/firebase.js";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, linkWithCredential } from "firebase/auth";
+import { pendingCred } from '../../components/ExternalAuth/GithubAuth.jsx'; 
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-export const ExternalAuth = () => {
+export const GoogleAuth = () => {
   const navigate = useNavigate();
 
   const signInWithGoogle = async (e) => {
     e.preventDefault();
     try {
       const googleData = await signInWithPopup(auth,googleProvider);
-      const googleUser = {
-        firstName: googleData._tokenResponse.firstName || '',
-        lastName: googleData._tokenResponse.lastName || '',
-        username: googleData._tokenResponse.displayName || '',
-        email: googleData._tokenResponse.email || '',
-        password: googleData._tokenResponse.photoUrl || '',
-        googlePicture: googleData._tokenResponse.photoUrl,
-        isGoogle: true
+      // if (pendingCred !== null) {
+      //   // As you have access to the pending credential, you can directly call the
+      //   // link method.
+      //   let user = await linkWithCredential(result.user, pendingCred);
+      // }
+      const extUser = {
+        firstName: googleData._tokenResponse.firstName,
+        lastName: googleData._tokenResponse.lastName,
+        username: googleData._tokenResponse.displayName,
+        email: googleData._tokenResponse.email,
+        password: googleData._tokenResponse.photoUrl,
+        extPicture: googleData._tokenResponse.photoUrl,
+        isExt: true
       };
       
       const response = await axios.post(
           `${import.meta.env.VITE_AXIOS_URI}/users/extLogin`,
-          googleUser
+          extUser
       );
 
       const token = response.data.authToken;
