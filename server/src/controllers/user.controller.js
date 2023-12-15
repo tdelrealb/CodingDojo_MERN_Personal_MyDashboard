@@ -217,6 +217,7 @@ const updateUser = async (req, res) => {
 			console.log('Successfully uploaded ', data);
 
 			user.userPicture = uploadParams.Key;
+			user.isGoogle = false;
 		}
 
 		const authToken = generateAuthToken(user);
