@@ -1,0 +1,19 @@
+.settingsPage {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+
+    height: 65.5rem;
+    width: 118rem;
+
+    padding: 2rem;
+
+    min-height: 65.5rem;
+    min-width: 118rem;
+    margin: 1rem;
+
+    z-index: 1;
+
+    background: var(--black-50);
+    border-radius: 1.875rem;
+}
