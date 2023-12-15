@@ -52,6 +52,36 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 // 	}
 // };
 
+const getNotes = async (req, res) => {
+    const userId = req.user._id;
+
+    try {
+        const notes = await Note.find({ userId });
+
+    
+        const notesWithImageUrls = await Promise.all(notes.map(async note => {
+            if (note.notePicture) {
+            const command = new GetObjectCommand({
+                Bucket: 'my-dashboard-bucket',
+                Key: note.notePicture,
+            });
+
+            const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); 
+
+            return { ...note.toObject(), imageUrl: signedUrl };
+        } else {
+        return note;
+        }
+    }));
+
+        res.status(200).json({ notes: notesWithImageUrls });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error getting notes.' });
+    }
+};
+
+
 
 //  CONTROLADOR CON AWSS3 V2
 const createNote = async (req, res) => {
@@ -294,4 +324,5 @@ export {
 	searchNotes,
 	updateNote,
 	deleteNote,
+    getNotes,
 };
