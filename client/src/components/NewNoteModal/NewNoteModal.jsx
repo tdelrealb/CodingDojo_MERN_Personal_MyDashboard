@@ -22,7 +22,6 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 	const [body, setBody] = useState('');
 	const [picture, setPicture] = useState(null);
 	const [editingNote, setEditingNote] = useState(null);
-	const [testArea, setTestArea] = useState('');
 	const [searchQuery, setSearchQuery] = useState('');
 
 	const handleHover = () => {
