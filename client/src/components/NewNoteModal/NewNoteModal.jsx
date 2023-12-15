@@ -12,8 +12,10 @@ import Modal from 'react-modal';
 import axios from 'axios';
 
 export const NewNoteModal = ({ isOpen, closeModal }) => {
-	const [text, setText] = useState('');
+	const [createMode, setCreateMode] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const [area, setArea] = useState('');
+	const [allNotes, setAllNotes] = useState([]);
 
 	const handleHover = () => {
 		setIsHovered(true);
@@ -22,6 +24,8 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 	const handleMouseLeave = () => {
 		setIsHovered(false);
 	};
+
+	// MÉTODOS AQUI
 
 	return (
 		<Modal
@@ -77,15 +81,20 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 				</div>
 			</section>
 			<section className={styles.create}>
-				<span
-					className={styles.addNoteFloating}
-					onMouseEnter={handleHover}
-					onMouseLeave={handleMouseLeave}>
-					<img
-						src={isHovered ? AddNoteIconYellow : AddNoteIcon}
-						alt='AddNote-icon'
-					/>
-				</span>
+				{createMode ? (
+					<input className={styles.noteTitle} type='text' placeholder='Note title'/>
+				) : (
+					<span
+						className={styles.addNoteFloating}
+						onMouseEnter={handleHover}
+						onMouseLeave={handleMouseLeave}>
+						<img
+							src={isHovered ? AddNoteIconYellow : AddNoteIcon}
+							alt='AddNote-icon'
+							onClick={e => setCreateMode(true)}
+						/>
+					</span>
+				)}
 			</section>
 		</Modal>
 	);
