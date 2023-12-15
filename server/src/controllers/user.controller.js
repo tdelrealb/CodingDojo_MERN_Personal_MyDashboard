@@ -84,15 +84,15 @@ const loginUser = async (req, res) => {
 	}
 };
 
-const googleLoginUser = async (req, res) => {
+const extLoginUser = async (req, res) => {
 	const email = req.body.email;
 	
 	try {
 		//check if user exists
-		const googleUser = await User.findOne({ email });
+		const extUser = await User.findOne({ email });
 		
-		if (googleUser){
-			const authToken = generateAuthToken(googleUser);
+		if (extUser){
+			const authToken = generateAuthToken(extUser);
 			res.status(200).json({ authToken });
 		} else {
 			const userData = req.body;
@@ -150,8 +150,9 @@ const getUserById = async (req, res) => {
 		const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
 		res.status(200).json({ user, imageUrl: url });
-	} catch (error) {
-		res.status(500).json({ error: 'Error obtaining user data.' });
+	} catch (err) {
+		// console.log('ERROR', err);
+		res.status(500).json({ error: err});
 	}
 };
 
@@ -231,4 +232,4 @@ const updateUser = async (req, res) => {
 	}
 };
 
-export { registerUser, loginUser, googleLoginUser, getUserById, updateUser };
+export { registerUser, loginUser, extLoginUser, getUserById, updateUser };
