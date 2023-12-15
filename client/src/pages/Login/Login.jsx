@@ -3,7 +3,8 @@ import myDashboardIcon from '../../assets/my-dashboard-icon-gradient.png';
 import CloseIcon from '../../assets/close-icon.svg';
 import NextIcon from '../../assets/next-icon.svg';
 import ErrorIcon from '../../assets/error-icon.svg';
-import { ExternalAuth } from '../../components/ExternalAuth/ExternalAuth.jsx'
+import { GoogleAuth } from '../../components/ExternalAuth/GoogleAuth.jsx'
+import { GithubAuth } from '../../components/ExternalAuth/GithubAuth.jsx'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
@@ -123,7 +124,8 @@ export const Login = () => {
 								<img src={NextIcon} alt='Next-icon' />
 							</button>
 						</span>
-						<ExternalAuth/>
+						<GoogleAuth/>
+						<GithubAuth/>
 					</div>
 				) : (
 					<div className={styles.userLogin}>
@@ -142,7 +144,8 @@ export const Login = () => {
 								<img src={NextIcon} alt='Next-icon' />
 							</button>
 						</span>
-						<ExternalAuth/>
+						<GoogleAuth/>
+						<GithubAuth/>
 					</div>
 				)}
 			</form>
