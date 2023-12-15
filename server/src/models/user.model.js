@@ -14,11 +14,11 @@ const UserSchema = new Schema(
 
 		lastName: {
 			type: String,
-			required: [true, 'You need to specify your last name.'],
-			minLength: [
-				3,
-				'Your last name must be at least three characters long.',
-			],
+			// required: [true, 'You need to specify your last name.'],
+			// minLength: [
+			// 	3,
+			// 	'Your last name must be at least three characters long.',
+			// ],
 		},
 
 		username: {
@@ -50,10 +50,10 @@ const UserSchema = new Schema(
 			type: String,
 			default: 'user-images/default-user-picture.png',
 		},
-		googlePicture: {
+		extPicture: {
 			type: String,
 		},
-		isGoogle: {
+		isExt: {
 			type: Boolean, 
 			default: false
 		}
