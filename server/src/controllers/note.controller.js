@@ -168,23 +168,60 @@ const getNotesByArea = async (req, res) => {
     }
 };
 
-const searchNotes = async (req, res) => {
-	const { query } = req.params;
-	const userId = req.user._id;
+//CONTROLADOR ORIGINAL
+// const searchNotes = async (req, res) => {
+// 	const { query } = req.params;
+// 	const userId = req.user._id;
 
-	try {
-		const notes = await Note.find({
-			userId,
-			$or: [
-				{ title: { $regex: query, $options: 'i' } },
-				{ body: { $regex: query, $options: 'i' } },
-				{ label: { $regex: query, $options: 'i' } },
-			],
-		});
-		res.status(200).json({ notes });
-	} catch (error) {
-		res.status(500).json({ error: 'Error searching for notes.' });
-	}
+// 	try {
+// 		const notes = await Note.find({
+// 			userId,
+// 			$or: [
+// 				{ title: { $regex: query, $options: 'i' } },
+// 				{ body: { $regex: query, $options: 'i' } },
+// 				{ label: { $regex: query, $options: 'i' } },
+// 			],
+// 		});
+// 		res.status(200).json({ notes });
+// 	} catch (error) {
+// 		res.status(500).json({ error: 'Error searching for notes.' });
+// 	}
+// };
+
+//  CONTROLADOR CON AWSS3
+const searchNotes = async (req, res) => {
+    const { query } = req.params;
+    const userId = req.user._id;
+
+    try {
+    const notes = await Note.find({
+        userId,
+        $or: [
+        { title: { $regex: query, $options: 'i' } },
+        { body: { $regex: query, $options: 'i' } },
+        { label: { $regex: query, $options: 'i' } },
+        ],
+    });
+
+    const notesWithUrls = await Promise.all(notes.map(async note => {
+        if (note.notePicture) {
+        const command = new GetObjectCommand({
+            Bucket: 'my-dashboard-bucket',
+            Key: note.notePicture,
+        });
+
+        const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); // 1 hour
+
+        return { ...note.toObject(), imageUrl: signedUrl };
+        } else {
+        return note;
+        }
+    }));
+
+    res.status(200).json({ notes: notesWithUrls });
+    } catch (error) {
+    res.status(500).json({ error: 'Error searching for notes.' });
+    }
 };
 
 //  CONTROLADOR ORIGINAL
