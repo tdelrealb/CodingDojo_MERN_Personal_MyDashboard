@@ -94,16 +94,48 @@ const createNote = async (req, res) => {
     }
 };
 
-const getNotesByArea = async (req, res) => {
-	const { area } = req.params;
-	const userId = req.user._id;
+//  CONTROLADOR ORIGINAL
+// const getNotesByArea = async (req, res) => {
+// 	const { area } = req.params;
+// 	const userId = req.user._id;
 
-	try {
-		const notes = await Note.find({ userId, area });
-		res.status(200).json({ notes });
-	} catch (error) {
-		res.status(500).json({ error: 'Error filtering notes by area.' });
-	}
+// 	try {
+// 		const notes = await Note.find({ userId, area });
+// 		res.status(200).json({ notes });
+// 	} catch (error) {
+// 		res.status(500).json({ error: 'Error filtering notes by area.' });
+// 	}
+// };
+
+//  CONTROLADOR CON AWSS3
+const getNotesByArea = async (req, res) => {
+    const { area } = req.params;
+    const userId = req.user._id;
+
+    try {
+    const notes = await Note.find({ userId, area });
+
+    
+    const notesWithImageUrls = await Promise.all(notes.map(async note => {
+        if (note.notePicture) {
+        const command = new GetObjectCommand({
+                Bucket: 'my-dashboard-bucket',
+                Key: note.notePicture,
+        });
+
+        const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); 
+
+        return { ...note.toObject(), imageUrl: signedUrl };
+        } else {
+        return note;
+        }
+    }));
+
+        res.status(200).json({ notes: notesWithImageUrls });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: 'Error filtering notes by area.' });
+    }
 };
 
 const searchNotes = async (req, res) => {
