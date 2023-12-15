@@ -20,7 +20,7 @@ const validateToken = (req, res, next) => {
 		const decoded = jwt.verify(token, secretKey);
 
 		req.user = decoded;
-		console.log(decoded);
+		// console.log(decoded);
 
 		next();
 	} catch (error) {
