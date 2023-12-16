@@ -1,15 +1,45 @@
 import Project from '../models/project.model.js';
+import axios from 'axios';
 
+//CONTROLADOR ORIGINAL
+// const createProject = async (req, res) => {
+// 	const projectData = req.body;
+// 	const userId = req.user._id;
+
+// 	try {
+// 		const newProject = await Project.create({ ...projectData, userId });
+// 		await newProject.save();
+// 		res.status(201).json({ newProject });
+// 	} catch (error) {
+// 		res.status(500).json({ error: 'Error creating the project.' });
+// 	}
+// };
+
+//CONTROLADOR CON TODOIST
 const createProject = async (req, res) => {
 	const projectData = req.body;
 	const userId = req.user._id;
+	const { access_token } = req.cookies;
 
 	try {
 		const newProject = await Project.create({ ...projectData, userId });
 		await newProject.save();
-		res.status(201).json({ newProject });
+
+		const todoistResponse = await axios.post('https://api.todoist.com/rest/v2/projects',{
+			name: newProject.title,
+
+		},
+		{
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
+		});
+
+		newProject.todoistProjectId = todoistResponse.data.id;
+		await newProject.save();
+		res.status(201).json({ newProject, todoistProject: todoistResponse.data})
 	} catch (error) {
-		res.status(500).json({ error: 'Error creating the project.' });
+		res.status(500).json({ error:'Error creating the project.'})
 	}
 };
 

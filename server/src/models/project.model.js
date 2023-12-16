@@ -20,6 +20,10 @@ const ProjectSchema = new Schema(
 		description: {
 			type: String,
 		},
+
+		todoistProjectId: {
+			type: Number,
+		},
 	},
 
 	{

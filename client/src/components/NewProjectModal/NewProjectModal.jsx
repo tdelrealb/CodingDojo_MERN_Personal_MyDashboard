@@ -7,6 +7,7 @@ import ErrorIcon from '../../assets/error-icon.svg';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const NewProjectModal = ({ isOpen, closeModal }) => {
 	const initialValue = {
@@ -47,6 +48,8 @@ export const NewProjectModal = ({ isOpen, closeModal }) => {
 						headers: {
 							Authorization: token,
 						},
+						withCredentials: true,
+						
 					},
 				);
 
