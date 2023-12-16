@@ -74,6 +74,10 @@
     -webkit-text-fill-color: transparent;
 }
 
+.social > a > img {
+    height: 1.5rem;
+}
+
 .userInfo > h6 {
     color: var(--white-75);
 }
