@@ -174,8 +174,6 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 		}
 	};
 
-	console.log(allNotes);
-
 	return (
 		<Modal
 			isOpen={isOpen}
@@ -286,6 +284,9 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 							theme='snow'
 							value={createdNote.body}
 							onChange={handleBodyChange}
+							autoCapitalize='off'
+							autoCorrect='off'
+							spellCheck='false'
 							modules={{
 								toolbar: [
 									[{ header: [1, 2, 3, 4, 5, false] }],
@@ -367,7 +368,9 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 					{allNotes.map((note, index) => {
 						return (
 							<div className={styles.noteContainer} key={index}>
-								<span className={styles.notePreview}>
+								<span
+									className={styles.notePreview}
+									onClick={''}>
 									<img
 										src={LittleNoteIcon}
 										alt='LittleNote-icon'
