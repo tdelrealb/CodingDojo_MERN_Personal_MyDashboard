@@ -9,8 +9,10 @@ import CloseIcon from '../../assets/close-icon.svg';
 import MyDashWhite from '../../assets/my-dashboard-icon-white.svg';
 import LittleNoteIcon from '../../assets/little-note-icon.svg';
 import FolderIconWhite from '../../assets/folder-icon-white.svg';
+import TrashIcon from '../../assets/trash-icon.svg';
+import TrashIconRed from '../../assets/trash-icon-red.svg';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ReactQuill from 'react-quill';
 import Modal from 'react-modal';
 import axios, { all } from 'axios';
@@ -24,7 +26,7 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 		notePicture: '',
 	};
 
-	const [createMode, setCreateMode] = useState(true);
+	const [createMode, setCreateMode] = useState(1);
 	const [selectedArea, setSelectedArea] = useState(createMode ? '' : 'all');
 	const [isHovered, setIsHovered] = useState(false);
 
@@ -42,7 +44,7 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 	};
 
 	const handleCreateMode = () => {
-		setCreateMode(true);
+		setCreateMode(1);
 	};
 
 	const handleTitleChange = e => {
@@ -70,7 +72,7 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 	};
 
 	const getAllNotes = async () => {
-		setCreateMode(false);
+		setCreateMode(0);
 		setSelectedArea('all');
 
 		const token = sessionStorage.getItem('token');
@@ -84,13 +86,14 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 				},
 			);
 			setAllNotes(response.data.notes);
+			setCreatedNote(initialValue);
 		} catch (error) {
 			console.log('Error loading notes', error);
 		}
 	};
 
 	const searchNotes = async query => {
-		setCreateMode(false);
+		setCreateMode(0);
 		setSelectedArea('all');
 
 		const token = sessionStorage.getItem('token');
@@ -111,13 +114,18 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 	};
 
 	const handleSearch = async e => {
+		setCreateMode(0);
 		setSearchQuery(e.target.value);
-		const notes = await searchNotes(e.target.value);
-		setAllNotes(notes);
+		if (e.target.value === '') {
+			getAllNotes();
+		} else {
+			const notes = await searchNotes(e.target.value);
+			setAllNotes(notes);
+		}
 	};
 
 	const getNotesByArea = async (e, area) => {
-		setCreateMode(false);
+		setCreateMode(0);
 		setSelectedArea(area);
 
 		const token = sessionStorage.getItem('token');
@@ -171,6 +179,79 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 			}
 		} catch (error) {
 			console.log('Error creating note', error);
+		}
+	};
+
+	const handleUpdateMode = (e, note) => {
+		e.preventDefault();
+		setCreateMode(2);
+		setCreatedNote({
+			noteId: note._id,
+			userId: note.userId,
+			area: note.area,
+			title: note.title,
+			body: note.body,
+			notePicture: note.notePicture,
+		});
+	};
+
+	const updateNote = async noteId => {
+		const token = sessionStorage.getItem('token');
+		const updatedNote = new FormData();
+
+		if (createdNote.title) {
+			updatedNote.append('title', createdNote.title);
+		}
+		if (createdNote.area) {
+			updatedNote.append('area', createdNote.area);
+		}
+		if (createdNote.body) {
+			updatedNote.append('body', createdNote.body);
+		}
+		if (createdNote.notePicture) {
+			updatedNote.append('image', createdNote.notePicture);
+		}
+
+		try {
+			const response = await axios.put(
+				`${import.meta.env.VITE_AXIOS_URI}/notes/update/${noteId}`,
+				updatedNote,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			if (response.status === 200) {
+				getAllNotes();
+				setCreateMode(0);
+				setCreatedNote(initialValue);
+			}
+		} catch (error) {
+			console.log('Error updating the note', error);
+		}
+	};
+
+	const deleteNote = async noteId => {
+		const token = sessionStorage.getItem('token');
+		try {
+			const response = await axios.delete(
+				`${import.meta.env.VITE_AXIOS_URI}/notes/delete/${noteId}`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			if (response.status === 200) {
+				getAllNotes();
+			} else {
+				console.log('Error deleting the note.');
+			}
+		} catch (error) {
+			console.log('Error deleting the note', error);
 		}
 	};
 
@@ -259,7 +340,7 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 				/>
 			</section>
 
-			{createMode ? (
+			{createMode === 1 && (
 				<section className={styles.create}>
 					<>
 						<img
@@ -276,6 +357,7 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 							autoCorrect='off'
 							spellCheck='false'
 							autoFocus
+							placeholder='Note title'
 							value={createdNote.title}
 							onChange={handleTitleChange}
 						/>
@@ -363,14 +445,16 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 						</button>
 					</>
 				</section>
-			) : (
+			)}
+
+			{createMode === 0 && (
 				<section className={styles.noteDisplay}>
 					{allNotes.map((note, index) => {
 						return (
 							<div className={styles.noteContainer} key={index}>
 								<span
 									className={styles.notePreview}
-									onClick={''}>
+									onClick={e => handleUpdateMode(e, note)}>
 									<img
 										src={LittleNoteIcon}
 										alt='LittleNote-icon'
@@ -400,6 +484,126 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 							alt='Note-icon'
 						/>
 					</span>
+				</section>
+			)}
+
+			{createMode === 2 && (
+				<section className={styles.create}>
+					<>
+						<img
+							src={CloseIcon}
+							alt='Close-icon'
+							className={styles.closeIcon}
+							onClick={getAllNotes}
+						/>
+
+						<input
+							className={styles.noteTitle}
+							type='text'
+							autoCapitalize='off'
+							autoCorrect='off'
+							spellCheck='false'
+							autoFocus
+							placeholder='Note title'
+							value={createdNote.title}
+							onChange={handleTitleChange}
+						/>
+
+						<ReactQuill
+							theme='snow'
+							value={createdNote.body}
+							onChange={handleBodyChange}
+							autoCapitalize='off'
+							autoCorrect='off'
+							spellCheck='false'
+							modules={{
+								toolbar: [
+									[{ header: [1, 2, 3, 4, 5, false] }],
+									[
+										'bold',
+										'italic',
+										'underline',
+										'strike',
+										'blockquote',
+									],
+									[{ list: 'ordered' }, { list: 'bullet' }],
+									['link', 'image', 'video'],
+								],
+							}}
+							formats={[
+								'header',
+								'bold',
+								'italic',
+								'underline',
+								'strike',
+								'blockquote',
+								'list',
+								'bullet',
+								'link',
+								'image',
+								'video',
+							]}
+						/>
+
+						<div className={styles.areaBtnContainer}>
+							<button
+								className={
+									createdNote.area === 'Work'
+										? styles.selectedBtn
+										: styles.areaBtn
+								}
+								onClick={e => handleAreaBtn(e, 'Work')}>
+								Work
+							</button>
+
+							<button
+								className={
+									createdNote.area === 'Studies'
+										? styles.selectedBtn
+										: styles.areaBtn
+								}
+								onClick={e => handleAreaBtn(e, 'Studies')}>
+								Studies
+							</button>
+
+							<button
+								className={
+									createdNote.area === 'Trip'
+										? styles.selectedBtn
+										: styles.areaBtn
+								}
+								onClick={e => handleAreaBtn(e, 'Trip')}>
+								Trip
+							</button>
+
+							<button
+								className={
+									createdNote.area === 'Personal'
+										? styles.selectedBtn
+										: styles.areaBtn
+								}
+								onClick={e => handleAreaBtn(e, 'Personal')}>
+								Personal
+							</button>
+						</div>
+
+						<span
+							className={styles.deleteNote}
+							onMouseEnter={handleHover}
+							onMouseLeave={handleMouseLeave}
+							onClick={e => deleteNote(createdNote.noteId)}>
+							<img
+								src={isHovered ? TrashIconRed : TrashIcon}
+								alt='Trash-icon'
+							/>
+						</span>
+
+						<button
+							className={styles.createBtn}
+							onClick={e => updateNote(createdNote.noteId)}>
+							Update note
+						</button>
+					</>
 				</section>
 			)}
 		</Modal>

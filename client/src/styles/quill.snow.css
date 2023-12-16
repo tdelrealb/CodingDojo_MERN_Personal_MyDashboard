@@ -555,6 +555,7 @@
   .ql-snow .ql-tooltip a {
     cursor: pointer;
     text-decoration: none;
+    color: #F9F871 !important;
   }
   .ql-snow .ql-tooltip.ql-flip {
     transform: translateY(-10px);
@@ -975,7 +976,8 @@
     content: "Enter video:";
   }
   .ql-snow a {
-    color: #06c;
+    color: #F9F871;
+    cursor: pointer;
   }
 
   .ql-snow p {
@@ -996,6 +998,10 @@
   }
   .ql-container.ql-snow {
     /* border: 1px solid #ccc; */
+  }
+
+  .ql-snow .ql-tooltip input::placeholder {
+    color: rgba(226, 231, 233, 0.50) !important;;
   }
   
   *:not([spellcheck]):not([contenteditable="true"]) {

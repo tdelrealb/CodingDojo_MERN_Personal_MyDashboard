@@ -144,8 +144,10 @@ export const Login = () => {
 								<img src={NextIcon} alt='Next-icon' />
 							</button>
 						</span>
+						<span className={styles.externalAuth}>
 						<GoogleAuth/>
 						<GithubAuth/>
+						</span>
 					</div>
 				)}
 			</form>
