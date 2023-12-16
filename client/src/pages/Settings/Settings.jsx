@@ -1,8 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './Settings.module.css';
 import MyDashGradient from '../../assets/my-dashboard-icon-gradient.png';
 
 import { useEffect, useState } from 'react';
-import axios, { all } from 'axios';
+import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/es';
 
@@ -13,6 +15,7 @@ export const Settings = () => {
 	const [tasks, setTasks] = useState('');
 	const [finishedTasksCount, setFinishedTasksCount] = useState(0);
 	const [notes, setNotes] = useState([]);
+	const [habits, setHabits] = useState([]);
 
 	const changeOption = option => {
 		setOptionSelected(option);
@@ -75,6 +78,24 @@ export const Settings = () => {
 		}
 	};
 
+	const getHabits = async () => {
+		try {
+			const token = sessionStorage.getItem('token');
+			const response = await axios.get(
+				`${import.meta.env.VITE_AXIOS_URI}/habits/all`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			setHabits(response.data.habits.length);
+		} catch (error) {
+			console.log('Error getting habits', error);
+		}
+	};
+
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
 
@@ -88,6 +109,7 @@ export const Settings = () => {
 		getUser();
 		getTasks();
 		getAllNotes();
+		getHabits();
 	}, [userData]);
 
 	const tasksNum = tasks.length;
@@ -174,12 +196,13 @@ export const Settings = () => {
 									</div>
 								</span>
 								<span className={styles.dataCard}>
-									<h4>Projects</h4>
+									<h4>Habits</h4>
 									<div className={styles.cardInfo}>
 										<p>
-											We created <span>2</span> projects
+											We created <span>{habits}</span>{' '}
+											habits
 										</p>
-										<p>Planning is your thing.</p>
+										<p>Tracking is your thing.</p>
 									</div>
 								</span>
 								<span className={styles.dataCard}>
