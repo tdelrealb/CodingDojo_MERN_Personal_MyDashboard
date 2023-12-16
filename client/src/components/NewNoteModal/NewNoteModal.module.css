@@ -54,6 +54,8 @@
     height: 46.6875rem;
     width: 19.5rem;
 
+    position: relative;
+
     padding: 3rem 2rem;
 
     background: var(--white-5);
@@ -130,6 +132,35 @@
     color: var(--white-25);
 }
 
+.selectedArea {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+
+    cursor: pointer;
+}
+
+.selectedArea > p {
+    color: var(--secondary-yellow);
+    font-weight: 500;
+}
+
+.selectedArea > p > span {
+    font-size: 0.75rem;
+    margin: 0;
+    color: var(--white-25);
+}
+
+.myDashIcon {
+    height: 2rem;
+    width: 2rem;
+
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+}
+
 .create {
     display: flex;
     flex-direction: column;
@@ -150,6 +181,8 @@
     bottom: 1.5rem;
     right: 1.5rem;
     cursor: pointer;
+
+    z-index: 10;
 
     transition: var(--transition-config);
 }
@@ -178,6 +211,171 @@
 .noteTitle::placeholder {
     color: var(--white-25);
 }
+
+.closeIcon {
+    height: 2rem;
+    width: 2rem;
+
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.closeIcon:hover {
+    transform: var(--btn-grow);
+}
+
+.areaBtnContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    position: absolute;
+    left: 1.5rem;
+    bottom: 1.5rem;
+}
+
+.areaBtn {
+    height: 2rem;
+    min-width: 6rem;
+
+    background: var(--white-10);
+    border-radius: 0.4375rem;
+    border: none;
+    outline: none;
+
+    padding: 0 0.8rem;
+
+    color: var(--white-75);
+    
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.areaBtn:hover {
+    transform: var(--btn-grow);
+}
+
+.selectedBtn {
+    height: 2rem;
+    min-width: 6rem;
+
+    background: var(--secondary-yellow);
+    border-radius: 0.4375rem;
+    border: none;
+    outline: none;
+
+    padding: 0 0.8rem;
+
+    color: var(--black-75);
+    
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.createBtn {
+    height: 3rem;
+    width: 11.375rem;
+    flex-shrink: 0;
+
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+
+    background: var(--secondary-yellow);
+    border-radius: 0.9375rem;
+    border: none;
+    outline: none;
+
+    color: var(--black);
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.createBtn:hover {
+    transform: var(--btn-grow);
+}
+
+.noteDisplay {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-content: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+
+    gap: 1.5rem 0;
+    
+    height: 46.6875rem;
+    width: 53.6875rem;
+
+    padding: 1.5rem;
+
+    position: relative;
+
+    height: 46.6875rem;
+    width: 53.6875rem;
+
+    background: var(--white-5);
+    border-radius: 0.9375rem;
+}
+
+.noteContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 0.62rem;
+
+    height: 10.125rem;
+    width: 12rem;
+}
+
+.notePreview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-shrink: 0;
+
+    height: 8.5rem;
+    width: 12rem;
+
+    padding: 1rem;
+
+    background: var(--black-5);
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.notePreview:hover {
+    transform: var(--btn-grow);
+    background: var(--white-10);
+}
+
+.notePreview > h6 {
+    color: var(--white-75);
+}
+
+.noteInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.noteInfo > p {
+    color: var(--white-25);
+    font-size: var(--paragraph-small);
+}
+
 
 @keyframes fadeInAnimation {
     0% {
