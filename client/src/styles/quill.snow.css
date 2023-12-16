@@ -11,9 +11,10 @@
     font-family: 'Rubik', sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, ul, li, a {
+/* ql.snow > h1, h2, h3, h4, h5, h6, p, ul, li, a {
   color: rgba(226, 231, 233, 0.50) !important;
-}
+} */
+
  .ql-container {
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
@@ -554,6 +555,7 @@ h1, h2, h3, h4, h5, h6, p, ul, li, a {
   .ql-snow .ql-tooltip a {
     cursor: pointer;
     text-decoration: none;
+    color: #F9F871 !important;
   }
   .ql-snow .ql-tooltip.ql-flip {
     transform: translateY(-10px);
@@ -974,7 +976,8 @@ h1, h2, h3, h4, h5, h6, p, ul, li, a {
     content: "Enter video:";
   }
   .ql-snow a {
-    color: #06c;
+    color: #F9F871;
+    cursor: pointer;
   }
 
   .ql-snow p {
@@ -985,7 +988,26 @@ h1, h2, h3, h4, h5, h6, p, ul, li, a {
     line-height: normal !important;
     margin: 0 !important;
   }
+
+  .ql-snow ul {
+    color: rgba(226, 231, 233, 0.50) !important;
+  }
+
+  .ql-snow ol {
+    color: rgba(226, 231, 233, 0.50) !important;
+  }
   .ql-container.ql-snow {
     /* border: 1px solid #ccc; */
   }
+
+  .ql-snow .ql-tooltip input::placeholder {
+    color: rgba(226, 231, 233, 0.50) !important;;
+  }
   
+  *:not([spellcheck]):not([contenteditable="true"]) {
+    text-decoration: none !important;
+  }
+
+  textarea, input, [contenteditable="true"] {
+    spellcheck: false;
+  }

@@ -300,6 +300,19 @@
     transform: var(--btn-grow);
 }
 
+.deleteNote {
+    position: absolute;
+    right: 14.94rem;
+    bottom: 1.8rem;
+
+    cursor: pointer;
+    transition: var(--transition-config);
+}
+
+.deleteNote:hover {
+    transform: var(--btn-grow);
+}
+
 .noteDisplay {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
