@@ -36,6 +36,10 @@ const TaskSchema = new Schema(
 			type: String,
 			required: [true, 'Please give a status to your task.'],
 		},
+
+		todoistTaskId: {
+			type: Number,
+		},
 	},
 
 	{
