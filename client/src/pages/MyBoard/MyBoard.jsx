@@ -69,30 +69,8 @@ export const MyBoard = () => {
 	const updateTasks = () => {
 		setCalendarUpdate(prevUpdate => prevUpdate + 1);
 	};
+	
 
-	//METODO PARA IR AL AUTH DE TODOIST
-	const goToTodoistAuth = async () => {
-		const token = sessionStorage.getItem('token');
-		if (token) {
-			try {
-				const response = await axios.get(
-					`${import.meta.env.VITE_AXIOS_URI}/todoist/auth`,
-					{
-						headers: {
-							Authorization: token,
-						},
-					},
-				);
-				if (response.status === 200) {
-					window.location.href = "http://localhost:8000/todoist/auth";
-				}
-			} catch (error) {
-				console.error('Error during authentication:', error);
-			}
-		} else {
-			console.error('No token found in session storage');
-		}
-	};
 
 
 	useEffect(() => {
@@ -203,9 +181,9 @@ export const MyBoard = () => {
 							<img src={WhatsappIcon} alt='Whatsapp-icon' />
 						</a>
 
-						<a href="http://localhost:8000/todoist/auth">
+						{/* <a href="http://localhost:8000/todoist/auth">
 							<img src="https://developer.todoist.com/static/images/logos/logo-black.svg" alt="todoist-icon" />
-						</a>
+						</a> */}
 					</div>
 
 					<div className={styles.userData}>
