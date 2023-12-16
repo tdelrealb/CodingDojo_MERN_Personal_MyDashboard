@@ -8,6 +8,7 @@ import InstagramIcon from '../../assets/instagram-icon.svg';
 import FacebookIcon from '../../assets/facebook-icon.svg';
 import TwitterIcon from '../../assets/twitter-icon.svg';
 import WhatsappIcon from '../../assets/whatsapp-icon.svg';
+import TodoistGradient from '../../assets/todoist-icon-gradient.svg';
 // import DummyUser from '../../assets/dummy-user.png';
 
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
@@ -204,7 +205,7 @@ export const MyBoard = () => {
 						</a>
 
 						<a href="http://localhost:8000/todoist/auth">
-							<img src="https://developer.todoist.com/static/images/logos/logo-black.svg" alt="todoist-icon" />
+							<img src={TodoistGradient} alt="todoist-icon" />
 						</a>
 					</div>
 
