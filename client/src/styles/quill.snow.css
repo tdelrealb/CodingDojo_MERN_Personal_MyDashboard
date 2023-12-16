@@ -11,9 +11,10 @@
     font-family: 'Rubik', sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6, p, ul, li, a {
+/* ql.snow > h1, h2, h3, h4, h5, h6, p, ul, li, a {
   color: rgba(226, 231, 233, 0.50) !important;
-}
+} */
+
  .ql-container {
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
@@ -985,7 +986,22 @@ h1, h2, h3, h4, h5, h6, p, ul, li, a {
     line-height: normal !important;
     margin: 0 !important;
   }
+
+  .ql-snow ul {
+    color: rgba(226, 231, 233, 0.50) !important;
+  }
+
+  .ql-snow ol {
+    color: rgba(226, 231, 233, 0.50) !important;
+  }
   .ql-container.ql-snow {
     /* border: 1px solid #ccc; */
   }
   
+  *:not([spellcheck]):not([contenteditable="true"]) {
+    text-decoration: none !important;
+  }
+
+  textarea, input, [contenteditable="true"] {
+    spellcheck: false;
+  }
