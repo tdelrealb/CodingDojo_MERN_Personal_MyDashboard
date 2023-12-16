@@ -2,9 +2,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from './Settings.module.css';
 import MyDashGradient from '../../assets/my-dashboard-icon-gradient.png';
+import Pencil from '../../assets/pencil-icon.svg';
+import Upload from '../../assets/upload-circle.svg';
+import Todoist from '../../assets/todoist-icon.svg';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import moment from 'moment';
 import 'moment/locale/es';
 
@@ -16,9 +19,12 @@ export const Settings = () => {
 	const [finishedTasksCount, setFinishedTasksCount] = useState(0);
 	const [notes, setNotes] = useState([]);
 	const [habits, setHabits] = useState([]);
+	const [updateMode, setUpdateMode] = useState(false);
+	const [userUpdate, setUserUpdate] = useState(null);
 
 	const changeOption = option => {
 		setOptionSelected(option);
+		setUpdateMode(false);
 	};
 
 	const getUser = async () => {
@@ -96,6 +102,31 @@ export const Settings = () => {
 		}
 	};
 
+	const handleUpdateMode = e => {
+		e.preventDefault();
+		setUpdateMode(true);
+
+		const userData = {
+			userId: allUserInfo.user._id,
+			firstName: allUserInfo.user.firstName,
+			lastName: allUserInfo.user.lastName,
+			username: allUserInfo.user.username,
+		};
+
+		setUserUpdate(userData);
+	};
+
+	const handleData = e => {
+		const { name, value } = e.target;
+
+		setUserUpdate({ ...userUpdate, [name]: value });
+	};
+
+	const handlePasswordChange = e => {
+		const { value } = e.target;
+		setUserUpdate({ ...userUpdate, newPassword: value });
+	};
+
 	useEffect(() => {
 		const token = sessionStorage.getItem('token');
 
@@ -153,16 +184,6 @@ export const Settings = () => {
 						onClick={e => changeOption('integrations')}>
 						<p>Integrations</p>
 					</span>
-
-					<span
-						className={
-							optionSelected === 'delete'
-								? styles.menuOptSelected
-								: styles.menuOpt
-						}
-						onClick={e => changeOption('delete')}>
-						<p>Delete account</p>
-					</span>
 				</section>
 
 				<section className={styles.optionContainer}>
@@ -219,21 +240,121 @@ export const Settings = () => {
 						</>
 					)}
 
-					{optionSelected === 'settings' && (
+					{optionSelected === 'settings' && updateMode === false && (
 						<>
-							<h1>user settings</h1>
+							<h1 className={styles.userName}>MyProfile</h1>
+							<div className={styles.userPreview}>
+								<div className={styles.imageWrapper}>
+									<img
+										src={allUserInfo.imageUrl}
+										alt='User-Pic'
+									/>
+
+									<img src='' alt='' />
+								</div>
+
+								<div className={styles.user}>
+									<h6>
+										{allUserInfo.user.firstName}{' '}
+										{allUserInfo.user.lastName}
+									</h6>
+									<p>{allUserInfo.user.username}</p>
+									<p>{allUserInfo.user.email}</p>
+								</div>
+								<button
+									className={styles.edit}
+									onClick={handleUpdateMode}>
+									<img src={Pencil} alt='Edit-icon' />
+									Edit
+								</button>
+							</div>
+						</>
+					)}
+
+					{optionSelected === 'settings' && updateMode === true && (
+						<>
+							<div className={styles.update}>
+								<span className={styles.userPreview}>
+									<div className={styles.updateImageWrapper}>
+										<img
+											className={styles.profilePic}
+											src={allUserInfo.imageUrl}
+											alt='User-Pic'
+										/>
+									</div>
+									<button className={styles.updateEdit}>
+										Upload new photo
+									</button>
+								</span>
+
+								<form className={styles.form}>
+									<span className={styles.element}>
+										<p>First name</p>
+										<input
+											type='text'
+											autoComplete='off'
+											name='firstName'
+											value={userUpdate.firstName}
+											onChange={handleData}
+										/>
+									</span>
+
+									<span className={styles.element}>
+										<p>Last name</p>
+										<input
+											type='text'
+											autoComplete='off'
+											name='lastName'
+											value={userUpdate.lastName}
+											onChange={handleData}
+										/>
+									</span>
+
+									<span className={styles.element}>
+										<p>Username</p>
+										<input
+											type='text'
+											autoComplete='off'
+											name='username'
+											value={userUpdate.username}
+											onChange={handleData}
+										/>
+									</span>
+
+									<span className={styles.element}>
+										<p>Password</p>
+										<input
+											type='password'
+											autoComplete='off'
+											name='password'
+											placeholder='Change password'
+											onChange={handleData}
+										/>
+									</span>
+
+									<button className={styles.userEdit}>
+										Update MyProfile
+									</button>
+								</form>
+							</div>
 						</>
 					)}
 
 					{optionSelected === 'integrations' && (
 						<>
-							<h1>integrations</h1>
-						</>
-					)}
+							<h1 className={styles.userName}>Integrations</h1>
+							<p className={styles.userMessage}>
+								We are working to deliver the best experience
+								for you.
+								<br />
+								That's why we invite you to integrate
+								MyDashboard into Todoist.
+							</p>
 
-					{optionSelected === 'delete' && (
-						<>
-							<h1>delete</h1>
+							<button className={styles.integrateEdit}>
+								<img src={Todoist} alt='Todoist-icon' />
+								Integrate Todoist
+							</button>
 						</>
 					)}
 				</section>
