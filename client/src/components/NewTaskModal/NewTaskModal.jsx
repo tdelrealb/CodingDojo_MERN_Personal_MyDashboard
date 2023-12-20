@@ -78,7 +78,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-
+	
 		try {
 			const createdTask = {
 				userId: userData._id,
@@ -89,7 +89,7 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 				label: task.label,
 				status: 'Not started',
 			};
-
+	
 			const token = sessionStorage.getItem('token');
 			await axios.post(
 				`${import.meta.env.VITE_AXIOS_URI}/tasks/create`,
@@ -98,9 +98,10 @@ export const NewTaskModal = ({ isOpen, closeModal }) => {
 					headers: {
 						Authorization: token,
 					},
+					withCredentials: true, // Include cookies in the request
 				},
 			);
-
+	
 			setCurrentStep(prevStep => prevStep + 1);
 		} catch (error) {
 			setErrors([

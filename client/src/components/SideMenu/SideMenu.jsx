@@ -48,15 +48,21 @@ export const SideMenu = () => {
 	return (
 		<div className={styles.sideMenu}>
 			{!isOpen && (
-				<span className={styles.sideBtn} onClick={toggleMenu}>
+				<span className={styles.sideBtn} onMouseEnter={toggleMenu}>
 					<img src={MyDashboardGreen} alt='myDashboard-Green' />
 					<img src={ArrowIcon} alt='Arrow-icon' />
 				</span>
 			)}
 
 			{isOpen && (
-				<div className={isOpen ? styles.sideMenuContainerOpen : styles.sideMenuContainerClosed}>
-					<span className={styles.sideBtnOpen} onClick={toggleMenu}>
+				<div
+					className={
+						isOpen
+							? styles.sideMenuContainerOpen
+							: styles.sideMenuContainerClosed
+					}
+					onMouseLeave={toggleMenu}>
+					<span className={styles.sideBtnOpen}>
 						<img src={LeftArrowIcon} alt='Arrow-icon' />
 						<img src={MyDashboardWhite} alt='myDashboard-Green' />
 					</span>

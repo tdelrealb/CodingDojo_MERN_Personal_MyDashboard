@@ -1,0 +1,430 @@
+.settingsPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 65.5rem;
+    width: 118rem;
+
+    padding: 2rem;
+
+    min-height: 65.5rem;
+    min-width: 118rem;
+    margin: 1rem;
+
+    z-index: 1;
+
+    background: var(--black-50);
+    border-radius: 1.875rem;
+}
+
+.centerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+
+    height: 38.5rem;
+    width: 62.5rem;
+
+    position: relative;
+
+    background: var(--white-5);
+    border-radius: 1.875rem;
+
+    box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.20);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 0.5rem;
+
+    height: 100%;
+    width: 12.5rem;
+}
+
+.myDashIcon {
+    height: 3rem;
+    width: 3rem;
+
+    position: absolute;
+    top: 4rem;
+    left: 4.75rem;
+}
+
+.menuOpt {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+
+    padding: 0 1.5rem;
+
+    height: 2.5rem;
+    width: 100%;
+
+    background: var(--white-5);
+    border-radius: 0rem 1.875rem 1.875rem 0rem;
+
+    cursor: pointer;
+}
+
+.menuOpt > p {
+    color: var(--white-25);
+    font-weight: 400;
+}
+
+.menuOptSelected {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+
+    padding: 0 1.5rem;
+
+    height: 2.5rem;
+    width: 100%;
+
+    background: var(--gradient);
+    border-radius: 0rem 1.875rem 1.875rem 0rem;
+
+    cursor: pointer;
+}
+
+.menuOptSelected > p {
+    color: var(--black-50);
+    font-weight: bold;
+}
+
+.optionContainer {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    height: 36.5rem;
+    width: 48.0625rem;
+
+    padding: 2rem;
+
+    background: var(--white-5);
+    border-radius: 1.875rem;
+
+    margin-right: 1rem;
+}
+
+.userName {
+    color: var(--secondary-aqua-green);
+    margin-bottom: 0.5rem;
+}
+
+.userMessage {
+    color: var(--white-75);
+    margin-bottom: 1rem;
+}
+
+.userNumbers {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
+
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.dataCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    gap: 0.5rem;
+
+    height: 8rem;
+    width: 14rem;
+
+    margin-bottom: 12.25rem;
+    padding: 1rem 1.25rem;
+
+    background: var(--black-25);
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+}
+
+.dataCard > h4 {
+    color: var(--white-50);
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+}
+
+.cardInfo > p {
+    font-size: var(--paragraph-small);
+    color: var(--white-25);
+}
+
+.cardInfo > p > span {
+    color: var(--secondary-aqua-green);
+}
+
+.userPreview {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+
+    height: 6rem;
+    padding: 1rem;
+
+    position: relative;
+
+    background: var(--black-25);
+    border: 1px solid var(--white-5);
+    border-radius: 0.9375rem;
+    
+    margin-top: 2rem;
+}
+
+.imageWrapper {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.imageWrapper > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.user > h6 {
+    color: var(--white);
+}
+
+.user > p {
+    color: var(--white-50);
+    font-size: var(--paragraph-small);
+}
+
+.edit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    position: absolute;
+    right: 1rem;
+
+
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+
+    padding: 0.5rem 1rem;
+
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    color: var(--white-50);
+
+    transition: var(--transition-config);
+    cursor: pointer;
+}
+
+.edit:hover {
+    transform: var(--btn-grow);
+    background: var(--black-50);
+}
+
+.edit > img {
+    height: 1rem;
+}
+
+.updateImageWrapper {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.profilePic {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.update {
+    display: flex;
+    flex-direction: column;
+    height: 60rem;
+
+    margin-bottom: 6rem;
+}
+
+.updateEdit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+
+    padding: 0.5rem 1rem;
+
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    color: var(--white-50);
+
+    transition: var(--transition-config);
+    cursor: pointer;
+}
+
+.updateEdit:hover {
+    transform: var(--btn-grow);
+    background: var(--black-50);
+}
+
+.updateEdit > img {
+    height: 1rem;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-content: center;
+    gap: 2rem;
+
+    height: 100%;
+    padding: 1rem;
+
+    position: relative;
+
+    /* background: var(--black-25);
+    border: 1px solid var(--white-5);
+    border-radius: 0.9375rem; */
+    
+    margin-top: 1rem; 
+}
+
+.element {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    height: 4rem;
+    width: 100%;
+}
+
+.element > p {
+    color: var(--white-25);
+}
+
+.element > input {
+    
+    height: 4rem;
+    width: 18rem;
+
+    background: var(--black-50);
+    outline: none;
+    border: none;
+
+    border-radius: 0.9375rem;
+    padding: 0 1rem;
+
+    color: var(--white-50);
+}
+
+.element > input::placeholder {
+    font-weight: 400;
+    color: var(--white-50);
+}
+
+.userEdit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    position: absolute;
+    right: 3rem;
+    bottom: 0rem;
+
+
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+
+    padding: 0.5rem 1rem;
+
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    color: var(--white-50);
+
+    transition: var(--transition-config);
+    cursor: pointer;
+}
+
+.userEdit:hover {
+    transform: var(--btn-grow);
+    background: var(--black-50);
+}
+
+.userEdit > img {
+    height: 1rem;
+}
+
+.integrateEdit {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+/* 
+    position: absolute;
+    right: 1rem; */
+
+    width: 11rem;
+
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+
+    padding: 0.5rem 1rem;
+
+    border: 1px solid var(--white-10);
+    border-radius: 0.9375rem;
+
+    color: var(--white-50);
+    font-size: var(--paragraph-small);
+
+    transition: var(--transition-config);
+    cursor: pointer;
+}
+
+.integrateEdit:hover {
+    transform: var(--btn-grow);
+    background: var(--black-50);
+    color: var(--error);
+}
+
+.integrateEdit > img {
+    height: 1rem;
+}

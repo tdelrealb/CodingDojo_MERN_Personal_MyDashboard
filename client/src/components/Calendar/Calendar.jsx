@@ -66,6 +66,7 @@ export const Calendar = ({ calendarUpdate }) => {
 					headers: {
 						Authorization: token,
 					},
+					withCredentials: true,
 				},
 			);
 			getTasks();
