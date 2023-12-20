@@ -206,7 +206,8 @@ export const Calendar = ({ calendarUpdate }) => {
 								<div className={styles.taskInfo}>
 									<img
 										src={
-											task.status === 'Not started'
+											task.status === 'Not started' ||
+											task.status === 'In progress'
 												? TaskPin
 												: TaskPinTransparent
 										}
@@ -215,7 +216,8 @@ export const Calendar = ({ calendarUpdate }) => {
 									<span className={styles.taskTitleInfo}>
 										<h6
 											className={
-												task.status === 'Not started'
+												task.status === 'Not started' ||
+												task.status === 'In progress'
 													? styles.taskTitle
 													: styles.taskTitleDisabled
 											}>
@@ -223,7 +225,8 @@ export const Calendar = ({ calendarUpdate }) => {
 										</h6>
 										<p
 											className={
-												task.status === 'Not started'
+												task.status === 'Not started' ||
+												task.status === 'In progress'
 													? styles.projectTitle
 													: styles.projectTitleDisabled
 											}>
@@ -243,7 +246,8 @@ export const Calendar = ({ calendarUpdate }) => {
 								<span className={styles.taskActions}>
 									<img
 										src={
-											task.status === 'Not started'
+											task.status === 'Not started' ||
+											task.status === 'In progress'
 												? CheckIcon
 												: CheckIconTransparent
 										}

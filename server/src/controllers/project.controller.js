@@ -15,32 +15,72 @@ import axios from 'axios';
 // 	}
 // };
 
-//CONTROLADOR CON TODOIST
+// //CONTROLADOR CON TODOIST
+// const createProject = async (req, res) => {
+// 	const projectData = req.body;
+// 	const userId = req.user._id;
+// 	const { access_token } = req.cookies;
+
+// 	try {
+// 		const newProject = await Project.create({ ...projectData, userId });
+// 		await newProject.save();
+
+// 		const todoistResponse = await axios.post('https://api.todoist.com/rest/v2/projects',{
+// 			name: newProject.title,
+
+// 		},
+// 		{
+// 			headers: {
+// 				Authorization: `Bearer ${access_token}`,
+// 			},
+// 		});
+
+// 		newProject.todoistProjectId = todoistResponse.data.id;
+// 		await newProject.save();
+// 		res.status(201).json({ newProject, todoistProject: todoistResponse.data})
+// 	} catch (error) {
+// 		console.log(error);
+// 		res.status(500).json({ error:'Error creating the project.'})
+// 	}
+// };
+
+// CONTROLADOR CON TODOIST APARTE
+
 const createProject = async (req, res) => {
-	const projectData = req.body;
-	const userId = req.user._id;
-	const { access_token } = req.cookies;
+    const projectData = req.body;
+    const userId = req.user._id;
+    const { access_token } = req.cookies;
 
-	try {
-		const newProject = await Project.create({ ...projectData, userId });
-		await newProject.save();
+    try {
+        const newProject = await Project.create({ ...projectData, userId });
+        await newProject.save();
 
-		const todoistResponse = await axios.post('https://api.todoist.com/rest/v2/projects',{
-			name: newProject.title,
+        let todoistProjectId;
 
-		},
-		{
-			headers: {
-				Authorization: `Bearer ${access_token}`,
-			},
-		});
+        try {
+            const todoistResponse = await axios.post('https://api.todoist.com/rest/v2/projects', {
+                name: newProject.title,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
 
-		newProject.todoistProjectId = todoistResponse.data.id;
-		await newProject.save();
-		res.status(201).json({ newProject, todoistProject: todoistResponse.data})
-	} catch (error) {
-		res.status(500).json({ error:'Error creating the project.'})
-	}
+            todoistProjectId = todoistResponse.data.id;
+        } catch (todoistError) {
+            console.error('Error creating Todoist project:', todoistError);
+        }
+
+        if (todoistProjectId) {
+            newProject.todoistProjectId = todoistProjectId;
+            await newProject.save();
+        }
+
+        res.status(201).json({ newProject, todoistProjectId });
+    } catch (error) {
+        console.error('Error creating project:', error);
+        res.status(500).json({ error: 'Error creating the project.' });
+    }
 };
 
 const getProjectsByArea = async (req, res) => {
