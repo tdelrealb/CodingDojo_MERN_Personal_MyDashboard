@@ -139,35 +139,32 @@ export const Settings = () => {
 	const handleUpdateUser = async e => {
 		e.preventDefault();
 		const token = sessionStorage.getItem('token');
-		let payload; 
-	
-		if(token){
+		let payload;
+
+		if (token) {
 			payload = JSON.parse(atob(token.split('.')[1]));
 			setUserData(payload);
 		}
-		
-		
+
 		const formData = new FormData();
-		
-		
+
 		for (let key in userUpdate) {
 			formData.append(key, userUpdate[key]);
 		}
-	
-		
+
 		const fileInput = document.querySelector(`.${styles.updateEdit}`);
 		if (fileInput.files[0]) {
 			formData.append('image', fileInput.files[0]);
 		}
-		
+
 		try {
 			const response = await axios.put(
-				`${import.meta.env.VITE_AXIOS_URI}/users/update/${payload._id}`, 
-				formData, 
+				`${import.meta.env.VITE_AXIOS_URI}/users/update/${payload._id}`,
+				formData,
 				{
 					headers: {
 						Authorization: token,
-						'Content-Type': 'multipart/form-data', 
+						'Content-Type': 'multipart/form-data',
 					},
 				},
 			);
@@ -323,10 +320,9 @@ export const Settings = () => {
 											alt='User-Pic'
 										/>
 									</div>
-									<input className={styles.updateEdit}
-									type='file'>
-										
-									</input>
+									<input
+										className={styles.updateEdit}
+										type='file'></input>
 								</span>
 
 								<form className={styles.form}>
@@ -374,8 +370,9 @@ export const Settings = () => {
 										/>
 									</span>
 
-									<button className={styles.userEdit} 
-									onClick={handleUpdateUser}>
+									<button
+										className={styles.userEdit}
+										onClick={handleUpdateUser}>
 										Update MyProfile
 									</button>
 								</form>
@@ -394,8 +391,12 @@ export const Settings = () => {
 								MyDashboard into Todoist.
 							</p>
 
-							<button className={styles.integrateEdit} 
-							onClick={() => window.location.href="http://localhost:8000/todoist/auth"}>
+							<button
+								className={styles.integrateEdit}
+								onClick={() =>
+									(window.location.href =
+										'http://localhost:8000/todoist/auth')
+								}>
 								<img src={Todoist} alt='Todoist-icon' />
 								Integrate Todoist
 							</button>
