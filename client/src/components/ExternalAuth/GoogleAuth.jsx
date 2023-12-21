@@ -60,7 +60,6 @@ export const GoogleAuth = () => {
         className={styles.googleLogin}
         onClick={signInWithGoogle}>
         <img src={GoogleIcon} alt='Google-icon' />
-        <p>Sign in with Google</p>
     </button>
   );
 };

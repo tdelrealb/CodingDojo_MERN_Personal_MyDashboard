@@ -1,6 +1,6 @@
 import styles from './ExternalAuth.module.css';
 import GithubIcon from '../../assets/github-icon.svg';
-import { auth , githubProvider} from "../../config/firebase.js";
+import { auth , facebookProvider} from "../../config/firebase.js";
 import { signInWithPopup, linkWithCredential } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -8,28 +8,26 @@ import { useNavigate } from 'react-router-dom';
 
 export let pendingCred
 
-export const GithubAuth = () => {
+export const FacebookAuth = () => {
   
   const navigate = useNavigate();
 
-  const signInWithGithub = async (e) => {
+  const signInWithFacebook = async (e) => {
     e.preventDefault()
     try {
-      const githubData = await signInWithPopup(auth,githubProvider);
+      const facebookData = await signInWithPopup(auth,facebookProvider);
       
-      const githubUser = {
-        firstName: githubData._tokenResponse.screenName,
-        // lastName: '',
-        username: githubData._tokenResponse.screenName,
-        email: githubData._tokenResponse.email,
-        password: githubData._tokenResponse.photoUrl,
-        extPicture: githubData._tokenResponse.photoUrl,
-        isExt: true
+      const facebookUser = {
+        firstName: facebookData._tokenResponse.firstName,
+        lastName: facebookData._tokenResponse.lastName,
+        username: facebookData._tokenResponse.displayName,
+        email: facebookData._tokenResponse.email,
+        password: facebookData._tokenResponse.email,
       };
-      console.log(githubUser);
+
       const response = await axios.post(
           `${import.meta.env.VITE_AXIOS_URI}/users/extLogin`,
-          githubUser
+          facebookUser
       );
 
       const token = response.data.authToken;
@@ -39,6 +37,7 @@ export const GithubAuth = () => {
     } catch (error){
         if (error.code === "auth/account-exists-with-different-credential") {
             pendingCred = error.credential;
+            console.log(error);
             navigate('/login')
             setTimeout(function(){
               alert('You already have an account with a different provider, please try again.')
@@ -54,7 +53,7 @@ export const GithubAuth = () => {
         } else {
             console.error(
                 'Error setting up the request:',
-                error.message,
+                error,
             );
         }
     }
@@ -63,7 +62,7 @@ export const GithubAuth = () => {
   return (
     <button
         className={styles.googleLogin}
-        onClick={signInWithGithub}>
+        onClick={signInWithFacebook}>
         <img src={GithubIcon} alt='Google-icon' />
     </button>
   );

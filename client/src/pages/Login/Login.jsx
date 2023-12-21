@@ -5,8 +5,9 @@ import NextIcon from '../../assets/next-icon.svg';
 import ErrorIcon from '../../assets/error-icon.svg';
 import { GoogleAuth } from '../../components/ExternalAuth/GoogleAuth.jsx'
 import { GithubAuth } from '../../components/ExternalAuth/GithubAuth.jsx'; 
+import { FacebookAuth } from '../../components/ExternalAuth/FacebookAuth.jsx';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import axios from 'axios';
 
 export const Login = () => {
@@ -108,47 +109,59 @@ export const Login = () => {
 				</div>
 
 				{showUsernameInput ? (
-					<div className={styles.userLogin}>
-						<span className={styles.input}>
-							<input
-								type='text'
-								autoComplete='off'
-								placeholder='username'
-								name='username'
-								value={user.username}
-								onChange={handleData}
-							/>
-							<button
-								className={styles.nextIcon}
-								onClick={handleNextButton}>
-								<img src={NextIcon} alt='Next-icon' />
-							</button>
-						</span>
-						<GoogleAuth/>
-						<GithubAuth/>
-					</div>
+					<Fragment>
+						<div className={styles.userLogin}>
+							<span className={styles.input}>
+								<input
+									type='text'
+									autoComplete='off'
+									placeholder='username'
+									name='username'
+									value={user.username}
+									onChange={handleData}
+								/>
+								<button
+									className={styles.nextIcon}
+									onClick={handleNextButton}>
+									<img src={NextIcon} alt='Next-icon' />
+								</button>
+							</span>
+						<p>or sign in with</p>	
+						</div>
+
+						<div className={styles.externalAuth}>
+							<GoogleAuth/>
+							<GithubAuth/>
+							<FacebookAuth/>
+						</div>
+					</Fragment>
 				) : (
-					<div className={styles.userLogin}>
-						<span className={styles.input}>
-							<input
-								type='password'
-								autoComplete='off'
-								placeholder='password'
-								name='password'
-								value={user.password}
-								onChange={handleData}
-							/>
-							<button
-								className={styles.nextIcon}
-								onClick={saveData}>
-								<img src={NextIcon} alt='Next-icon' />
-							</button>
-						</span>
-						<span className={styles.externalAuth}>
-						<GoogleAuth/>
-						<GithubAuth/>
-						</span>
-					</div>
+					<Fragment>
+						<div className={styles.userLogin}>
+							<span className={styles.input}>
+								<input
+									type='password'
+									autoComplete='off'
+									placeholder='password'
+									name='password'
+									value={user.password}
+									onChange={handleData}
+								/>
+								<button
+									className={styles.nextIcon}
+									onClick={saveData}>
+									<img src={NextIcon} alt='Next-icon' />
+								</button>
+							</span>
+						<p>or sign in with</p>
+						</div>
+
+						<div className={styles.externalAuth}>
+							<GoogleAuth/>
+							<GithubAuth/>
+							<FacebookAuth/>
+						</div>
+					</Fragment>
 				)}
 			</form>
 

@@ -2,14 +2,15 @@
 .googleLogin {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     gap: 0.5rem;
 
     height: 1.20925rem;
-    width: 10.5625rem;
+    width: 3rem;
 
     margin: 0;
-    margin-top: 1.5rem;
+    /* margin-top: 1.5rem; */
     padding: 0;
 
     background: none;
@@ -29,6 +30,8 @@
     height: 1.14675rem;
     width: 1.125rem;
     flex-shrink: 0;
+    text-align: center;
+    align-items: center;
 }
 
 .googleLogin > p {
