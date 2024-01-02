@@ -25,43 +25,49 @@ import axios from 'axios';
 
 //CONTROLADOR CON TODOIST
 const createTask = async (req, res) => {
-    const taskData = req.body;
-    const userId = req.user._id;
-    const { access_token } = req.cookies;
+	const taskData = req.body;
+	const userId = req.user._id;
+	const { access_token } = req.cookies;
 
-    try {
-        const projectId = taskData.projectId;
-        const project = await Project.findOne({ _id: projectId, userId });
+	try {
+		const projectId = taskData.projectId;
+		const project = await Project.findOne({ _id: projectId, userId });
 
-        if (!project) {
-            return res.status(404).json({ error: 'Project not found.' });
-        }
+		if (!project) {
+			return res.status(404).json({ error: 'Project not found.' });
+		}
 
-        // Send the task to Todoist
-        const todoistResponse = await axios.post('https://api.todoist.com/rest/v2/tasks', {
-            content: taskData.title, 
-            project_id: project.todoistProjectId, 
-        }, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
+		// Send the task to Todoist
+		const todoistResponse = await axios.post(
+			'https://api.todoist.com/rest/v2/tasks',
+			{
+				content: taskData.title,
+				project_id: project.todoistProjectId,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${access_token}`,
+				},
+			},
+		);
 
-        
-        const newTask = await Task.create({ 
-            ...taskData, 
-            userId, 
-            projectId,
-            todoistTaskId: todoistResponse.data.id, 
-        });
+		const newTask = await Task.create({
+			...taskData,
+			userId,
+			projectId,
+			todoistTaskId: todoistResponse.data.id,
+		});
 
-        await newTask.save();
+		await newTask.save();
 
-        res.status(201).json({ message: newTask, todoistTask: todoistResponse.data });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error creating the task.' });
-    }
+		res.status(201).json({
+			message: newTask,
+			todoistTask: todoistResponse.data,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: 'Error creating the task.' });
+	}
 };
 
 const getTasks = async (req, res) => {
@@ -146,14 +152,6 @@ const updateTask = async (req, res) => {
 	}
 };
 
-
-
-
-
-
-
-
-
 //CONTROLADOR ORIGINAL
 // const deleteTask = async (req, res) => {
 // 	const { id } = req.params;
@@ -171,33 +169,70 @@ const updateTask = async (req, res) => {
 // 	}
 // };
 
-//CONTROLADOR CON TODOIST
+// //CONTROLADOR CON TODOIST
+// const deleteTask = async (req, res) => {
+//     const { id } = req.params;
+//     const userId = req.user._id;
+//     const { access_token } = req.cookies;
+
+//     try {
+//         const task = await Task.findOne({ _id: id, userId });
+
+//         if (!task) {
+//             return res.status(404).json({ error: 'Task not found.' });
+//         }
+
+//         // Delete the task in Todoist
+//         await axios.delete(`https://api.todoist.com/rest/v2/tasks/${task.todoistTaskId}`, {
+//             headers: {
+//                 Authorization: `Bearer ${access_token}`,
+//             },
+//         });
+
+//         // Delete the task in the database
+//         await Task.findByIdAndDelete({ _id: id, userId });
+
+//         res.status(200).json({ message: 'Task successfully deleted.' });
+//     } catch (error) {
+//         res.status(500).json({ error: 'Error deleting the task.' });
+//     }
+// };
+
 const deleteTask = async (req, res) => {
-    const { id } = req.params;
-    const userId = req.user._id;
-    const { access_token } = req.cookies;
+	const { id } = req.params;
+	const userId = req.user._id;
+	const { access_token } = req.cookies;
 
-    try {
-        const task = await Task.findOne({ _id: id, userId });
+	if (!access_token) {
+		await Task.findByIdAndDelete({ _id: id, userId });
 
-        if (!task) {
-            return res.status(404).json({ error: 'Task not found.' });
-        }
+		res.status(200).json({ message: 'Task successfully deleted.' });
+	} else {
+		try {
+			const task = await Task.findOne({ _id: id, userId });
 
-        // Delete the task in Todoist
-        await axios.delete(`https://api.todoist.com/rest/v2/tasks/${task.todoistTaskId}`, {
-            headers: {
-                Authorization: `Bearer ${access_token}`,
-            },
-        });
+			if (!task) {
+				return res.status(404).json({ error: 'Task not found.' });
+			}
 
-        // Delete the task in the database
-        await Task.findByIdAndDelete({ _id: id, userId });
+			if (task.todoistTaskId) {
+				await axios.delete(
+					`https://api.todoist.com/rest/v2/tasks/${task.todoistTaskId}`,
+					{
+						headers: {
+							Authorization: `Bearer ${access_token}`,
+						},
+					},
+				);
+			}
 
-        res.status(200).json({ message: 'Task successfully deleted.' });
-    } catch (error) {
-        res.status(500).json({ error: 'Error deleting the task.' });
-    }
+			await Task.findByIdAndDelete({ _id: id, userId });
+
+			res.status(200).json({ message: 'Task successfully deleted.' });
+		} catch (error) {
+			res.status(500).json({ error: 'Error deleting the task.' });
+		}
+	}
 };
 
 export {
