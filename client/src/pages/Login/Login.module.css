@@ -82,6 +82,26 @@
     margin-top: 1rem;
 }
 
+.userLogin > p {
+    margin-top: 4rem;
+    font-size: var(--paragraph);
+    color: var(--white-75);
+}
+
+.externalAuth {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+
+    height: 5.20925rem;
+    width: 21.5rem;
+
+    margin-top: 1rem;
+}
+
 .input {
     display: flex;
     align-items: center;
