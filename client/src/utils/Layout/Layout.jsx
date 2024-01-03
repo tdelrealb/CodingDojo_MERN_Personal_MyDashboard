@@ -7,20 +7,65 @@ import TaskCheck from '../../assets/task-check.svg';
 import TrashIcon from '../../assets/trash-icon.svg';
 import CheckIcon from '../../assets/check-icon-transparent.svg';
 import { Clock } from '../../components/Clock/Clock';
+import InstagramIcon from '../../assets/instagram-icon.svg';
+import FacebookIcon from '../../assets/facebook-icon.svg';
+import TwitterIcon from '../../assets/twitter-icon.svg';
+import WhatsappIcon from '../../assets/whatsapp-icon.svg';
+import TodoistGradient from '../../assets/todoist-icon-gradient.svg';
+import LittleNoteIcon from '../../assets/little-note-icon.svg';
+import CloseIcon from '../../assets/close-icon.svg';
 
-import axios from 'axios';
+import axios, { all } from 'axios';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import { NewProjectModal } from '../../components/NewProjectModal/NewProjectModal';
 import { NewTaskModal } from '../../components/NewTaskModal/NewTaskModal';
+import { NewNoteModal } from '../../components/NewNoteModal/NewNoteModal';
+import { Link } from 'react-router-dom';
 
 export const Layout = ({ area, headerDescription }) => {
+	const initialValue = {
+		userId: '',
+		title: '',
+		description: '',
+		link: '',
+	};
+
 	const [projects, setProjects] = useState([]);
 	const [activeProjectLabel, setActiveProjectLabel] = useState('');
 	const [tasks, setTasks] = useState([]);
 	const [selectorIsOpen, setSelectorIsOpen] = useState(false);
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 	const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+	const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+	const [imageUrl, setImageUrl] = useState(null);
+	const [userData, setUserData] = useState(null);
+	const [allNotes, setAllNotes] = useState([]);
+	const [selectedNoteEditable, setSelectedNoteEditable] = useState(null);
+	const [resourcesCreateMode, setResourcesCreateMode] = useState(false);
+	const [newResource, setNewResource] = useState(initialValue);
+	const [resources, setResources] = useState([]);
+
+	const openNoteModal = () => {
+		setSelectedNoteEditable(null);
+		setIsNoteModalOpen(true);
+	};
+
+	const openEditNoteModal = note => {
+		setSelectedNoteEditable(note);
+		setIsNoteModalOpen(true);
+	};
+
+	const closeNoteModal = async () => {
+		setIsNoteModalOpen(false);
+		await getNotesByArea();
+	};
+
+	const handleResourceModeChange = () => {
+		setResourcesCreateMode(!resourcesCreateMode);
+	};
+
+	console.log(resourcesCreateMode);
 
 	const getProjectsByArea = async () => {
 		try {
@@ -177,7 +222,9 @@ export const Layout = ({ area, headerDescription }) => {
 		try {
 			const token = sessionStorage.getItem('token');
 			await axios.delete(
-				`${import.meta.env.VITE_AXIOS_URI}/projects/delete/${projectId}`,
+				`${
+					import.meta.env.VITE_AXIOS_URI
+				}/projects/delete/${projectId}`,
 				{
 					headers: {
 						Authorization: token,
@@ -190,7 +237,7 @@ export const Layout = ({ area, headerDescription }) => {
 		} catch (error) {
 			console.log('Error deleting project', error);
 		}
-	}
+	};
 
 	const updateProjects = async () => {
 		try {
@@ -221,6 +268,23 @@ export const Layout = ({ area, headerDescription }) => {
 		}
 	};
 
+	const getNotesByArea = async () => {
+		const token = sessionStorage.getItem('token');
+		try {
+			const response = await axios.get(
+				`${import.meta.env.VITE_AXIOS_URI}/notes/area/${area}`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+			setAllNotes(response.data.notes);
+		} catch (error) {
+			console.log(`Error getting notes by ${area} area`);
+		}
+	};
+
 	const closeTaskModal = async () => {
 		setIsTaskModalOpen(false);
 		await updateTasks();
@@ -231,8 +295,114 @@ export const Layout = ({ area, headerDescription }) => {
 		await updateProjects();
 	};
 
+	const handleValueChange = (e, name) => {
+		setNewResource(prevResource => ({
+			...prevResource,
+			[name]: e.target.value,
+		}));
+	};
+
+	const getResources = async () => {
+		try {
+			const token = sessionStorage.getItem('token');
+			const response = await axios.get(
+				`${import.meta.env.VITE_AXIOS_URI}/resources/all`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+
+			setResources(response.data.resources);
+		} catch (error) {
+			console.log('Error getting resources.');
+		}
+	};
+
+	const handleResourceSubmit = async e => {
+		e.preventDefault();
+
+		try {
+			const resource = {
+				userId: userData._id,
+				title: newResource.title,
+				description: newResource.description,
+				link: newResource.link,
+			};
+
+			const token = sessionStorage.getItem('token');
+			await axios.post(
+				`${import.meta.env.VITE_AXIOS_URI}/resources/create`,
+				resource,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+			setNewResource(initialValue);
+			setResourcesCreateMode(false);
+			getResources();
+		} catch (error) {
+			console.log('Error creating the resource', error);
+		}
+	};
+
+	const deleteResource = async (e, resourceId) => {
+		e.preventDefault();
+		try {
+			const token = sessionStorage.getItem('token');
+			await axios.delete(
+				`${
+					import.meta.env.VITE_AXIOS_URI
+				}/resources/delete/${resourceId}`,
+				{
+					headers: {
+						Authorization: token,
+					},
+				},
+			);
+			getResources();
+		} catch (error) {
+			console.log('Error deleting the resource');
+		}
+	};
+
 	useEffect(() => {
 		getProjectsByArea();
+		getNotesByArea();
+		getResources();
+	}, []);
+
+	useEffect(() => {
+		const token = sessionStorage.getItem('token');
+
+		if (token) {
+			const payload = JSON.parse(atob(token.split('.')[1]));
+			setUserData(payload);
+			const fetchUserImage = async () => {
+				try {
+					const res = await axios.get(
+						`${import.meta.env.VITE_AXIOS_URI}/users/${
+							payload._id
+						}`,
+						{
+							headers: {
+								Authorization: token,
+							},
+						},
+					);
+					const urlPicture = res.data.user.isExt
+						? res.data.user.extPicture
+						: res.data.imageUrl;
+					setImageUrl(urlPicture);
+				} catch (error) {
+					console.log(error);
+				}
+			};
+			fetchUserImage();
+		}
 	}, []);
 
 	return (
@@ -249,6 +419,14 @@ export const Layout = ({ area, headerDescription }) => {
 					isOpen={isProjectModalOpen}
 					closeModal={closeProjectModal}
 					updateProjects={updateProjects}
+				/>
+			)}
+
+			{isNoteModalOpen && (
+				<NewNoteModal
+					isOpen={isNoteModalOpen}
+					closeModal={closeNoteModal}
+					selectedNoteEditable={selectedNoteEditable}
 				/>
 			)}
 
@@ -292,7 +470,11 @@ export const Layout = ({ area, headerDescription }) => {
 											<img
 												src={TrashIcon}
 												alt='Trash-icon'
-												onClick={() => handleProjectDelete(project._id)}
+												onClick={() =>
+													handleProjectDelete(
+														project._id,
+													)
+												}
 											/>
 										)}
 									</div>
@@ -473,7 +655,164 @@ export const Layout = ({ area, headerDescription }) => {
 					)}
 				</section>
 			</div>
-			<div className={styles.rightColumn}></div>
+			<div className={styles.rightColumn}>
+				<section className={styles.userHub}>
+					<div className={styles.social}>
+						<a href='https://www.instagram.com/' target='blank'>
+							<img src={InstagramIcon} alt='Instagram-icon' />
+						</a>
+
+						<a href='https://www.facebook.com/' target='blank'>
+							<img src={FacebookIcon} alt='Facebook-icon' />
+						</a>
+
+						<a href='https://twitter.com/' target='blank'>
+							<img src={TwitterIcon} alt='Twitter-icon' />
+						</a>
+
+						<a href='https://web.whatsapp.com/' target='blank'>
+							<img src={WhatsappIcon} alt='Whatsapp-icon' />
+						</a>
+
+						<a href='http://localhost:8000/todoist/auth'>
+							<img src={TodoistGradient} alt='todoist-icon' />
+						</a>
+					</div>
+
+					<div className={styles.userData}>
+						<span className={styles.userContact}>
+							<Link to={'/settings'} className={styles.link}>
+								<h4>
+									{userData && userData.firstName}{' '}
+									{userData && userData.lastName}
+								</h4>
+							</Link>
+							<p>{userData && userData.email}</p>
+						</span>
+						<div className={styles.userPic}>
+							<img
+								// style={{ height: '50px' }}
+								src={imageUrl}
+								alt='User-profile-pic'
+							/>
+						</div>
+					</div>
+				</section>
+
+				<section className={styles.notes}>
+					<h2>MyNotes</h2>
+
+					<div className={styles.noteDisplay}>
+						{allNotes.map((note, index) => {
+							return (
+								<div
+									className={styles.noteContainer}
+									key={index}>
+									<span
+										className={styles.notePreview}
+										onClick={() => openEditNoteModal(note)}>
+										<img
+											src={LittleNoteIcon}
+											alt='LittleNote-icon'
+										/>
+										<h6>{note.title}</h6>
+									</span>
+								</div>
+							);
+						})}
+						<span
+							className={styles.newNoteBtn}
+							onClick={() => openNoteModal()}>
+							<img src={AddIconAqua} alt='AddIcon' />
+						</span>
+					</div>
+				</section>
+
+				<section className={styles.resources}>
+					<span
+						className={styles.addResource}
+						onClick={() => handleResourceModeChange()}>
+						<img
+							src={resourcesCreateMode ? CloseIcon : AddIconAqua}
+							alt='Add-icon'
+							className={styles.ResourceIcon}
+						/>
+					</span>
+					<h2>
+						{resourcesCreateMode ? 'Create resource' : 'Resources'}
+					</h2>
+
+					{resourcesCreateMode ? (
+						<div className={styles.resourcesCreateMode}>
+							<input
+								type='text'
+								placeholder='Add title to your resource'
+								autoCapitalize='off'
+								autoCorrect='off'
+								spellCheck='false'
+								autoComplete='off'
+								autoFocus
+								name='title'
+								value={newResource.title}
+								onChange={e => handleValueChange(e, 'title')}
+							/>
+							<input
+								type='url'
+								placeholder='Add the link to the resource'
+								autoCapitalize='off'
+								autoCorrect='off'
+								spellCheck='false'
+								autoComplete='off'
+								name='link'
+								value={newResource.link}
+								onChange={e => handleValueChange(e, 'link')}
+							/>
+							<input
+								type='text'
+								placeholder='Add a description for your resource'
+								autoCapitalize='off'
+								autoCorrect='off'
+								spellCheck='false'
+								autoComplete='off'
+								name='description'
+								value={newResource.description}
+								onChange={e =>
+									handleValueChange(e, 'description')
+								}
+							/>
+							{newResource.title.length > 0 &&
+							newResource.link.length > 0 ? (
+								<button onClick={e => handleResourceSubmit(e)}>
+									Add resource
+								</button>
+							) : (
+								<></>
+							)}
+						</div>
+					) : (
+						<div className={styles.resourceView}>
+							{resources.map(resource => (
+								<span key={resource._id}>
+									<a
+										href={resource.link}
+										target='_blank'
+										rel='noopener noreferrer'>
+										<h6>{resource.title}</h6>
+									</a>
+
+									<img
+										src={TrashIcon}
+										alt='Trash-icon'
+										onClick={e =>
+											deleteResource(e, resource._id)
+										}
+									/>
+								</span>
+							))}
+						</div>
+					)}
+				</section>
+			</div>
 		</div>
 	);
 };
