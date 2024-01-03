@@ -23,7 +23,53 @@ import axios from 'axios';
 // 	}
 // };
 
-//CONTROLADOR CON TODOIST
+// //CONTROLADOR CON TODOIST
+// const createTask = async (req, res) => {
+// 	const taskData = req.body;
+// 	const userId = req.user._id;
+// 	const { access_token } = req.cookies;
+
+// 	try {
+// 		const projectId = taskData.projectId;
+// 		const project = await Project.findOne({ _id: projectId, userId });
+
+// 		if (!project) {
+// 			return res.status(404).json({ error: 'Project not found.' });
+// 		}
+
+// 		// Send the task to Todoist
+// 		const todoistResponse = await axios.post(
+// 			'https://api.todoist.com/rest/v2/tasks',
+// 			{
+// 				content: taskData.title,
+// 				project_id: project.todoistProjectId,
+// 			},
+// 			{
+// 				headers: {
+// 					Authorization: `Bearer ${access_token}`,
+// 				},
+// 			},
+// 		);
+
+// 		const newTask = await Task.create({
+// 			...taskData,
+// 			userId,
+// 			projectId,
+// 			todoistTaskId: todoistResponse.data.id,
+// 		});
+
+// 		await newTask.save();
+
+// 		res.status(201).json({
+// 			message: newTask,
+// 			todoistTask: todoistResponse.data,
+// 		});
+// 	} catch (error) {
+// 		console.error(error);
+// 		res.status(500).json({ error: 'Error creating the task.' });
+// 	}
+// };
+
 const createTask = async (req, res) => {
 	const taskData = req.body;
 	const userId = req.user._id;
@@ -37,32 +83,37 @@ const createTask = async (req, res) => {
 			return res.status(404).json({ error: 'Project not found.' });
 		}
 
-		// Send the task to Todoist
-		const todoistResponse = await axios.post(
-			'https://api.todoist.com/rest/v2/tasks',
-			{
-				content: taskData.title,
-				project_id: project.todoistProjectId,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${access_token}`,
+		let todoistTask = null;
+
+		if (access_token) {
+			const todoistResponse = await axios.post(
+				'https://api.todoist.com/rest/v2/tasks',
+				{
+					content: taskData.title,
+					project_id: project.todoistProjectId,
 				},
-			},
-		);
+				{
+					headers: {
+						Authorization: `Bearer ${access_token}`,
+					},
+				},
+			);
+
+			todoistTask = todoistResponse.data;
+		}
 
 		const newTask = await Task.create({
 			...taskData,
 			userId,
 			projectId,
-			todoistTaskId: todoistResponse.data.id,
+			todoistTaskId: todoistTask ? todoistTask.id : null,
 		});
 
 		await newTask.save();
 
 		res.status(201).json({
 			message: newTask,
-			todoistTask: todoistResponse.data,
+			todoistTask: todoistTask,
 		});
 	} catch (error) {
 		console.error(error);
