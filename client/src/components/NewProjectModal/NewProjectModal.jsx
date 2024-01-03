@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-export const NewProjectModal = ({ isOpen, closeModal }) => {
+export const NewProjectModal = ({ isOpen, closeModal, updateProjects }) => {
 	const initialValue = {
 		userId: '',
 		area: '',
@@ -52,7 +52,6 @@ export const NewProjectModal = ({ isOpen, closeModal }) => {
 						
 					},
 				);
-
 				setCurrentStep(prevStep => prevStep + 1);
 			} else {
 				setErrors(['You need to specify a name for your project.']);

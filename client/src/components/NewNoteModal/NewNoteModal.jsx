@@ -12,12 +12,12 @@ import FolderIconWhite from '../../assets/folder-icon-white.svg';
 import TrashIcon from '../../assets/trash-icon.svg';
 import TrashIconRed from '../../assets/trash-icon-red.svg';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import Modal from 'react-modal';
 import axios, { all } from 'axios';
 
-export const NewNoteModal = ({ isOpen, closeModal }) => {
+export const NewNoteModal = ({ isOpen, closeModal, selectedNoteEditable }) => {
 	const initialValue = {
 		userId: '',
 		area: 'default',
@@ -195,6 +195,23 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 		});
 	};
 
+	const handleExternalUpdateMode = note => {
+		if (
+			selectedNoteEditable !== null &&
+			selectedNoteEditable !== undefined
+		) {
+			setCreateMode(2);
+			setCreatedNote({
+				noteId: note._id,
+				userId: note.userId,
+				area: note.area,
+				title: note.title,
+				body: note.body,
+				notePicture: note.notePicture,
+			});
+		}
+	};
+
 	const updateNote = async noteId => {
 		const token = sessionStorage.getItem('token');
 		const updatedNote = new FormData();
@@ -254,6 +271,13 @@ export const NewNoteModal = ({ isOpen, closeModal }) => {
 			console.log('Error deleting the note', error);
 		}
 	};
+
+	useEffect(() => {
+		if (selectedNoteEditable !== null) {
+			handleExternalUpdateMode(selectedNoteEditable);
+		} else {
+		}
+	}, []);
 
 	return (
 		<Modal

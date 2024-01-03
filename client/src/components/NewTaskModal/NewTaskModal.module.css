@@ -56,11 +56,15 @@
 
 .areas {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 0fr);
+    justify-content: start;
+    align-content: flex-start;
     gap: 0.37rem;
 
+    overflow: auto;
+
     height: 4.375rem;
-    width: 21.375rem;
+    width: 100%;
 
     margin-top: 1rem;
 }
@@ -89,6 +93,8 @@
     justify-content: center;
     height: 2rem;
     width: max-content;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     min-width: 6.875rem;
 
